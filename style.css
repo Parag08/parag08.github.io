@@ -480,9 +480,11 @@ a {
 
 /* Industry Expertise Bar */
 .expertise-bar-section {
-    padding: 3.5rem 0; /* Increased padding */
+    padding: 3.5rem 0;
+    /* Increased padding */
     margin: 4rem 0;
-    width: 100vw; /* Force viewport width */
+    width: 100vw;
+    /* Force viewport width */
     position: relative;
     left: 50%;
     right: 50%;
@@ -497,20 +499,24 @@ a {
 .expertise-container {
     width: 100%;
     margin: 0;
-    padding: 0 4rem; /* Increased padding for better side alignment */
+    padding: 0 4rem;
+    /* Increased padding for better side alignment */
 }
 
 .expertise-grid {
     display: flex;
-    justify-content: space-between; /* This will push items to the corners */
+    justify-content: space-between;
+    /* This will push items to the corners */
     gap: 1.5rem;
     flex-wrap: nowrap;
     width: 100%;
 }
 
 .expertise-item {
-    flex: 1; /* Equally space items */
-    min-width: 0; /* Allow items to shrink if needed */
+    flex: 1;
+    /* Equally space items */
+    min-width: 0;
+    /* Allow items to shrink if needed */
     max-width: none;
     display: flex;
     align-items: flex-start;
@@ -587,7 +593,8 @@ a {
 }
 
 .expertise-item:hover .expertise-description {
-    max-height: 250px; /* Increased to accommodate longer B2B text */
+    max-height: 250px;
+    /* Increased to accommodate longer B2B text */
     opacity: 1;
     margin-top: 0.8rem;
 }
@@ -598,6 +605,7 @@ a {
         flex-wrap: wrap;
         justify-content: center;
     }
+
     .expertise-item {
         flex: 1 1 300px;
         max-width: 400px;
@@ -608,6 +616,7 @@ a {
     .expertise-container {
         padding: 0 1.5rem;
     }
+
     .expertise-item {
         flex: 1 1 100%;
     }
@@ -1029,6 +1038,7 @@ footer {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -1043,10 +1053,21 @@ body.loaded .animate-on-load {
     animation: fadeInUp 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.delay-0 { animation-delay: 0s; }
-.delay-1 { animation-delay: 0.3s; }
-.delay-2 { animation-delay: 0.6s; }
-.delay-3 { animation-delay: 0.9s; }
+.delay-0 {
+    animation-delay: 0s;
+}
+
+.delay-1 {
+    animation-delay: 0.3s;
+}
+
+.delay-2 {
+    animation-delay: 0.6s;
+}
+
+.delay-3 {
+    animation-delay: 0.9s;
+}
 
 .magnetic-btn {
     transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease;
