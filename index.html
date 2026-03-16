@@ -33,8 +33,29 @@
             <a href="#education">Education</a>
             <a href="#skills">Skills</a>
         </div>
-        <a href="#contact" class="btn btn-primary">Let's Connect</a>
+        <div class="nav-actions">
+            <a href="#contact" class="btn btn-primary hide-mobile">Let's Connect</a>
+            <button class="menu-toggle" aria-label="Toggle Menu">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay">
+        <div class="mobile-menu-content">
+            <button class="menu-close" aria-label="Close Menu">
+                <i data-lucide="x"></i>
+            </button>
+            <div class="mobile-nav-links">
+                <a href="#home">About</a>
+                <a href="#experience">Experience</a>
+                <a href="#education">Education</a>
+                <a href="#skills">Skills</a>
+                <a href="#contact" class="btn btn-primary">Let's Connect</a>
+            </div>
+        </div>
+    </div>
 
     <main>
         <!-- Hero Section -->

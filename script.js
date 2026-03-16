@@ -35,10 +35,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 2. Navbar Scroll Effect
-    const navbar = document.querySelector('.navbar');
+    // Mobile Menu Logic
+    const menuToggle = document.querySelector('.menu-toggle');
+    const menuClose = document.querySelector('.menu-close');
+    const mobileMenu = document.querySelector('.mobile-menu-overlay');
+    const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
 
+    function toggleMenu() {
+        mobileMenu.classList.toggle('active');
+        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    }
+
+    if (menuToggle) menuToggle.addEventListener('click', toggleMenu);
+    if (menuClose) menuClose.addEventListener('click', toggleMenu);
+
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    });
+
+    // Navbar Scroll Effect
     window.addEventListener('scroll', () => {
+        const navbar = document.querySelector('.navbar');
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
         } else {
