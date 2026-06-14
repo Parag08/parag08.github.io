@@ -1,0 +1,1798 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Valeo Smart Tracker</title>
+  <style>
+    :root {
+      --gold: #E8B21E;
+      --gold-2: #F2C94C;
+      --amber: #C79210;
+      --cream: #FFF9EC;
+      --surface: #FFFFFF;
+      --warm-border: #F4E8C6;
+      --text: #1F2937;
+      --muted: #6B7280;
+      --green: #22C55E;
+      --orange: #F59E0B;
+      --red: #EF4444;
+      --shadow: 0 18px 45px rgba(31, 41, 55, 0.08);
+      --shadow-soft: 0 10px 30px rgba(31, 41, 55, 0.06);
+      --radius: 22px;
+      --radius-sm: 14px;
+      --ease: cubic-bezier(.2, .8, .2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background:
+        radial-gradient(circle at top left, rgba(242, 201, 76, .24), transparent 34rem),
+        linear-gradient(180deg, var(--cream) 0%, #fffdf6 42%, #fff 100%);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app-shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr);
+      gap: 24px;
+      align-items: stretch;
+      min-height: 420px;
+      margin-bottom: 24px;
+    }
+
+    .hero.story {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+
+    .hero.story .hero-panel {
+      min-height: 360px;
+    }
+
+    .member-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+      border: 1px solid rgba(244, 232, 198, .9);
+      border-radius: 24px;
+      padding: 16px 18px;
+      background: rgba(255, 255, 255, .82);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .member-header h1 {
+      margin: 0;
+      font-size: clamp(1.55rem, 3vw, 2.35rem);
+      line-height: 1.08;
+    }
+
+    .member-header p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .top-dashboard {
+      display: grid;
+      grid-template-columns: minmax(320px, .82fr) minmax(0, 1.18fr);
+      gap: 24px;
+      align-items: stretch;
+      margin-bottom: 24px;
+    }
+
+    .hero-panel,
+    .card,
+    .task-row,
+    .insight-card,
+    .story-item {
+      background: rgba(255, 255, 255, .9);
+      border: 1px solid rgba(244, 232, 198, .9);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-panel {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 420px;
+      padding: clamp(24px, 4vw, 46px);
+      border-radius: calc(var(--radius) + 8px);
+    }
+
+    .hero-panel::before {
+      position: absolute;
+      inset: auto -12% -34% 48%;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232, 178, 30, .28), transparent 67%);
+      content: "";
+      pointer-events: none;
+    }
+
+    .logo {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .logo-mark {
+      position: relative;
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--gold-2), var(--gold));
+      box-shadow: 0 10px 20px rgba(232, 178, 30, .28);
+    }
+
+    .logo-mark::before,
+    .logo-mark::after {
+      position: absolute;
+      content: "";
+      background: #fff;
+    }
+
+    .logo-mark::before {
+      width: 18px;
+      height: 4px;
+      border-radius: 999px;
+    }
+
+    .logo-mark::after {
+      width: 4px;
+      height: 18px;
+      border-radius: 999px;
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      padding-top: 56px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 14px;
+      color: var(--amber);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--gold);
+      content: "";
+      box-shadow: 0 0 0 5px rgba(232, 178, 30, .14);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin-bottom: 18px;
+      font-size: clamp(2.6rem, 7vw, 5.9rem);
+      line-height: .94;
+      letter-spacing: 0;
+    }
+
+    .hero-copy p {
+      max-width: 620px;
+      margin-bottom: 26px;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 11px 16px;
+      color: var(--text);
+      background: #fff;
+      font-weight: 800;
+      text-decoration: none;
+      transition: transform .18s var(--ease), box-shadow .18s var(--ease), background .18s var(--ease), border-color .18s var(--ease);
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 22px rgba(31, 41, 55, .08);
+    }
+
+    .button.primary {
+      background: var(--gold);
+      color: #241a05;
+      box-shadow: 0 14px 28px rgba(232, 178, 30, .28);
+    }
+
+    .button.primary:hover {
+      background: var(--amber);
+      color: #fff;
+    }
+
+    .button.secondary {
+      border-color: var(--warm-border);
+      background: rgba(255, 255, 255, .8);
+    }
+
+    .icon {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      color: currentColor;
+      flex: 0 0 auto;
+    }
+
+    .summary-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      min-height: 420px;
+      padding: 24px;
+      border-radius: calc(var(--radius) + 8px);
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, .96), rgba(255, 249, 236, .88)),
+        var(--surface);
+      border: 1px solid var(--warm-border);
+      box-shadow: var(--shadow);
+    }
+
+    .health-card {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(210px, .72fr) minmax(0, 1fr);
+      gap: 22px;
+      min-height: 420px;
+      align-items: center;
+      border: 1px solid var(--warm-border);
+      border-radius: calc(var(--radius) + 8px);
+      padding: 26px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, .97), rgba(255, 249, 236, .9)),
+        var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .health-card::before {
+      position: absolute;
+      inset: -30% -18% auto auto;
+      width: 390px;
+      height: 390px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(34, 197, 94, .15), transparent 68%);
+      content: "";
+      pointer-events: none;
+    }
+
+    .health-visual {
+      position: relative;
+      display: grid;
+      min-height: 280px;
+      place-items: center;
+      border: 1px solid var(--warm-border);
+      border-radius: 26px;
+      background: linear-gradient(180deg, #fffdf7, #fff7df);
+    }
+
+    .tree {
+      position: relative;
+      width: 165px;
+      height: 218px;
+      transform-origin: 50% 100%;
+      transition: transform .35s var(--ease), filter .35s var(--ease);
+    }
+
+    .tree::before {
+      position: absolute;
+      left: 50%;
+      bottom: 4px;
+      width: 52px;
+      height: 112px;
+      border-radius: 18px 18px 8px 8px;
+      background: linear-gradient(90deg, #9A6324, #C58A3A);
+      content: "";
+      transform: translateX(-50%);
+    }
+
+    .tree::after {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 150px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(31, 41, 55, .1);
+      content: "";
+      transform: translateX(-50%);
+    }
+
+    .leaf {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: inset -10px -12px 0 rgba(21, 128, 61, .16);
+      transition: background .35s var(--ease), transform .35s var(--ease), opacity .35s var(--ease);
+    }
+
+    .leaf.one {
+      left: 38px;
+      top: 36px;
+      width: 92px;
+      height: 82px;
+    }
+
+    .leaf.two {
+      left: 3px;
+      top: 78px;
+      width: 90px;
+      height: 76px;
+    }
+
+    .leaf.three {
+      right: 2px;
+      top: 82px;
+      width: 88px;
+      height: 76px;
+    }
+
+    .leaf.four {
+      left: 42px;
+      top: 112px;
+      width: 86px;
+      height: 72px;
+    }
+
+    .tree.needs-care {
+      transform: rotate(-1deg);
+      filter: saturate(.9);
+    }
+
+    .tree.needs-care .leaf {
+      background: var(--orange);
+      opacity: .86;
+    }
+
+    .tree.at-risk {
+      transform: rotate(-4deg);
+      filter: saturate(.75);
+    }
+
+    .tree.at-risk .leaf {
+      background: #D6A746;
+      opacity: .72;
+    }
+
+    .tree.at-risk .leaf.two,
+    .tree.at-risk .leaf.three {
+      transform: translateY(14px) rotate(8deg);
+    }
+
+    .health-copy {
+      position: relative;
+      z-index: 1;
+    }
+
+    .score-line {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 10px;
+      margin: 8px 0 10px;
+    }
+
+    .score-line strong {
+      font-size: clamp(3rem, 7vw, 5rem);
+      line-height: .9;
+    }
+
+    .score-line span {
+      color: var(--muted);
+      font-size: 1rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .health-copy h2 {
+      margin-bottom: 8px;
+      font-size: clamp(1.45rem, 3vw, 2.15rem);
+    }
+
+    .health-copy p {
+      max-width: 480px;
+      margin-bottom: 16px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .health-factors {
+      display: grid;
+      gap: 9px;
+      margin-top: 18px;
+    }
+
+    .factor {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      border: 1px solid var(--warm-border);
+      border-radius: 999px;
+      padding: 8px 11px;
+      background: #fff;
+      color: var(--muted);
+      font-size: .88rem;
+      font-weight: 800;
+    }
+
+    .completion-ring {
+      display: grid;
+      width: min(230px, 58vw);
+      aspect-ratio: 1;
+      place-items: center;
+      align-self: center;
+      margin: 8px 0 4px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at center, #fff 58%, transparent 59%),
+        conic-gradient(var(--gold) calc(var(--completion) * 1%), #f3ead0 0);
+      transition: background .3s var(--ease);
+    }
+
+    .ring-inner {
+      display: grid;
+      width: 72%;
+      aspect-ratio: 1;
+      place-items: center;
+      border-radius: 50%;
+      background: #fff;
+      text-align: center;
+      box-shadow: inset 0 0 0 1px rgba(244, 232, 198, .8);
+    }
+
+    .ring-inner strong {
+      display: block;
+      font-size: clamp(2.1rem, 5vw, 3rem);
+      line-height: 1;
+    }
+
+    .ring-inner span {
+      color: var(--muted);
+      font-size: .86rem;
+      font-weight: 700;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      min-height: 92px;
+      border: 1px solid var(--warm-border);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      background: #fff;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 7px;
+      font-size: 1.72rem;
+      line-height: 1.05;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(320px, .95fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .stack {
+      display: grid;
+      gap: 24px;
+    }
+
+    .card {
+      border-radius: var(--radius);
+      padding: 22px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .section-head h2 {
+      margin-bottom: 4px;
+      font-size: clamp(1.28rem, 2.4vw, 1.72rem);
+      letter-spacing: 0;
+    }
+
+    .section-head p {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .pill {
+      display: inline-flex;
+      min-height: 32px;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border: 1px solid var(--warm-border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: #fffaf0;
+      color: var(--amber);
+      font-size: .78rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .tasks {
+      display: grid;
+      gap: 12px;
+    }
+
+    .task-row {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      min-height: 104px;
+      border-radius: 18px;
+      padding: 14px;
+      transition: transform .2s var(--ease), border-color .2s var(--ease), background .2s var(--ease), opacity .2s var(--ease);
+    }
+
+    .task-row:hover {
+      transform: translateY(-1px);
+      border-color: rgba(232, 178, 30, .55);
+    }
+
+    .task-row.just-updated {
+      animation: rowPulse .45s var(--ease);
+    }
+
+    .task-row.done {
+      background: linear-gradient(90deg, rgba(34, 197, 94, .1), #fff 54%);
+      border-color: rgba(34, 197, 94, .28);
+    }
+
+    .task-row.missed {
+      background: linear-gradient(90deg, rgba(239, 68, 68, .08), #fff 58%);
+      border-color: rgba(239, 68, 68, .2);
+    }
+
+    .task-row.snoozed {
+      background: linear-gradient(90deg, rgba(245, 158, 11, .11), #fff 58%);
+    }
+
+    .task-row.skipped {
+      background: linear-gradient(90deg, rgba(107, 114, 128, .09), #fff 58%);
+      opacity: .86;
+    }
+
+    @keyframes rowPulse {
+      0% { transform: scale(.992); }
+      55% { transform: scale(1.01); }
+      100% { transform: scale(1); }
+    }
+
+    .task-icon {
+      display: grid;
+      width: 48px;
+      height: 48px;
+      place-items: center;
+      border-radius: 15px;
+      background: #fff7df;
+      color: var(--amber);
+    }
+
+    .task-main h3 {
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .task-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      color: var(--muted);
+      font-size: .86rem;
+      font-weight: 700;
+    }
+
+    .badge,
+    .status {
+      display: inline-flex;
+      min-height: 26px;
+      align-items: center;
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: .74rem;
+      font-weight: 900;
+      letter-spacing: .02em;
+    }
+
+    .badge {
+      background: #fff7df;
+      color: var(--amber);
+    }
+
+    .status {
+      background: #f4f5f7;
+      color: var(--muted);
+    }
+
+    .status.done {
+      background: rgba(34, 197, 94, .13);
+      color: #15803d;
+    }
+
+    .status.due {
+      background: rgba(245, 158, 11, .13);
+      color: #a15c05;
+    }
+
+    .status.missed {
+      background: rgba(239, 68, 68, .12);
+      color: #b91c1c;
+    }
+
+    .status.snoozed {
+      background: rgba(245, 158, 11, .13);
+      color: #a15c05;
+    }
+
+    .status.skipped {
+      background: rgba(107, 114, 128, .12);
+      color: #4b5563;
+    }
+
+    .task-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .action-button {
+      display: inline-flex;
+      min-width: 42px;
+      min-height: 38px;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      border: 1px solid var(--warm-border);
+      border-radius: 999px;
+      padding: 8px 10px;
+      background: #fff;
+      color: var(--text);
+      font-size: .82rem;
+      font-weight: 850;
+      transition: transform .18s var(--ease), background .18s var(--ease), border-color .18s var(--ease);
+    }
+
+    .action-button:hover {
+      transform: translateY(-1px);
+      border-color: var(--gold);
+      background: #fffaf0;
+    }
+
+    .action-button.done-action {
+      background: var(--text);
+      color: #fff;
+      border-color: var(--text);
+    }
+
+    .action-button.done-action:hover {
+      background: var(--gold);
+      color: #241a05;
+      border-color: var(--gold);
+    }
+
+    .mini-note {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin-top: 14px;
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      background: #fffaf0;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .mini-note strong {
+      color: var(--text);
+    }
+
+    .streak-score {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .streak-number {
+      display: grid;
+      width: 112px;
+      aspect-ratio: 1;
+      place-items: center;
+      border-radius: 28px;
+      background: linear-gradient(145deg, #fff8e2, #fff);
+      border: 1px solid var(--warm-border);
+      box-shadow: inset 0 0 0 8px rgba(242, 201, 76, .12);
+      text-align: center;
+    }
+
+    .streak-number strong {
+      display: block;
+      font-size: 2.35rem;
+      line-height: 1;
+    }
+
+    .streak-number span {
+      color: var(--muted);
+      font-size: .72rem;
+      font-weight: 900;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .week-strip {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 8px;
+      margin: 18px 0;
+    }
+
+    .day {
+      display: grid;
+      min-width: 0;
+      min-height: 58px;
+      place-items: center;
+      border: 1px solid var(--warm-border);
+      border-radius: 14px;
+      background: #fff;
+      color: var(--muted);
+      font-size: .74rem;
+      font-weight: 900;
+      transition: background .22s var(--ease), color .22s var(--ease), transform .22s var(--ease);
+    }
+
+    .day.complete {
+      background: rgba(34, 197, 94, .12);
+      color: #15803d;
+      border-color: rgba(34, 197, 94, .3);
+    }
+
+    .day.today {
+      background: var(--gold);
+      color: #251b05;
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .day.frozen {
+      background: #fff7df;
+      color: var(--amber);
+      border-color: rgba(232, 178, 30, .42);
+    }
+
+    .freeze-box {
+      display: grid;
+      gap: 12px;
+      border: 1px dashed rgba(199, 146, 16, .5);
+      border-radius: 18px;
+      padding: 15px;
+      background: #fffaf0;
+    }
+
+    .freeze-box p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .reminder-display {
+      display: grid;
+      gap: 12px;
+      border: 1px solid var(--warm-border);
+      border-radius: 18px;
+      padding: 16px;
+      background: linear-gradient(135deg, #fff, #fff8e6);
+    }
+
+    .reminder-display h3 {
+      margin-bottom: 2px;
+      font-size: 1.05rem;
+    }
+
+    .reminder-display p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .reminder-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .insight-grid,
+    .alert-grid,
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .insight-card,
+    .story-item {
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .insight-card {
+      min-height: 138px;
+    }
+
+    .insight-card .kicker,
+    .story-item .kicker {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--amber);
+      font-size: .72rem;
+      font-weight: 900;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .insight-card h3,
+    .story-item h3 {
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .insight-card p,
+    .story-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .91rem;
+    }
+
+    .alert {
+      display: grid;
+      gap: 8px;
+      border: 1px solid var(--warm-border);
+      border-radius: 18px;
+      padding: 15px;
+      background: #fff;
+    }
+
+    .alert strong {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .alert p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .alert.warning {
+      border-color: rgba(245, 158, 11, .35);
+      background: rgba(245, 158, 11, .07);
+    }
+
+    .alert.error {
+      border-color: rgba(239, 68, 68, .28);
+      background: rgba(239, 68, 68, .06);
+    }
+
+    .dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--gold);
+      flex: 0 0 auto;
+    }
+
+    .dot.green {
+      background: var(--green);
+    }
+
+    .dot.orange {
+      background: var(--orange);
+    }
+
+    .dot.red {
+      background: var(--red);
+    }
+
+    .story {
+      margin-top: 24px;
+    }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 10;
+      display: grid;
+      max-width: min(380px, calc(100vw - 36px));
+      gap: 4px;
+      border: 1px solid var(--warm-border);
+      border-radius: 18px;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, .96);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(16px);
+      pointer-events: none;
+      transition: opacity .25s var(--ease), transform .25s var(--ease);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast strong {
+      font-size: .94rem;
+    }
+
+    .toast span {
+      color: var(--muted);
+      font-size: .86rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .top-dashboard,
+      .health-card,
+      .section-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-card {
+        min-height: 0;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .app-shell {
+        width: min(100% - 20px, 1180px);
+        padding-top: 10px;
+      }
+
+      .member-header {
+        display: grid;
+        padding: 14px;
+      }
+
+      .hero-panel,
+      .summary-card,
+      .health-card,
+      .card {
+        border-radius: 20px;
+        padding: 18px;
+      }
+
+      .health-visual {
+        min-height: 230px;
+      }
+
+      .tree {
+        transform: scale(.86);
+      }
+
+      .hero-panel {
+        min-height: 520px;
+      }
+
+      .hero-copy {
+        padding-top: 42px;
+      }
+
+      .hero-actions,
+      .task-actions {
+        width: 100%;
+      }
+
+      .button,
+      .task-actions .action-button {
+        flex: 1 1 auto;
+      }
+
+      .task-row {
+        grid-template-columns: auto minmax(0, 1fr);
+      }
+
+      .task-actions {
+        grid-column: 1 / -1;
+        justify-content: stretch;
+      }
+
+      .section-head {
+        display: grid;
+      }
+
+      .summary-grid,
+      .insight-grid,
+      .alert-grid,
+      .story-grid,
+      .reminder-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .week-strip {
+        gap: 6px;
+      }
+
+      .day {
+        min-height: 50px;
+        font-size: .68rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="member-header" aria-labelledby="page-title">
+      <div class="logo" aria-label="Valeo Smart Tracker">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <span>Valeo Smart Tracker</span>
+      </div>
+      <div>
+        <h1 id="page-title">Today's care plan</h1>
+        <p>Sunday, June 14 - medicines, habits, and check-ins</p>
+      </div>
+      <span class="pill" id="freezePill">Freeze available</span>
+    </header>
+
+    <section class="top-dashboard" aria-label="Today's adherence overview">
+      <aside class="summary-card" aria-label="Daily adherence summary">
+        <div class="section-head">
+          <div>
+            <h2>Today at a glance</h2>
+            <p>Your progress updates as care actions are logged.</p>
+          </div>
+        </div>
+
+        <div class="completion-ring" id="completionRing" style="--completion: 0">
+          <div class="ring-inner">
+            <div>
+              <strong id="completionPercent">0%</strong>
+              <span>complete</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="summary-grid">
+          <div class="metric">
+            <span>Current streak</span>
+            <strong><span id="summaryStreak">12</span>d</strong>
+          </div>
+          <div class="metric">
+            <span>Tasks left</span>
+            <strong id="tasksLeft">0</strong>
+          </div>
+          <div class="metric">
+            <span>Due soon</span>
+            <strong id="dueSoon">0</strong>
+          </div>
+          <div class="metric">
+            <span>Freeze status</span>
+            <strong id="freezeStatus">Ready</strong>
+          </div>
+        </div>
+      </aside>
+
+      <section class="health-card" aria-labelledby="health-title">
+        <div class="health-visual" aria-hidden="true">
+          <div class="tree" id="healthTree">
+            <span class="leaf one"></span>
+            <span class="leaf two"></span>
+            <span class="leaf three"></span>
+            <span class="leaf four"></span>
+          </div>
+        </div>
+        <div class="health-copy">
+          <span class="pill" id="healthLabel">Healthy today</span>
+          <div class="score-line">
+            <strong id="healthScore">92</strong>
+            <span>/ 100</span>
+          </div>
+          <h2 id="health-title">Your care tree is strong</h2>
+          <p id="healthMessage">Taking medicines on time keeps your health score high and your tree full.</p>
+          <div class="health-factors" aria-label="Health score factors">
+            <div class="factor"><span class="dot green" aria-hidden="true"></span><span id="medicineFactor">Medicines are on schedule</span></div>
+            <div class="factor"><span class="dot" aria-hidden="true"></span><span id="habitFactor">Habits are ready for today</span></div>
+            <div class="factor"><span class="dot orange" aria-hidden="true"></span><span id="riskFactor">Refill check: 3 days left</span></div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <div class="section-grid">
+      <div class="stack">
+        <section class="card" id="today" aria-labelledby="today-title">
+          <div class="section-head">
+            <div>
+              <h2 id="today-title">To do today</h2>
+              <p>Tap an action when it is complete.</p>
+            </div>
+            <span class="pill" id="taskCountLabel">6 tracked items</span>
+          </div>
+          <div class="tasks" id="taskList"></div>
+          <div class="mini-note" id="dailyNote">
+            <span class="dot green" aria-hidden="true"></span>
+            <span><strong>Valeo remembered:</strong> blood pressure is usually logged before breakfast, so it stays near the top today.</span>
+          </div>
+        </section>
+
+        <section class="card" aria-labelledby="alerts-title">
+          <div class="section-head">
+            <div>
+              <h2 id="alerts-title">Refill and risk alerts</h2>
+              <p>Clear signals for supply, routine drift, and possible follow-up moments.</p>
+            </div>
+          </div>
+          <div class="alert-grid">
+            <article class="alert warning">
+              <strong><span class="dot orange" aria-hidden="true"></span>Metformin supply low</strong>
+              <p>3 days left. Valeo can prompt refill, pharmacy pickup, or coach follow-up.</p>
+            </article>
+            <article class="alert error">
+              <strong><span class="dot red" aria-hidden="true"></span>Evening adherence risk</strong>
+              <p>2 missed evening doses this week. Consider a later reminder window.</p>
+            </article>
+            <article class="alert">
+              <strong><span class="dot" aria-hidden="true"></span>Coach follow-up available</strong>
+              <p>A gentle check-in can be enabled when the same pattern repeats.</p>
+            </article>
+            <article class="alert">
+              <strong><span class="dot green" aria-hidden="true"></span>Morning plan stable</strong>
+              <p>Medication and blood pressure logs are usually completed on time.</p>
+            </article>
+          </div>
+        </section>
+      </div>
+
+      <aside class="stack">
+        <section class="card" aria-labelledby="streak-title">
+          <div class="section-head">
+            <div>
+              <h2 id="streak-title">Streak and freeze</h2>
+              <p>Motivation that supports recovery after legitimate interruptions.</p>
+            </div>
+          </div>
+          <div class="streak-score">
+            <div class="streak-number">
+              <div>
+                <strong id="streakValue">12</strong>
+                <span>day streak</span>
+              </div>
+            </div>
+            <div>
+              <span class="pill" id="freezeToken">Streak Freeze available</span>
+              <p style="margin: 12px 0 0; color: var(--muted);">A freeze preserves momentum when life interrupts care, while still making missed items visible.</p>
+            </div>
+          </div>
+          <div class="week-strip" id="weekStrip" aria-label="Seven day streak timeline"></div>
+          <div class="freeze-box">
+            <p id="freezeMessage">Simulate a missed task, then apply one freeze to protect the 12-day streak.</p>
+            <div class="hero-actions">
+              <button class="button secondary" type="button" id="simulateMissBtn">Simulate miss</button>
+              <button class="button primary" type="button" id="applyFreezeBtn">Apply freeze</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="card" aria-labelledby="reminders-title">
+          <div class="section-head">
+            <div>
+              <h2 id="reminders-title">Smart reminders</h2>
+              <p>Contextual nudges for what matters now.</p>
+            </div>
+          </div>
+          <div class="reminder-display" aria-live="polite">
+            <span class="pill" id="reminderState">Ready to remind</span>
+            <h3 id="reminderTitle">It's 8:00 AM - time for Metformin</h3>
+            <p id="reminderBody">Valeo is prioritizing this because it anchors the user's morning care routine.</p>
+            <div class="reminder-actions">
+              <button class="action-button done-action" type="button" id="triggerReminderBtn">Trigger reminder</button>
+              <button class="action-button" type="button" id="markReminderBtn">Mark from reminder</button>
+              <button class="action-button" type="button" id="snoozeReminderBtn">Snooze 15 min</button>
+              <button class="action-button" type="button" id="rescheduleReminderBtn">Reschedule</button>
+            </div>
+          </div>
+        </section>
+      </aside>
+    </div>
+
+    <section class="hero story" aria-labelledby="concept-title">
+      <div class="hero-panel">
+        <div class="logo" aria-label="Valeo Smart Tracker">
+          <span class="logo-mark" aria-hidden="true"></span>
+          <span>Valeo Smart Tracker</span>
+        </div>
+
+        <div class="hero-copy">
+          <p class="eyebrow">Prototype context</p>
+          <h2 id="concept-title" style="font-size: clamp(2.2rem, 5vw, 4.2rem); line-height: .98; margin-bottom: 18px;">Helping users stay on track with medicines and health habits</h2>
+          <p>Valeo prepares the day, remembers the plan, nudges at the right moment, and helps users recover without losing momentum.</p>
+          <div class="hero-actions" aria-label="Prototype context links">
+            <a class="button primary" href="#today">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 6.8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Back to today
+            </a>
+            <a class="button secondary" href="#intelligence">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v3M12 18v3M4.6 5.6l2.1 2.1M17.3 17.3l2.1 2.1M3 12h3M18 12h3M4.6 18.4l2.1-2.1M17.3 6.7l2.1-2.1M9 12a3 3 0 106 0 3 3 0 00-6 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              Memory engine
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card story" id="intelligence" aria-labelledby="memory-title">
+      <div class="section-head">
+        <div>
+          <h2 id="memory-title">Tracking memory</h2>
+          <p>A proactive layer that keeps care tasks from living only in the user's head.</p>
+        </div>
+        <span class="pill">Prepared today</span>
+      </div>
+      <div class="insight-grid" id="insightGrid"></div>
+    </section>
+
+    <section class="card story" aria-labelledby="story-title">
+      <div class="section-head">
+        <div>
+          <h2 id="story-title">What this prototype demonstrates</h2>
+          <p>A stakeholder-friendly view of how Valeo can move from access into daily care execution.</p>
+        </div>
+      </div>
+      <div class="story-grid">
+        <article class="story-item">
+          <span class="kicker">One-tap logging</span>
+          <h3>Less friction at the moment of care</h3>
+          <p>Medication, habit, and check-in actions can be completed without navigating away from today.</p>
+        </article>
+        <article class="story-item">
+          <span class="kicker">Daily guidance</span>
+          <h3>The plan is already prepared</h3>
+          <p>Valeo shows what matters today, ordered around time, routine, and risk.</p>
+        </article>
+        <article class="story-item">
+          <span class="kicker">Recovery-friendly design</span>
+          <h3>Streaks motivate without punishing</h3>
+          <p>Freeze support protects momentum while preserving a clear record of interrupted care.</p>
+        </article>
+        <article class="story-item">
+          <span class="kicker">Tracking memory</span>
+          <h3>The system remembers patterns</h3>
+          <p>Refills, delayed routines, and skipped logs become proactive guidance instead of forgotten work.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <strong id="toastTitle">Updated</strong>
+    <span id="toastBody">Your plan has been refreshed.</span>
+  </div>
+
+  <script>
+    const tasks = [
+      {
+        id: "metformin",
+        type: "Medication",
+        title: "Take Metformin 500mg",
+        time: "8:00 AM",
+        status: "Due",
+        icon: "pill",
+        reminder: "It's 8:00 AM - time for Metformin"
+      },
+      {
+        id: "bp",
+        type: "Check-in",
+        title: "Log blood pressure",
+        time: "8:30 AM",
+        status: "Due",
+        icon: "heart",
+        reminder: "You usually log blood pressure by 8:30 AM"
+      },
+      {
+        id: "vitamin-d",
+        type: "Medication",
+        title: "Take Vitamin D",
+        time: "1:00 PM",
+        status: "Due",
+        icon: "sun",
+        reminder: "Vitamin D is queued after lunch"
+      },
+      {
+        id: "water",
+        type: "Habit",
+        title: "Drink 2L water goal",
+        time: "All day",
+        status: "Due",
+        icon: "drop",
+        reminder: "Hydration is behind the usual pace"
+      },
+      {
+        id: "walk",
+        type: "Habit",
+        title: "20-minute walk",
+        time: "6:00 PM",
+        status: "Due",
+        icon: "walk",
+        reminder: "A short walk keeps today's routine on track"
+      },
+      {
+        id: "sleep",
+        type: "Habit",
+        title: "Sleep before 11:00 PM",
+        time: "10:30 PM",
+        status: "Due",
+        icon: "moon",
+        reminder: "You're one task away from protecting your 12-day streak"
+      }
+    ];
+
+    const insights = [
+      {
+        kicker: "Plan memory",
+        title: "Valeo prepared today's checklist",
+        body: "Medications, water, movement, blood pressure, and sleep were assembled from the active care plan."
+      },
+      {
+        kicker: "Pattern",
+        title: "Weekend delay detected",
+        body: "Evening dose often slips later on weekends, so Valeo can shift the reminder window."
+      },
+      {
+        kicker: "Supply",
+        title: "Refill in 3 days",
+        body: "Metformin stock is approaching the reorder threshold before the user runs out."
+      },
+      {
+        kicker: "Friction",
+        title: "Friday check-ins need help",
+        body: "Blood pressure logs are skipped more often on Fridays, suggesting a morning nudge."
+      }
+    ];
+
+    const state = {
+      streak: 12,
+      freezeAvailable: true,
+      freezeApplied: false,
+      simulatedMiss: false,
+      activeReminderIndex: 0,
+      toastTimer: null
+    };
+
+    const icons = {
+      pill: '<svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M10.4 20.1a4.7 4.7 0 01-6.6-6.6l5.7-5.7a4.7 4.7 0 116.6 6.6l-5.7 5.7zM7 10.3l6.7 6.7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+      heart: '<svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.4 5.8a5 5 0 00-7.1 0L12 7.1l-1.3-1.3a5 5 0 00-7.1 7.1L12 21l8.4-8.1a5 5 0 000-7.1z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>',
+      sun: '<svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5V3M12 21v-2M5 12H3M21 12h-2M6.3 6.3L4.9 4.9M19.1 19.1l-1.4-1.4M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4M8 12a4 4 0 108 0 4 4 0 00-8 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+      drop: '<svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3s6 6.4 6 11a6 6 0 11-12 0c0-4.6 6-11 6-11z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>',
+      walk: '<svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13 4.5a2 2 0 11-4 0 2 2 0 014 0zM10.5 8l-2 4 3 2 1.5 6M13 10l2 3 3 1M8.5 20l2.5-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      moon: '<svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 15.3A8.2 8.2 0 018.7 4a8.6 8.6 0 1011.3 11.3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>'
+    };
+
+    const elements = {
+      taskList: document.querySelector("#taskList"),
+      completionRing: document.querySelector("#completionRing"),
+      completionPercent: document.querySelector("#completionPercent"),
+      summaryStreak: document.querySelector("#summaryStreak"),
+      streakValue: document.querySelector("#streakValue"),
+      tasksLeft: document.querySelector("#tasksLeft"),
+      dueSoon: document.querySelector("#dueSoon"),
+      freezeStatus: document.querySelector("#freezeStatus"),
+      freezePill: document.querySelector("#freezePill"),
+      freezeToken: document.querySelector("#freezeToken"),
+      healthScore: document.querySelector("#healthScore"),
+      healthTree: document.querySelector("#healthTree"),
+      healthLabel: document.querySelector("#healthLabel"),
+      healthMessage: document.querySelector("#healthMessage"),
+      medicineFactor: document.querySelector("#medicineFactor"),
+      habitFactor: document.querySelector("#habitFactor"),
+      riskFactor: document.querySelector("#riskFactor"),
+      taskCountLabel: document.querySelector("#taskCountLabel"),
+      weekStrip: document.querySelector("#weekStrip"),
+      freezeMessage: document.querySelector("#freezeMessage"),
+      insightGrid: document.querySelector("#insightGrid"),
+      reminderState: document.querySelector("#reminderState"),
+      reminderTitle: document.querySelector("#reminderTitle"),
+      reminderBody: document.querySelector("#reminderBody"),
+      toast: document.querySelector("#toast"),
+      toastTitle: document.querySelector("#toastTitle"),
+      toastBody: document.querySelector("#toastBody")
+    };
+
+    function normalizeStatus(status) {
+      return status.toLowerCase();
+    }
+
+    function getCompletion() {
+      const done = tasks.filter(task => task.status === "Done").length;
+      return Math.round((done / tasks.length) * 100);
+    }
+
+    function getRemaining() {
+      return tasks.filter(task => task.status !== "Done" && task.status !== "Skipped").length;
+    }
+
+    function getHealthScore() {
+      const done = tasks.filter(task => task.status === "Done").length;
+      const missed = tasks.filter(task => task.status === "Missed").length;
+      const snoozed = tasks.filter(task => task.status === "Snoozed").length;
+      const skipped = tasks.filter(task => task.status === "Skipped").length;
+      return Math.max(35, Math.min(100, 92 + done * 2 - missed * 18 - snoozed * 7 - skipped * 10));
+    }
+
+    function renderIcon(name) {
+      return icons[name] || icons.pill;
+    }
+
+    function renderTasks(updatedId = "") {
+      elements.taskList.innerHTML = tasks.map(task => {
+        const statusClass = normalizeStatus(task.status);
+        const updatedClass = task.id === updatedId ? " just-updated" : "";
+        return `
+          <article class="task-row ${statusClass}${updatedClass}" data-task-id="${task.id}">
+            <div class="task-icon">${renderIcon(task.icon)}</div>
+            <div class="task-main">
+              <h3>${task.title}</h3>
+              <div class="task-meta">
+                <span class="badge">${task.type}</span>
+                <span>${task.time}</span>
+                <span class="status ${statusClass}">${task.status}</span>
+              </div>
+            </div>
+            <div class="task-actions" aria-label="Actions for ${task.title}">
+              <button class="action-button done-action" type="button" data-action="done" data-id="${task.id}" aria-label="Mark ${task.title} done">Done</button>
+              <button class="action-button" type="button" data-action="skip" data-id="${task.id}" aria-label="Skip ${task.title}">Skip</button>
+              <button class="action-button" type="button" data-action="snooze" data-id="${task.id}" aria-label="Snooze ${task.title}">Snooze</button>
+            </div>
+          </article>
+        `;
+      }).join("");
+
+      if (updatedId) {
+        window.setTimeout(() => {
+          const row = document.querySelector(`[data-task-id="${updatedId}"]`);
+          if (row) row.classList.remove("just-updated");
+        }, 500);
+      }
+    }
+
+    function animateNumber(element, nextValue, suffix = "") {
+      const current = parseInt(element.textContent, 10) || 0;
+      const difference = nextValue - current;
+      const frames = 14;
+      let frame = 0;
+
+      if (difference === 0) {
+        element.textContent = `${nextValue}${suffix}`;
+        return;
+      }
+
+      const timer = window.setInterval(() => {
+        frame += 1;
+        const eased = 1 - Math.pow(1 - frame / frames, 3);
+        element.textContent = `${Math.round(current + difference * eased)}${suffix}`;
+        if (frame >= frames) {
+          window.clearInterval(timer);
+          element.textContent = `${nextValue}${suffix}`;
+        }
+      }, 18);
+    }
+
+    function renderSummary() {
+      const completion = getCompletion();
+      const remaining = getRemaining();
+      const dueSoon = tasks.filter(task => ["Due", "Snoozed"].includes(task.status)).length;
+
+      elements.completionRing.style.setProperty("--completion", completion);
+      animateNumber(elements.completionPercent, completion, "%");
+      animateNumber(elements.tasksLeft, remaining);
+      animateNumber(elements.dueSoon, dueSoon);
+      animateNumber(elements.summaryStreak, state.streak);
+      animateNumber(elements.streakValue, state.streak);
+      renderHealthScore();
+
+      elements.freezeStatus.textContent = state.freezeApplied ? "Used" : state.freezeAvailable ? "Ready" : "None";
+      elements.freezePill.textContent = state.freezeApplied ? "Freeze used today" : state.freezeAvailable ? "Freeze available" : "No freeze";
+      elements.freezeToken.textContent = state.freezeApplied ? "Streak Freeze applied" : state.freezeAvailable ? "Streak Freeze available" : "No freeze available";
+      elements.taskCountLabel.textContent = `${tasks.length} tracked items`;
+    }
+
+    function renderHealthScore() {
+      const score = getHealthScore();
+      const missed = tasks.filter(task => task.status === "Missed").length;
+      const medicinesDone = tasks.filter(task => task.type === "Medication" && task.status === "Done").length;
+      const medicinesTotal = tasks.filter(task => task.type === "Medication").length;
+      const medicinesLeft = medicinesTotal - medicinesDone;
+      const remaining = getRemaining();
+
+      animateNumber(elements.healthScore, score);
+      elements.healthTree.classList.toggle("at-risk", score < 65);
+      elements.healthTree.classList.toggle("needs-care", score >= 65 && score < 86);
+
+      if (score >= 86) {
+        elements.healthLabel.textContent = "Healthy today";
+        elements.healthMessage.textContent = "Taking medicines on time keeps your health score high and your tree full.";
+      } else if (score >= 65) {
+        elements.healthLabel.textContent = "Needs attention";
+        elements.healthMessage.textContent = "A few actions need care today. Completing medicines first will strengthen your tree.";
+      } else {
+        elements.healthLabel.textContent = "Care at risk";
+        elements.healthMessage.textContent = "Missed or delayed actions are affecting today's score. Start with the next medicine.";
+      }
+
+      elements.medicineFactor.textContent = medicinesLeft === 0
+        ? "All medicines logged"
+        : `${medicinesLeft} medicine item${medicinesLeft === 1 ? "" : "s"} left`;
+      elements.habitFactor.textContent = `${remaining} action${remaining === 1 ? "" : "s"} left today`;
+      elements.riskFactor.textContent = missed
+        ? `${missed} missed item${missed === 1 ? "" : "s"} needs recovery`
+        : "Refill check: 3 days left";
+    }
+
+    function renderWeekStrip() {
+      const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Today"];
+      elements.weekStrip.innerHTML = days.map((day, index) => {
+        let className = "day";
+        let marker = "Done";
+        if (index < 5) className += " complete";
+        if (index === 5 && state.freezeApplied) {
+          className += " frozen";
+          marker = "Freeze";
+        }
+        if (index === 6) {
+          className += " today";
+          marker = `${getCompletion()}%`;
+        }
+        return `<div class="${className}"><span>${day}</span><strong>${marker}</strong></div>`;
+      }).join("");
+    }
+
+    function renderInsights() {
+      elements.insightGrid.innerHTML = insights.map(insight => `
+        <article class="insight-card">
+          <span class="kicker">${insight.kicker}</span>
+          <h3>${insight.title}</h3>
+          <p>${insight.body}</p>
+        </article>
+      `).join("");
+    }
+
+    function renderReminder() {
+      const reminder = tasks[state.activeReminderIndex];
+      elements.reminderTitle.textContent = reminder.reminder;
+      elements.reminderBody.textContent = reminder.status === "Done"
+        ? "This reminder was resolved from the notification, reducing extra taps."
+        : reminder.status === "Snoozed"
+          ? "Valeo will bring this back in 15 minutes without hiding it from today."
+          : "Valeo is prioritizing this because it matches the user's care routine and current risk.";
+    }
+
+    function showToast(title, body) {
+      window.clearTimeout(state.toastTimer);
+      elements.toastTitle.textContent = title;
+      elements.toastBody.textContent = body;
+      elements.toast.classList.add("show");
+      state.toastTimer = window.setTimeout(() => elements.toast.classList.remove("show"), 2600);
+    }
+
+    function updateTaskStatus(id, status) {
+      const task = tasks.find(item => item.id === id);
+      if (!task) return;
+
+      task.status = status;
+      renderTasks(id);
+      renderSummary();
+      renderWeekStrip();
+      renderReminder();
+
+      const message = status === "Done"
+        ? `${task.title} was logged. Today's completion moved to ${getCompletion()}%.`
+        : status === "Snoozed"
+          ? `${task.title} will return in 15 minutes.`
+          : `${task.title} is marked skipped and remains visible in today's record.`;
+      showToast(status === "Done" ? "Logged with one tap" : `${status} updated`, message);
+    }
+
+    function simulateMiss() {
+      const target = tasks.find(task => task.id === "sleep") || tasks[tasks.length - 1];
+      target.status = "Missed";
+      state.simulatedMiss = true;
+      if (!state.freezeApplied) {
+        state.streak = 11;
+      }
+      elements.freezeMessage.textContent = "A legitimate interruption was recorded. Apply a freeze to preserve the streak while keeping the missed item transparent.";
+      renderTasks(target.id);
+      renderSummary();
+      renderWeekStrip();
+      showToast("Miss simulated", "The streak is at risk, and the freeze option is now meaningful.");
+    }
+
+    function applyFreeze() {
+      if (!state.simulatedMiss) {
+        showToast("No freeze needed yet", "Simulate a missed task first to show the recovery flow.");
+        return;
+      }
+
+      if (!state.freezeAvailable || state.freezeApplied) {
+        showToast("Freeze already used", "Valeo keeps recovery supportive without hiding repeated misses.");
+        return;
+      }
+
+      state.freezeApplied = true;
+      state.freezeAvailable = false;
+      state.streak = 12;
+      elements.freezeMessage.textContent = "Freeze applied. The missed task stays visible, but the 12-day streak is preserved for a legitimate interruption.";
+      renderSummary();
+      renderWeekStrip();
+      showToast("Streak protected", "The freeze preserved momentum without erasing the missed task.");
+    }
+
+    function triggerReminder() {
+      state.activeReminderIndex = (state.activeReminderIndex + 1) % tasks.length;
+      const reminder = tasks[state.activeReminderIndex];
+      elements.reminderState.textContent = "Reminder triggered";
+      renderReminder();
+      showToast("Smart reminder", reminder.reminder);
+    }
+
+    function markFromReminder() {
+      const task = tasks[state.activeReminderIndex];
+      elements.reminderState.textContent = "Resolved from reminder";
+      updateTaskStatus(task.id, "Done");
+    }
+
+    function snoozeReminder() {
+      const task = tasks[state.activeReminderIndex];
+      elements.reminderState.textContent = "Snoozed for 15 min";
+      updateTaskStatus(task.id, "Snoozed");
+    }
+
+    function rescheduleReminder() {
+      const task = tasks[state.activeReminderIndex];
+      elements.reminderState.textContent = "Rescheduled";
+      elements.reminderBody.textContent = `${task.title} moved to a calmer window based on the user's routine.`;
+      showToast("Reminder rescheduled", "Valeo adjusted the nudge instead of letting the task disappear.");
+    }
+
+    function bindEvents() {
+      elements.taskList.addEventListener("click", event => {
+        const button = event.target.closest("button[data-action]");
+        if (!button) return;
+
+        const action = button.dataset.action;
+        const id = button.dataset.id;
+        if (action === "done") updateTaskStatus(id, "Done");
+        if (action === "skip") updateTaskStatus(id, "Skipped");
+        if (action === "snooze") updateTaskStatus(id, "Snoozed");
+      });
+
+      document.querySelector("#simulateMissBtn").addEventListener("click", simulateMiss);
+      document.querySelector("#applyFreezeBtn").addEventListener("click", applyFreeze);
+      document.querySelector("#triggerReminderBtn").addEventListener("click", triggerReminder);
+      document.querySelector("#markReminderBtn").addEventListener("click", markFromReminder);
+      document.querySelector("#snoozeReminderBtn").addEventListener("click", snoozeReminder);
+      document.querySelector("#rescheduleReminderBtn").addEventListener("click", rescheduleReminder);
+    }
+
+    function init() {
+      renderTasks();
+      renderSummary();
+      renderWeekStrip();
+      renderInsights();
+      renderReminder();
+      bindEvents();
+    }
+
+    init();
+  </script>
+</body>
+</html>

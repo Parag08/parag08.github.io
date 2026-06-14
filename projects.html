@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Parag Rahangdale</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-blob"></div>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo">PR.</a>
+        <div class="nav-links">
+            <a href="index.html#home">About</a>
+            <a href="projects.html" class="active">Projects</a>
+            <a href="index.html#experience">Experience</a>
+            <a href="index.html#education">Education</a>
+            <a href="index.html#skills">Skills</a>
+        </div>
+        <div class="nav-actions">
+            <a href="index.html#contact" class="btn btn-primary hide-mobile">Let's Connect</a>
+            <button class="menu-toggle" aria-label="Toggle Menu">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay">
+        <div class="mobile-menu-content">
+            <button class="menu-close" aria-label="Close Menu">
+                <i data-lucide="x"></i>
+            </button>
+            <div class="mobile-nav-links">
+                <a href="index.html#home">About</a>
+                <a href="projects.html">Projects</a>
+                <a href="index.html#experience">Experience</a>
+                <a href="index.html#education">Education</a>
+                <a href="index.html#skills">Skills</a>
+                <a href="index.html#contact" class="btn btn-primary">Let's Connect</a>
+            </div>
+        </div>
+    </div>
+
+    <main class="projects-page">
+        <section class="section-padding" style="margin-top: 80px;">
+            <div class="section-header fade-up">
+                <h2>Professional <span class="gradient-text">Projects</span></h2>
+                <div class="section-line"></div>
+                <p style="margin-top: 1rem; color: var(--text-secondary); max-width: 600px;">A detailed look at major platforms and tools I've developed, optimized, or scaled across different domains.</p>
+            </div>
+            
+            <div class="projects-grid">
+                
+                <!-- Cognizant -->
+                <div class="project-card glass-panel fade-up">
+                    <div class="project-header">
+                        <div class="project-icon-box">
+                            <i data-lucide="factory"></i>
+                        </div>
+                        <div class="project-title-area">
+                            <h3>Enterprise IoT Platform</h3>
+                            <div class="project-badges">
+                                <span class="company-badge">Cognizant</span>
+                                <span class="domain-badge">Industrial IoT</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h4>Overview</h4>
+                        <p>An enterprise-grade IoT platform developed to monitor, manage, and automate operations across large-scale smart factories. The system integrates diverse hardware sensors with a centralized data management backbone.</p>
+                        
+                        <h4>Impact & Contributions</h4>
+                        <ul>
+                            <li>Spearheaded an engineering initiative that drastically reduced deployment time.</li>
+                            <li>Standardized setup process for new factory configurations, automating the deployment of complex IoT solutions from 5-6 days to just 1 hour.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Wavenet -->
+                <div class="project-card glass-panel fade-up" style="transition-delay: 0.1s;">
+                    <div class="project-header">
+                        <div class="project-icon-box">
+                            <i data-lucide="radio"></i>
+                        </div>
+                        <div class="project-title-area">
+                            <h3>Proximity Marketing System</h3>
+                            <div class="project-badges">
+                                <span class="company-badge">Wavenet Solutions</span>
+                                <span class="domain-badge">Retail Tech</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h4>Overview</h4>
+                        <p>An innovative footfall-driving solution that transmits targeted promotional codes directly to users' mobile devices within malls and shops. It utilizes ultrasonic and infrasonic sound waves to deliver localized offers over short distances.</p>
+                        
+                        <h4>Impact & Contributions</h4>
+                        <ul>
+                            <li>Designed backend systems to seamlessly push offers without relying on traditional Bluetooth or GPS tracking.</li>
+                            <li>The solution bypassed hardware connection hurdles and directly resulted in a measurable increase in store footfall.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Eleven01 -->
+                <div class="project-card glass-panel fade-up" style="transition-delay: 0.2s;">
+                    <div class="project-header">
+                        <div class="project-icon-box">
+                            <i data-lucide="hexagon"></i>
+                        </div>
+                        <div class="project-title-area">
+                            <h3>Eleven01 Protocol</h3>
+                            <div class="project-badges">
+                                <span class="company-badge">Eleven01</span>
+                                <span class="domain-badge">Blockchain</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h4>Overview</h4>
+                        <p>Backed by the Telangana Government and part of the "Telangana Blockchain District", this initiative created India's first native blockchain protocol, aiming to be a fast and scalable foundation for enterprise workloads.</p>
+                        
+                        <h4>Impact & Contributions</h4>
+                        <ul>
+                            <li>Served as a Founding Member and Blockchain Developer, architecting the foundational MVP codebase.</li>
+                            <li>Helped design a high-performance distributed networking system for solving real-world enterprise and government problems on-chain.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Touchnote -->
+                <div class="project-card glass-panel fade-up" style="transition-delay: 0.3s;">
+                    <div class="project-header">
+                        <div class="project-icon-box">
+                            <i data-lucide="image"></i>
+                        </div>
+                        <div class="project-title-area">
+                            <h3>Personalized Gifting App</h3>
+                            <div class="project-badges">
+                                <span class="company-badge">Touchnote</span>
+                                <span class="domain-badge">E-commerce</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h4>Overview</h4>
+                        <p>A popular UK-based mobile and web service allowing users to create and send personalized physical postcards, greeting cards, and photo-based products globally from their devices through a print-on-demand network.</p>
+                        
+                        <h4>Impact & Contributions</h4>
+                        <ul>
+                            <li>Functioned as a key developer at the UK startup, analyzing user engagement drops in the payment funnel.</li>
+                            <li>Revamped the entire checkout process, shaving 30 seconds off each transaction and significantly improving conversion rates.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Nutanix Move -->
+                <div class="project-card glass-panel fade-up" style="transition-delay: 0.4s;">
+                    <div class="project-header">
+                        <div class="project-icon-box">
+                            <i data-lucide="cloud-lightning"></i>
+                        </div>
+                        <div class="project-title-area">
+                            <h3>Migration Tool (Move)</h3>
+                            <div class="project-badges">
+                                <span class="company-badge">Nutanix</span>
+                                <span class="domain-badge">Cloud Infrastructure</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h4>Overview</h4>
+                        <p>A powerful cross-hypervisor migration tool (VMware, Hyper-V, AWS) used by enterprises to move virtual machines to the Nutanix Cloud Platform with minimal downtime, preserving configurations without requiring refactoring.</p>
+                        
+                        <h4>Impact & Contributions</h4>
+                        <ul>
+                            <li>Spearheaded the large-scale files migration feature, designing the strategy and leading execution.</li>
+                            <li>Successfully onboarded customers with 10+ petabytes of data, directly unlocking and securing $1M+ in recurring revenue.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">PR.</a>
+                <p>Bridging the gap between complex engineering and product strategy.</p>
+            </div>
+            <div class="footer-socials">
+                <a href="mailto:paragrahangdale80@gmail.com" class="social-btn"><i data-lucide="mail"></i></a>
+                <a href="https://www.linkedin.com/in/paragr" target="_blank" class="social-btn"><i data-lucide="linkedin"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Parag Rahangdale. Built with passion and AI.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
