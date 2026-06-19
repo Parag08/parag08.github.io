@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settld Mobile Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="stage">
+      <section class="phone-shell" aria-label="Settld mobile app demo">
+        <div class="status-bar">
+          <span>9:41</span>
+          <span class="status-icons">5G 100%</span>
+        </div>
+
+        <div class="app-screen active" id="homeScreen">
+          <header class="topbar">
+            <div>
+              <p class="eyebrow" data-city-label>Welcome to Paris</p>
+              <h1>Settld</h1>
+            </div>
+            <button class="icon-button" aria-label="View notifications">
+              <span aria-hidden="true">!</span>
+            </button>
+          </header>
+
+          <section class="hero-panel">
+            <img src="assets/arrival-guide.svg" alt="Local guide meeting a new arrival near an airport" />
+            <div class="hero-copy">
+              <p>Arrival help</p>
+              <h2>Meet your city concierge before you land.</h2>
+            </div>
+          </section>
+
+          <section class="city-picker" aria-label="Choose destination city">
+            <button class="city-chip active" data-city="Paris">Paris</button>
+            <button class="city-chip" data-city="London">London</button>
+            <button class="city-chip" data-city="Berlin">Berlin</button>
+          </section>
+
+          <section class="buddy-section" aria-labelledby="buddy-title">
+            <div class="section-heading">
+              <h2 id="buddy-title">Available concierges</h2>
+              <button class="link-button" data-schedule-first>Schedule first</button>
+            </div>
+            <div class="buddy-list" id="buddyList"></div>
+          </section>
+
+          <section class="addons" aria-labelledby="addons-title">
+            <h2 id="addons-title">Arrival help</h2>
+            <div class="addon-grid">
+              <label>
+                <input type="checkbox" checked />
+                <span>
+                  <strong>Airport pickup</strong>
+                  <small>Meet at arrivals, ride to stay</small>
+                </span>
+              </label>
+              <label>
+                <input type="checkbox" checked />
+                <span>
+                  <strong>Care package</strong>
+                  <small>Essentials ready on day one</small>
+                </span>
+              </label>
+            </div>
+          </section>
+
+          <section class="request-card" aria-label="Request arrival support">
+            <div>
+              <span>Ready on arrival</span>
+              <strong id="mobileSelectedBuddy">Amelie, 4.98 rating</strong>
+            </div>
+            <button class="request-button" data-book-action>Schedule</button>
+          </section>
+        </div>
+
+        <div class="app-screen booking-screen" id="bookingScreen" aria-hidden="true">
+          <header class="booking-topbar">
+            <button class="back-button" id="backButton" aria-label="Back to concierges">&lt;</button>
+            <div>
+              <p class="eyebrow">Subscription plan</p>
+              <h1>Choose support</h1>
+            </div>
+          </header>
+
+          <section class="selected-concierge">
+            <span class="avatar large-avatar" id="bookingAvatar" aria-hidden="true">AM</span>
+            <div>
+              <span>Your concierge</span>
+              <strong id="bookingBuddy">Amelie</strong>
+              <p id="bookingNote">Ex-airport host, fluent in English and French.</p>
+            </div>
+          </section>
+
+          <section class="concierge-details" aria-labelledby="concierge-details-title">
+            <div class="section-heading">
+              <h2 id="concierge-details-title">About your concierge</h2>
+              <span id="bookingRating">4.98</span>
+            </div>
+            <div class="detail-grid">
+              <article>
+                <span>Languages</span>
+                <strong id="bookingLanguages">English, French</strong>
+              </article>
+              <article>
+                <span>Best for</span>
+                <strong id="bookingBestFor">Airport arrivals</strong>
+              </article>
+            </div>
+            <div class="detail-block">
+              <span>Activities</span>
+              <div class="tag-list" id="bookingActivities"></div>
+            </div>
+            <div class="detail-block">
+              <span>Interests</span>
+              <div class="tag-list" id="bookingInterests"></div>
+            </div>
+          </section>
+
+          <section class="booking-section" aria-labelledby="plan-select-title">
+            <div class="section-heading">
+              <h2 id="plan-select-title">Settling plans</h2>
+              <span data-city-name>Paris</span>
+            </div>
+            <div class="plan-list" id="planList"></div>
+          </section>
+
+          <section class="booking-summary" aria-label="Booking summary">
+            <div>
+              <span>Selected plan</span>
+              <strong id="planSummary">3-day landing plan</strong>
+            </div>
+            <button id="confirmButton">Subscribe</button>
+          </section>
+        </div>
+
+        <nav class="bottom-nav" aria-label="App navigation">
+          <button class="active">
+            <span aria-hidden="true">H</span>
+            Home
+          </button>
+          <button>
+            <span aria-hidden="true">B</span>
+            Buddies
+          </button>
+          <button>
+            <span aria-hidden="true">T</span>
+            Tasks
+          </button>
+          <button>
+            <span aria-hidden="true">P</span>
+            Profile
+          </button>
+        </nav>
+      </section>
+
+      <aside class="demo-panel" aria-label="Demo controls">
+        <p class="eyebrow">Mobile demo</p>
+        <h2>Concierge onboarding for newcomers</h2>
+        <p>
+          Tap a city or choose a concierge to select 3, 7, or 30 days of local settling support.
+        </p>
+        <div class="booking-card">
+          <span>Selected concierge</span>
+          <strong id="selectedBuddy">Amelie, 4.98 rating</strong>
+          <button data-book-action>Schedule arrival support</button>
+        </div>
+      </aside>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">
+      Arrival support requested. Your concierge will confirm shortly.
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

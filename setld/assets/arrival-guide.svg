@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 480" role="img" aria-labelledby="title desc">
+  <title id="title">Airport arrival with local concierge</title>
+  <desc id="desc">A clean illustration of a local guide greeting a newcomer with luggage and a care package.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#dff5ef"/>
+      <stop offset="1" stop-color="#f9efe1"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#159183"/>
+      <stop offset="1" stop-color="#0b5b55"/>
+    </linearGradient>
+    <linearGradient id="coral" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f08266"/>
+      <stop offset="1" stop-color="#d95848"/>
+    </linearGradient>
+  </defs>
+  <rect width="720" height="480" fill="url(#sky)"/>
+  <circle cx="585" cy="80" r="52" fill="#f7c96c" opacity=".75"/>
+  <path d="M52 345c62-40 111-35 156 8 55 51 125 55 197 10 84-53 159-55 263-2v119H52z" fill="#d9ebe6"/>
+  <path d="M0 356h720v124H0z" fill="#f7f2e8"/>
+  <path d="M94 148h334c32 0 58 26 58 58v124H36V206c0-32 26-58 58-58z" fill="#ffffff" opacity=".86"/>
+  <path d="M72 188h96m31 0h96m31 0h96M72 232h350M72 276h190" fill="none" stroke="#d6ded8" stroke-width="10" stroke-linecap="round"/>
+  <path d="M538 134l85 26-5 17-88-10-49 44-17-6 31-49-45-24 11-15 55 13 29-48 18 4z" fill="#4d74a8" opacity=".22"/>
+  <g transform="translate(86 236)">
+    <rect x="4" y="82" width="130" height="122" rx="28" fill="#36516d"/>
+    <rect x="29" y="48" width="74" height="98" rx="28" fill="url(#teal)"/>
+    <circle cx="66" cy="29" r="29" fill="#f0b98e"/>
+    <path d="M36 24c7-28 53-27 62 0-15-10-45-8-62 0z" fill="#253a36"/>
+    <path d="M44 92h46l32 112H16z" fill="#127a72"/>
+    <rect x="116" y="172" width="38" height="70" rx="12" fill="#263e52"/>
+    <circle cx="136" cy="248" r="10" fill="#263e52"/>
+  </g>
+  <g transform="translate(324 220)">
+    <rect x="3" y="98" width="140" height="118" rx="30" fill="#f3d9bd"/>
+    <rect x="34" y="64" width="78" height="108" rx="30" fill="url(#coral)"/>
+    <circle cx="72" cy="34" r="31" fill="#d89568"/>
+    <path d="M42 22c12-33 64-20 64 14-20-17-42-19-64-14z" fill="#2c3432"/>
+    <path d="M34 113h78l30 103H6z" fill="#e96d58"/>
+    <path d="M121 92c27 14 52 11 73-10" fill="none" stroke="#d89568" stroke-width="17" stroke-linecap="round"/>
+    <path d="M181 80l31 20" stroke="#d89568" stroke-width="14" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(506 288)">
+    <rect x="0" y="48" width="116" height="82" rx="20" fill="#ffffff" stroke="#d9ded6" stroke-width="4"/>
+    <path d="M35 49V31c0-15 46-15 46 0v18" fill="none" stroke="#127a72" stroke-width="9" stroke-linecap="round"/>
+    <circle cx="35" cy="88" r="10" fill="#f4bb52"/>
+    <circle cx="59" cy="88" r="10" fill="#127a72"/>
+    <circle cx="83" cy="88" r="10" fill="#e96d58"/>
+  </g>
+  <g transform="translate(230 319)">
+    <rect x="0" y="4" width="70" height="112" rx="16" fill="#253e53"/>
+    <rect x="13" y="0" width="44" height="12" rx="6" fill="#253e53"/>
+    <circle cx="18" cy="124" r="9" fill="#253e53"/>
+    <circle cx="52" cy="124" r="9" fill="#253e53"/>
+  </g>
+  <path d="M254 320c31-38 78-39 112-2" fill="none" stroke="#127a72" stroke-width="9" stroke-linecap="round" opacity=".45"/>
+</svg>
