@@ -4,50 +4,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parag Rahangdale | PRODUCT LEADER & AI BUILDER</title>
+    <title>Parag Rahangdale — Product Strategy & Engineering Leadership</title>
     <meta name="description"
-        content="Profile website of Parag Rahangdale - Product Strategy Manager and Engineering Lead specializing in innovation architecture and sustainable growth.">
-    <!-- Google Fonts: Inter and Material Symbols -->
+        content="Parag Rahangdale — product strategy and engineering leadership. Ten years building software across healthtech, proptech, cloud infrastructure, blockchain and consumer e-commerce. INSEAD MBA, December 2026.">
+    <meta name="theme-color" content="#0D0F13">
+
+    <!-- Social preview -->
+    <meta property="og:type" content="profile">
+    <meta property="og:title" content="Parag Rahangdale — Product Strategy & Engineering Leadership">
+    <meta property="og:description"
+        content="Ten years building software: engineer, then team lead, now product strategy. Product strategy, grounded in engineering.">
+    <meta property="og:image" content="colouredProfilePic.webp">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!--
+      Theme is resolved before first paint so the page never flashes the wrong
+      one. Clock decides for new visitors; a stored choice always wins.
+    -->
+    <script>
+        (function () {
+            var theme;
+            try { theme = localStorage.getItem('pr-theme'); } catch (e) { theme = null; }
+            if (theme !== 'light' && theme !== 'dark') {
+                var h = new Date().getHours();
+                theme = (h >= 7 && h < 19) ? 'light' : 'dark';
+            }
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/svg+xml" href="logo.svg">
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Three.js for 3D Animations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js" defer></script>
 </head>
 
 <body>
-    <!-- Custom Cursor -->
-    <div class="cursor-dot"></div>
-    <div class="cursor-blob"></div>
+    <a href="#home" class="skip-link">Skip to content</a>
+
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-blob" aria-hidden="true"></div>
 
     <nav class="navbar">
-        <a href="#" class="logo">PR.</a>
+        <a href="#home" class="logo">PR.</a>
         <div class="nav-links">
             <a href="#home">About</a>
             <a href="projects.html">Projects</a>
             <a href="#experience">Experience</a>
             <a href="#education">Education</a>
-            <a href="#skills">Skills</a>
+            <a href="#strengths">Strengths</a>
         </div>
         <div class="nav-actions">
-            <a href="#contact" class="btn btn-primary hide-mobile">Let's Connect</a>
-            <button class="menu-toggle" aria-label="Toggle Menu">
+            <button class="theme-toggle" aria-label="Switch theme" aria-pressed="false">
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    aria-hidden="true">
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M12 2v2" />
+                    <path d="M12 20v2" />
+                    <path d="m4.93 4.93 1.41 1.41" />
+                    <path d="m17.66 17.66 1.41 1.41" />
+                    <path d="M2 12h2" />
+                    <path d="M20 12h2" />
+                    <path d="m6.34 17.66-1.41 1.41" />
+                    <path d="m19.07 4.93-1.41 1.41" />
+                </svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    aria-hidden="true">
+                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                </svg>
+            </button>
+            <a href="#contact" class="btn btn-primary hide-mobile">Get in touch</a>
+            <button class="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
                 <i data-lucide="menu"></i>
             </button>
         </div>
     </nav>
 
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu-overlay">
+    <div class="mobile-menu-overlay" id="mobile-menu" aria-hidden="true">
         <div class="mobile-menu-content">
-            <button class="menu-close" aria-label="Close Menu">
+            <button class="menu-close" aria-label="Close menu">
                 <i data-lucide="x"></i>
             </button>
             <div class="mobile-nav-links">
@@ -55,64 +96,78 @@
                 <a href="projects.html">Projects</a>
                 <a href="#experience">Experience</a>
                 <a href="#education">Education</a>
-                <a href="#skills">Skills</a>
-                <a href="#contact" class="btn btn-primary">Let's Connect</a>
+                <a href="#strengths">Strengths</a>
+                <a href="#contact" class="btn btn-primary">Get in touch</a>
             </div>
         </div>
     </div>
 
+    <canvas id="hero-3d-canvas" aria-hidden="true"></canvas>
+
     <main>
-        <!-- Full-screen 3D Background for Hero -->
-        <canvas id="hero-3d-canvas"></canvas>
-        <!-- Hero Section -->
+        <!-- Hero -->
         <section id="home" class="hero">
-            <div class="hero-content fade-up">
-                <div class="badge animate-on-load delay-0"><span id="rotating-pill">PRODUCT LEADER & AI BUILDER</span>
+            <div class="hero-content">
+                <div class="badge animate-on-load delay-0">
+                    <span id="rotating-pill">Product Leader &amp; AI Builder</span>
                 </div>
-                <h1 class="hero-title animate-on-load delay-1">
-                    Parag <span class="gradient-text">Rahangdale</span>
-                </h1>
-                <h2 class="hero-subtitle animate-on-load delay-2">Building High-Impact Products & Empowering
-                    Cross-Functional Teams</h2>
+
+                <h1 class="hero-title animate-on-load delay-1">Parag Rahangdale</h1>
+
+                <h2 class="hero-subtitle animate-on-load delay-2">
+                    Product strategy, grounded in engineering.
+                </h2>
+
                 <p class="hero-desc animate-on-load delay-2">
-                    Bridging the gap between complex engineering and product strategy. I leverage AI to accelerate
-                    high-quality development and lead teams to deliver scalable solutions that drive measurable business
-                    impact.
+                    Ten years building software: engineer, then team lead, now product strategy.
+                    I work where product decisions meet the codebase — scoping what gets built,
+                    then making sure it actually gets built.
                 </p>
-                <div class="hero-cta animate-on-load delay-3">
+
+                <div class="hero-meta animate-on-load delay-3">
+                    <span><i data-lucide="map-pin"></i> Singapore</span>
+                    <span><i data-lucide="graduation-cap"></i> INSEAD MBA, Dec 2026</span>
+                    <span><span class="status-dot" aria-hidden="true"></span> Open to new opportunities</span>
+                </div>
+
+                <div class="hero-cta animate-on-load delay-4">
                     <a href="Parag Rahangdale 2026.pdf" target="_blank" rel="noopener noreferrer"
                         class="btn btn-primary magnetic-btn">Download CV <i data-lucide="download"></i></a>
-                    <a href="https://www.linkedin.com/in/paragr" target="_blank"
+                    <a href="https://www.linkedin.com/in/paragr" target="_blank" rel="noopener noreferrer"
                         class="btn btn-secondary magnetic-btn"><i data-lucide="linkedin"></i> LinkedIn</a>
                 </div>
             </div>
+
             <div class="hero-visual fade-left">
-                <div class="glass-orb orb-1"></div>
-                <div class="glass-orb orb-2"></div>
+                <div class="glass-orb orb-1" aria-hidden="true"></div>
+                <div class="glass-orb orb-2" aria-hidden="true"></div>
 
                 <div class="profile-container">
                     <div class="profile-frame">
-                        <img src="colouredProfilePic.webp" alt="Parag Rahangdale" class="profile-img">
+                        <img src="colouredProfilePic.webp" alt="Parag Rahangdale" class="profile-img" width="300"
+                            height="360">
                     </div>
-                    <div class="hero-card floating-stats flip-container">
+
+                    <div class="hero-card floating-stats flip-container glassmorphism" tabindex="0"
+                        aria-label="Experience and revenue impact. Focus to see the breakdown.">
                         <div class="flipper">
-                            <!-- Front of the card -->
-                            <div class="front stats glassmorphism">
+                            <div class="front stats">
                                 <div class="stat-item">
-                                    <h3>10+ YEARS</h3>
-                                    <p>EXPERIENCE</p>
+                                    <h3>10 yrs</h3>
+                                    <p>Engineering &amp; Product</p>
                                 </div>
                                 <div class="stat-item">
-                                    <h3>$20M+</h3>
-                                    <p>REVENUE IMPACT DRIVEN</p>
+                                    <h3>$40–50M</h3>
+                                    <p>ACV enabled</p>
                                 </div>
+                                <span class="flip-hint" aria-hidden="true">Breakdown</span>
                             </div>
 
-                            <!-- Back of the card -->
-                            <div class="back glassmorphism">
+                            <div class="back">
                                 <ul class="impact-breakdown">
-                                    <li><span>$19M+</span> Files Migration (10PB+)</li>
-                                    <li><span>$1M+</span> Touchnote Gifting</li>
+                                    <li><span>$40–50M</span> ACV, Nutanix</li>
+                                    <li><span>$1M+</span> Recurring, Nutanix</li>
+                                    <li><span>$25K+/mo</span> New stream, Touchnote</li>
                                 </ul>
                             </div>
                         </div>
@@ -121,58 +176,61 @@
             </div>
         </section>
 
-        <!-- Industry Expertise Section -->
-        <section id="expertise-bar" class="section expertise-bar-section fade-up">
+        <!-- Domains -->
+        <section id="expertise-bar" class="expertise-bar-section">
             <div class="expertise-container">
                 <div class="expertise-grid">
-                    <div class="expertise-item">
-                        <div class="expertise-icon"><i data-lucide="layers"></i></div>
-                        <div class="expertise-info">
-                            <h3 class="expertise-title">Blockchain</h3>
-                            <div class="expertise-description">
-                                Led technical teams from concept to ICO, establishing core product strategies and
-                                operational standards to scale emerging platforms.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="expertise-item">
+                    <div class="expertise-item" tabindex="0">
                         <div class="expertise-icon"><i data-lucide="cpu"></i></div>
                         <div class="expertise-info">
                             <h3 class="expertise-title">AI</h3>
                             <div class="expertise-description">
-                                Integrating AI-driven research to define feature roadmaps, while utilizing AI to
-                                optimize workflows, drastically reducing development time without sacrificing quality.
+                                Using AI for market research that shapes roadmaps, and for tooling that
+                                compresses the build cycle without loosening the quality bar.
                             </div>
                         </div>
                     </div>
-                    <div class="expertise-item">
+
+                    <div class="expertise-item" tabindex="0">
                         <div class="expertise-icon"><i data-lucide="landmark"></i></div>
                         <div class="expertise-info">
                             <h3 class="expertise-title">Fintech</h3>
                             <div class="expertise-description">
-                                Developing secure payment gateways, lending protocols, and institutional-grade financial
-                                platforms optimized for transaction integrity and user growth.
+                                Payment gateways, lending protocols and institutional-grade platforms
+                                built for transaction integrity first.
                             </div>
                         </div>
                     </div>
-                    <div class="expertise-item">
-                        <div class="expertise-icon"><i data-lucide="users"></i></div>
+
+                    <div class="expertise-item" tabindex="0">
+                        <div class="expertise-icon"><i data-lucide="layers"></i></div>
                         <div class="expertise-info">
-                            <h3 class="expertise-title">B2C</h3>
+                            <h3 class="expertise-title">Blockchain</h3>
                             <div class="expertise-description">
-                                Optimizing the consumer journey to reduce friction, drive conversion rates, and unlock
-                                net-new monthly revenue streams.
+                                Took a protocol from concept to ICO as a founding member, setting the
+                                product strategy and engineering standards along the way.
                             </div>
                         </div>
                     </div>
-                    <div class="expertise-item">
+
+                    <div class="expertise-item" tabindex="0">
                         <div class="expertise-icon"><i data-lucide="briefcase"></i></div>
                         <div class="expertise-info">
                             <h3 class="expertise-title">B2B</h3>
                             <div class="expertise-description">
-                                Partnering with sales and engineering to prioritize customer-driven features and
-                                automate complex deployments, directly contributing to creating business impact
-                                resulting in $20M in revenue.
+                                Working alongside sales and engineering to prioritise what customers
+                                actually ask for, and to automate the deployments behind it.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="expertise-item" tabindex="0">
+                        <div class="expertise-icon"><i data-lucide="users"></i></div>
+                        <div class="expertise-info">
+                            <h3 class="expertise-title">B2C</h3>
+                            <div class="expertise-description">
+                                Removing friction from the consumer journey to lift conversion and open
+                                net-new monthly revenue.
                             </div>
                         </div>
                     </div>
@@ -180,214 +238,301 @@
             </div>
         </section>
 
-        <!-- Experience Section -->
+        <!-- Experience -->
         <section id="experience" class="section">
-            <div class="section-header fade-up">
-                <h2 class="section-title">Professional <span class="gradient-text">Experience</span></h2>
-                <p>A track record of driving both product innovation and engineering excellence.</p>
+            <div class="section-header reveal">
+                <h2 class="section-title">Professional <span class="gradient-text">experience</span></h2>
+                <p>Ten years across healthtech, proptech, cloud infrastructure, blockchain and consumer e-commerce.</p>
+                <div class="section-line"></div>
             </div>
 
             <div class="timeline">
-                <!-- EverHaus Group -->
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content glassmorphism">
+                        <div class="timeline-header">
+                            <div>
+                                <h3>Management Intern</h3>
+                                <h4>Valeo Health <span class="location">· UAE</span></h4>
+                            </div>
+                            <span class="date">Jul — Aug 2026</span>
+                        </div>
+                        <p class="company-desc">Home healthtech provider bringing medical services to patients at
+                            home across the UAE.</p>
+                        <ul class="achievements">
+                            <li>Traced an 18% rise in fleet operating cost against 0% revenue growth to its
+                                underlying drivers, building the financial analysis that framed the problem.</li>
+                            <li>Developed two strategies to cut fleet cost by up to 30%: consolidating the two
+                                verticals, and a three-hub network that shortens distance driven per order.</li>
+                            <li>Learned how the operation ran from the people running it, then specified and
+                                prototyped the route-optimisation app they needed — 100% adoption in one week.
+                                <a href="valeohealth.html">See the prototype →</a></li>
+                            <li>Won CEO and operations-leadership approval by showing the KPIs the strategies move
+                                today and the returns that compound with scale.</li>
+                        </ul>
+                    </div>
+                </div>
+
                 <div class="timeline-item reveal">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content glassmorphism">
                         <div class="timeline-header">
                             <div>
                                 <h3>Product Strategy Manager</h3>
-                                <h4>EverHaus Group <span class="location">• Singapore</span></h4>
+                                <h4>EverHaus Group <span class="location">· Singapore</span></h4>
                             </div>
-                            <span class="date">2026 - Present</span>
+                            <span class="date">Jan — May 2026</span>
                         </div>
-                        <p class="company-desc">Singapore-based proptech investment platform democratizing access to
-                            high-yield real estate renovation projects.</p>
+                        <p class="company-desc">Proptech investment platform opening up high-yield real estate
+                            renovation projects to individual investors.</p>
                         <ul class="achievements">
-                            <li>Developed the product roadmap defining 20+ core features using AI-driven research.</li>
-                            <li>Owned compliance research and product strategy for a lean founding team targeting up to
-                                16% annual returns.</li>
-                            <li>Optimized development workflow with AI tooling and JIRA, delivering 50% fewer meetings
-                                and 20% faster product cycles.</li>
-                            <li>Drove product strategy with Sales to prioritize customer-driven features, enabling
-                                $40–50M in Annual Contract Value.</li>
+                            <li>Built the product roadmap for a bootstrapped platform, defining 20+ core features
+                                using AI-driven research.</li>
+                            <li>Owned compliance research and product strategy for a lean founding team, shaping a
+                                platform targeting up to 16% annual returns.</li>
+                            <li>Defined the AI-first operating model that had the founding team running in two
+                                months instead of six, reaching a demo product and investor conversations far
+                                sooner.</li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- Nutanix -->
                 <div class="timeline-item reveal">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content glassmorphism">
                         <div class="timeline-header">
                             <div>
                                 <h3>Team Lead, Engineering</h3>
-                                <h4>Nutanix <span class="location">• Bangalore, India</span></h4>
+                                <h4>Nutanix <span class="location">· Bangalore, India</span></h4>
                             </div>
-                            <span class="date">2022 - 2026</span>
+                            <span class="date">2024 — 2026</span>
                         </div>
-                        <p class="company-desc">Hybrid multi-cloud platform for managing storage, computing, and
-                            networking.</p>
+                        <p class="company-desc">Hybrid multi-cloud platform for storage, compute and networking.</p>
                         <ul class="achievements">
-                            <li>Managed a team of 11+ developers and a $500K budget to deliver best-in-class migration
-                                software recognized by Gartner.</li>
-                            <li>Spearheaded files migration feature, onboarding customers with 10+ petabytes of data
-                                resulting in $1M+ recurring revenue.</li>
-                            <li>Introduced coding standards initiatives, resulting in a 30% improvement in code quality.
-                            </li>
+                            <li>Managed 11+ developers and a $500K budget to deliver best-in-class migration
+                                software recognised by Gartner.</li>
+                            <li>Drove product strategy with Sales to prioritise customer-driven features, enabling
+                                $40–50M in annual contract value.</li>
+                            <li>Owned technical due diligence on Nutanix Move, working with Legal and Compliance to
+                                take 400+ critical security risks down to 20, and 500+ licensing risks to zero.</li>
+                            <li>Optimised the development workflow with AI tooling and JIRA: 20% faster product
+                                cycles, 50% fewer meetings.</li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- Touchnote -->
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content glassmorphism">
+                        <div class="timeline-header">
+                            <div>
+                                <h3>Member of Technical Staff</h3>
+                                <h4>Nutanix <span class="location">· Bangalore, India</span></h4>
+                            </div>
+                            <span class="date">2022 — 2024</span>
+                        </div>
+                        <ul class="achievements">
+                            <li>Spearheaded the files migration feature, leading cross-organisational collaboration
+                                to onboard customers with 10+ petabytes of data — $1M+ in recurring revenue.</li>
+                            <li>Helped banking customers migrate from public cloud back to on-premises
+                                infrastructure, including a global custodian bank moving 20,000 workloads.</li>
+                            <li>Introduced coding standards across the team, lifting code quality 30% and reducing
+                                customer defects.</li>
+                        </ul>
+                    </div>
+                </div>
+
                 <div class="timeline-item reveal">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content glassmorphism">
                         <div class="timeline-header">
                             <div>
                                 <h3>Backend Developer</h3>
-                                <h4>Touchnote <span class="location">• Hyderabad, India</span></h4>
+                                <h4>Touchnote <span class="location">· Hyderabad, India</span></h4>
                             </div>
-                            <span class="date">2020 - 2022</span>
+                            <span class="date">2020 — 2022</span>
                         </div>
-                        <p class="company-desc">UK-based platform to send personalized postcards and gifts.</p>
+                        <p class="company-desc">UK consumer platform for sending personalised postcards and gifts.</p>
                         <ul class="achievements">
-                            <li>Revamped the checkout process, saving customers 30 seconds per checkout; improving
-                                conversion and AOV globally.</li>
-                            <li>Drove business expansion by mapping out a new e-commerce feature establishing a new
-                                revenue stream of $25K+/month.</li>
+                            <li>Rebuilt checkout after analysing where the payment funnel leaked, cutting 30 seconds
+                                per transaction and lifting conversion and average order value globally.</li>
+                            <li>Mapped and shipped a new e-commerce feature that opened a $25K+/month revenue
+                                stream.</li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- Eleven01 -->
                 <div class="timeline-item reveal">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content glassmorphism">
                         <div class="timeline-header">
                             <div>
-                                <h3>Blockchain Developer & Founding Member</h3>
-                                <h4>Eleven01 <span class="location">• Hyderabad, India</span></h4>
+                                <h3>Founding Member &amp; Blockchain Developer</h3>
+                                <h4>Eleven01 <span class="location">· Hyderabad, India</span></h4>
                             </div>
-                            <span class="date">2019 - 2020</span>
+                            <span class="date">2019 — 2020</span>
                         </div>
-                        <p class="company-desc">Blockchain startup providing scalable decentralized solutions.</p>
+                        <p class="company-desc">India's first native blockchain protocol, backed by the Telangana
+                            government.</p>
                         <ul class="achievements">
-                            <li>Architected the foundational blockchain MVP and strategic product roadmap.</li>
-                            <li>Led a 10+ member team to develop differentiating features culminating in an Initial Coin
-                                Offering.</li>
+                            <li>Architected the foundational MVP and the product roadmap behind it.</li>
+                            <li>Led 10+ engineers through to a successful Initial Coin Offering.</li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- Previous Roles -->
                 <div class="timeline-item reveal">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content glassmorphism">
                         <div class="timeline-header">
                             <div>
-                                <h3>Earlier Experiences</h3>
+                                <h3>Earlier roles</h3>
                             </div>
-                            <span class="date">2016 - 2018</span>
+                            <span class="date">2016 — 2018</span>
                         </div>
                         <ul class="achievements">
-                            <li><strong>Software Engineer at Amantya Technologies (2018):</strong> Built an iOS app
-                                boosting footfall and sales by 10% via hyper-local offers.</li>
-                            <li><strong>Associate at Cognizant (2016-2018):</strong> Automated deployment of complex IOT
-                                solutions, cutting deployment time from 5-6 days to 1 hour.</li>
+                            <li><strong>Amantya Technologies — Software Engineer, Gurugram (2018):</strong> boosted
+                                footfall and sales for brick-and-mortar retailers by 10% with an iOS app sending
+                                hyper-local, personalised offers to users inside a shopping mall.</li>
+                            <li><strong>Cognizant — Associate, Bangalore (2016–2018):</strong> led a cross-team
+                                initiative to build a deployment platform, cutting IoT platform deployment from
+                                5–6 days to one hour.</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Education Section -->
+        <!-- Education -->
         <section id="education" class="section">
-            <div class="section-header fade-up">
-                <h2 class="section-title">Academic <span class="gradient-text">Background</span></h2>
+            <div class="section-header reveal">
+                <h2 class="section-title">Academic <span class="gradient-text">background</span></h2>
+                <div class="section-line"></div>
             </div>
+
             <div class="edu-grid">
-                <div class="edu-card glassmorphism reveal fade-up">
+                <div class="edu-card glassmorphism reveal">
                     <div class="edu-icon"><i data-lucide="graduation-cap"></i></div>
                     <h3>INSEAD</h3>
-                    <h4>MBA Class of December 2026</h4>
+                    <h4>MBA, Class of December 2026</h4>
                     <p class="location">Singapore / France</p>
                     <ul class="achievements mt-4">
-                        <li>President of Fintech & Blockchain club</li>
-                        <li>GMAT Focus: 695 (97th %ile)</li>
-                        <li>Merit Scholarship Recipient</li>
+                        <li>President, Fintech &amp; Blockchain Club</li>
+                        <li>GMAT Focus 695 — 97th percentile</li>
+                        <li>Merit scholarship recipient</li>
                     </ul>
                 </div>
-                <div class="edu-card glassmorphism reveal fade-up" style="transition-delay: 100ms;">
+
+                <div class="edu-card glassmorphism reveal">
                     <div class="edu-icon"><i data-lucide="book-open"></i></div>
-                    <h3>Indian Institute of Technology (IIT), Jodhpur</h3>
-                    <h4>Bachelor of Technology in System Science</h4>
-                    <p class="location">Jodhpur, India | 2012 - 2016</p>
+                    <h3>IIT Jodhpur</h3>
+                    <h4>B.Tech, System Science</h4>
+                    <p class="location">Jodhpur, India · 2012 — 2016</p>
                     <ul class="achievements mt-4">
-                        <li>Mentored junior students, achieving a 10% rise in avg GPA.</li>
-                        <li>Served as Workshop Head for annual college festival Ignus, generating $10K in revenue.</li>
+                        <li>Mentored junior students to a 10% rise in average GPA</li>
+                        <li>Workshop Head for Ignus, the annual college festival, generating $10K in revenue</li>
                     </ul>
                 </div>
             </div>
         </section>
 
-        <!-- Core Defensibility Section -->
-        <section id="skills" class="section reveal">
-            <div class="section-header fade-up">
-                <div class="badge">Proprietary Edge</div>
-                <h2 class="section-title">Core <span class="gradient-text">Defensibility</span></h2>
-                <p>The strategic frameworks and technical moats ensuring long-term advantage.</p>
+        <!-- Strengths -->
+        <section id="strengths" class="section">
+            <div class="section-header reveal">
+                <div class="badge">Proprietary edge</div>
+                <h2 class="section-title">Core <span class="gradient-text">defensibility</span></h2>
+                <p>Four things I keep proving, and where each one was proven.</p>
+                <div class="section-line"></div>
             </div>
 
             <div class="defensibility-grid">
-                <div class="defensiblity-card reveal fade-up">
-                    <i data-lucide="target" class="size-8"></i>
-                    <h3>Strategic Precision</h3>
-                    <p>Using data-driven methodologies to identify market gaps and architectural weaknesses before they
-                        become liabilities.</p>
+                <div class="defensiblity-card reveal">
+                    <i data-lucide="target"></i>
+                    <h3>Strategic precision</h3>
+                    <p>Finding where a business actually leaks value, rather than where it looks broken —
+                        then fixing that first.</p>
+                    <div class="proof">
+                        <strong>Valeo Health</strong>
+                        <span>Traced an 18% fleet cost rise to its drivers, then built strategies to cut it
+                            30%.</span>
+                    </div>
                 </div>
-                <div class="defensiblity-card reveal fade-up" style="transition-delay: 100ms;">
-                    <i data-lucide="shield" class="size-8"></i>
-                    <h3>Innovation Moat</h3>
-                    <p>Building proprietary systems and workflows that are difficult to replicate, ensuring sustained
-                        market leadership.</p>
+
+                <div class="defensiblity-card reveal">
+                    <i data-lucide="shield"></i>
+                    <h3>Innovation moat</h3>
+                    <p>Building the systems nobody else has built yet, in territory where there is no
+                        reference implementation to copy.</p>
+                    <div class="proof">
+                        <strong>Eleven01</strong>
+                        <span>Architected the MVP for India's first native blockchain protocol, through
+                            to ICO.</span>
+                    </div>
                 </div>
-                <div class="defensiblity-card reveal fade-up" style="transition-delay: 200ms;">
-                    <i data-lucide="trending-up" class="size-8"></i>
+
+                <div class="defensiblity-card reveal">
+                    <i data-lucide="trending-up"></i>
                     <h3>Scalability DNA</h3>
-                    <p>Designing every solution with a 'Scale First' mindset, ensuring critical infrastructure grows
-                        ahead of demand.</p>
+                    <p>Designing for the load that arrives in two years, not the one on the desk today.</p>
+                    <div class="proof">
+                        <strong>Nutanix</strong>
+                        <span>Files migration onboarded 10+ petabytes; a custodian bank moved 20,000 workloads.</span>
+                    </div>
                 </div>
-                <div class="defensiblity-card reveal fade-up" style="transition-delay: 300ms;">
-                    <i data-lucide="network" class="size-8"></i>
-                    <h3>Ecosystem Integrity</h3>
-                    <p>Creating synergistic loops between technology, people, and processes to drive compounding
-                        enterprise value.</p>
+
+                <div class="defensiblity-card reveal">
+                    <i data-lucide="network"></i>
+                    <h3>Ecosystem integrity</h3>
+                    <p>Treating the team and its process as part of the product — because shipping speed
+                        is an engineering output too.</p>
+                    <div class="proof">
+                        <strong>Nutanix</strong>
+                        <span>Led 11+ engineers; a coding-standards programme lifted code quality 30%.</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Contact Section -->
+        <!-- Contact -->
         <section id="contact" class="section contact-section reveal">
             <div class="contact-box glassmorphism text-center">
-                <h2 class="section-title">Let's build something <span class="gradient-text">amazing.</span></h2>
-                <p>Always open to discussing new opportunities, emerging tech, or strategic gaming.</p>
+                <h2 class="section-title">Let's build something <span class="gradient-text">worth building.</span></h2>
+                <p>Always open to talking product, applied AI, emerging tech — or strategic gaming.</p>
                 <div class="contact-links mt-6">
-                    <a href="mailto:parag.rahangdale@insead.edu" class="btn btn-primary"><i data-lucide="mail"></i>
-                        Email Me</a>
-                    <a href="https://www.linkedin.com/in/paragr" target="_blank" class="btn btn-secondary glass"><i
-                            data-lucide="linkedin"></i> LinkedIn</a>
+                    <a href="mailto:parag.rahangdale@insead.edu" class="btn btn-primary magnetic-btn">
+                        <i data-lucide="mail"></i> Email me</a>
+                    <a href="https://www.linkedin.com/in/paragr" target="_blank" rel="noopener noreferrer"
+                        class="btn btn-secondary magnetic-btn"><i data-lucide="linkedin"></i> LinkedIn</a>
                 </div>
             </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2026 Parag Rahangdale. Built with <i data-lucide="code" class="inline-icon"></i> and <i
-                data-lucide="coffee" class="inline-icon"></i>.</p>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="#home" class="logo">PR.</a>
+                <p>Product strategy, grounded in engineering.</p>
+            </div>
+            <div class="footer-socials">
+                <a href="mailto:parag.rahangdale@insead.edu" class="social-btn" aria-label="Email">
+                    <i data-lucide="mail"></i></a>
+                <a href="https://www.linkedin.com/in/paragr" target="_blank" rel="noopener noreferrer"
+                    class="social-btn" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Parag Rahangdale. Built with <i data-lucide="code" class="inline-icon"></i> and
+                <i data-lucide="coffee" class="inline-icon"></i>.
+            </p>
+        </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
     <script>
-        lucide.createIcons();
+        window.addEventListener('load', function () {
+            if (window.lucide) lucide.createIcons();
+        });
     </script>
 </body>
 
