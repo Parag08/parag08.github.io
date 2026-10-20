@@ -343,6 +343,15 @@ p {
   box-shadow: 0 0 0 4px rgba(52, 199, 89, 0.16);
 }
 .chip-mail { top: 30%; right: 0; background: #ece9ff; color: #4c1d95; }
+.chip-gmail { top: 30%; left: 0; background: #ece9ff; color: #4c1d95; }
+.chip-cv {
+  top: 3%;
+  left: 0;
+  background: var(--ink);
+  color: #fff;
+  border-color: transparent;
+  font-size: 0.78rem;
+}
 .chip-aside {
   top: 70%;
   left: -1.2rem;
@@ -414,6 +423,17 @@ p {
   font-size: 0.86rem;
   font-weight: 600;
 }
+
+.rail-contacts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Small screens hide the hero email/résumé chips; these rail pills carry the
+   same links there. */
+.rail-contact { display: none; }
 
 .section {
   padding: 72px 0;
@@ -921,9 +941,13 @@ p {
 
   .chip-place,
   .chip-aside,
-  .chip-mail {
+  .chip-mail,
+  .chip-gmail,
+  .chip-cv {
     display: none;
   }
+
+  .rail-contact { display: inline-flex; }
 
   /* Hero chips: sit them clear of the headline rather than floating over it */
   .hero-stage { padding-top: 78px; }
