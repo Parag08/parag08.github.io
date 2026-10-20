@@ -1,302 +1,101 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects — Parag Rahangdale</title>
-    <meta name="description"
-        content="Platforms and tools Parag Rahangdale has built, scaled or turned around — across healthtech, cloud infrastructure, blockchain, e-commerce and industrial IoT.">
-    <meta name="theme-color" content="#0D0F13">
-
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Projects — Parag Rahangdale">
-    <meta property="og:description"
-        content="Platforms and tools built, scaled or turned around across healthtech, cloud infrastructure, blockchain, e-commerce and industrial IoT.">
-    <meta name="twitter:card" content="summary">
-
-    <!-- Theme resolved before first paint. See index.html for the rationale. -->
-    <script>
-        (function () {
-            var theme;
-            try { theme = localStorage.getItem('pr-theme'); } catch (e) { theme = null; }
-            if (theme !== 'light' && theme !== 'dark') {
-                var h = new Date().getHours();
-                theme = (h >= 7 && h < 19) ? 'light' : 'dark';
-            }
-            document.documentElement.setAttribute('data-theme', theme);
-        })();
-    </script>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/svg+xml" href="logo.svg">
-
-    <script src="https://unpkg.com/lucide@latest" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projects — Parag Rahangdale</title>
+  <meta name="description" content="Platforms and tools Parag Rahangdale has built, scaled or turned around.">
+  <meta name="theme-color" content="#f5f5f7">
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;550;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
-
 <body>
-    <a href="#projects" class="skip-link">Skip to content</a>
-
-    <div class="cursor-dot" aria-hidden="true"></div>
-    <div class="cursor-blob" aria-hidden="true"></div>
-
-    <nav class="navbar">
-        <a href="index.html" class="logo">PR.</a>
-        <div class="nav-links">
-            <a href="index.html#home">About</a>
-            <a href="projects.html" class="active">Projects</a>
-            <a href="index.html#experience">Experience</a>
-            <a href="index.html#education">Education</a>
-            <a href="index.html#strengths">Strengths</a>
-        </div>
-        <div class="nav-actions">
-            <button class="theme-toggle" aria-label="Switch theme" aria-pressed="false">
-                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    aria-hidden="true">
-                    <circle cx="12" cy="12" r="4" />
-                    <path d="M12 2v2" />
-                    <path d="M12 20v2" />
-                    <path d="m4.93 4.93 1.41 1.41" />
-                    <path d="m17.66 17.66 1.41 1.41" />
-                    <path d="M2 12h2" />
-                    <path d="M20 12h2" />
-                    <path d="m6.34 17.66-1.41 1.41" />
-                    <path d="m19.07 4.93-1.41 1.41" />
-                </svg>
-                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    aria-hidden="true">
-                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-                </svg>
-            </button>
-            <a href="index.html#contact" class="btn btn-primary hide-mobile">Get in touch</a>
-            <button class="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
-                <i data-lucide="menu"></i>
-            </button>
-        </div>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-nav">
+    <a class="brand" href="index.html"><span class="brand-dot"></span>parag</a>
+    <nav class="nav-pill" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="work.html">Case Studies</a>
+      <a class="is-active" href="projects.html">My Projects</a>
+      <a href="about.html">About Me</a>
     </nav>
+    <a class="nav-cta" href="contact.html">Contact Me</a>
+    <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false">Menu</button>
+  </header>
+  <div class="mobile-menu">
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="work.html">Case Studies</a>
+      <a href="projects.html">My Projects</a>
+      <a href="about.html">About Me</a>
+      <a href="contact.html">Contact Me</a>
+    </nav>
+  </div>
 
-    <div class="mobile-menu-overlay" id="mobile-menu" aria-hidden="true">
-        <div class="mobile-menu-content">
-            <button class="menu-close" aria-label="Close menu">
-                <i data-lucide="x"></i>
-            </button>
-            <div class="mobile-nav-links">
-                <a href="index.html#home">About</a>
-                <a href="projects.html">Projects</a>
-                <a href="index.html#experience">Experience</a>
-                <a href="index.html#education">Education</a>
-                <a href="index.html#strengths">Strengths</a>
-                <a href="index.html#contact" class="btn btn-primary">Get in touch</a>
-            </div>
+  <main id="main" class="wrap">
+    <section class="page-hero reveal">
+      <p class="kicker">My Projects</p>
+      <h1>Platforms and tools I’ve built, scaled, or turned around.</h1>
+    </section>
+    <section class="section reveal">
+      <a class="project-item" href="valeohealth.html">
+        <div>
+          <h3>Valeo Smart Tracker</h3>
+          <p>Medication and health-habit adherence prototype — daily care plan, refill alerts, and recovery-friendly streaks.</p>
         </div>
-    </div>
-
-    <canvas id="hero-3d-canvas" aria-hidden="true"></canvas>
-
-    <main class="projects-page">
-        <section id="projects" class="section">
-            <div class="section-header reveal">
-                <h2 class="section-title">Selected <span class="gradient-text">projects</span></h2>
-                <p>Platforms and tools I've built, scaled or turned around — what each one was, and what
-                    changed because of my work on it.</p>
-                <div class="section-line"></div>
-            </div>
-
-            <div class="projects-grid">
-                <div class="project-card glass-panel reveal">
-                    <div class="project-header">
-                        <div class="project-icon-box"><i data-lucide="heart-pulse"></i></div>
-                        <div class="project-title-area">
-                            <h3>Valeo Smart Tracker</h3>
-                            <div class="project-badges">
-                                <span class="company-badge">Valeo Health</span>
-                                <span class="domain-badge">Healthtech</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h4>What it is</h4>
-                        <p>A working prototype for medication and health-habit adherence — a daily care plan,
-                            refill and risk alerts, and streaks that motivate without punishing a missed day.</p>
-
-                        <h4>What I did</h4>
-                        <ul>
-                            <li>Learned how the operation actually ran from the people running it, then specified
-                                and built the prototype around what they were missing.</li>
-                            <li>Separately, specified a route-optimisation app for the same team that reached 100%
-                                adoption within a week.</li>
-                        </ul>
-                        <p class="mt-4"><a href="valeohealth.html" class="btn btn-secondary">Open the prototype
-                                <i data-lucide="arrow-up-right"></i></a></p>
-                    </div>
-                </div>
-
-                <div class="project-card glass-panel reveal">
-                    <div class="project-header">
-                        <div class="project-icon-box"><i data-lucide="cloud-lightning"></i></div>
-                        <div class="project-title-area">
-                            <h3>Move — cross-hypervisor migration</h3>
-                            <div class="project-badges">
-                                <span class="company-badge">Nutanix</span>
-                                <span class="domain-badge">Cloud Infrastructure</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h4>What it is</h4>
-                        <p>Enterprise tooling that lifts virtual machines off VMware, Hyper-V or AWS and onto
-                            the Nutanix Cloud Platform with minimal downtime — configurations preserved, no
-                            refactoring required.</p>
-
-                        <h4>What I did</h4>
-                        <ul>
-                            <li>Spearheaded the files migration feature, leading cross-organisational collaboration to
-                                onboard customers with 10+ petabytes of data — $1M+ in recurring revenue.</li>
-                            <li>Moved banking customers from public cloud back on-premises, including a global
-                                custodian bank shifting 20,000 workloads.</li>
-                            <li>Later led the 11+ engineer team and its $500K budget; owned technical due diligence
-                                that cut 400+ critical security risks to 20 and 500+ licensing risks to zero.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="project-card glass-panel reveal">
-                    <div class="project-header">
-                        <div class="project-icon-box"><i data-lucide="hexagon"></i></div>
-                        <div class="project-title-area">
-                            <h3>Eleven01 Protocol</h3>
-                            <div class="project-badges">
-                                <span class="company-badge">Eleven01</span>
-                                <span class="domain-badge">Blockchain</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h4>What it is</h4>
-                        <p>India's first native blockchain protocol — backed by the Telangana government as part
-                            of the Telangana Blockchain District, and built to be fast enough for real enterprise
-                            workloads.</p>
-
-                        <h4>What I did</h4>
-                        <ul>
-                            <li>Joined as a founding member and architected the foundational MVP codebase.</li>
-                            <li>Designed the high-performance distributed networking layer underneath it.</li>
-                            <li>Led 10+ engineers through to a successful Initial Coin Offering.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="project-card glass-panel reveal">
-                    <div class="project-header">
-                        <div class="project-icon-box"><i data-lucide="image"></i></div>
-                        <div class="project-title-area">
-                            <h3>Touchnote — personalised gifting</h3>
-                            <div class="project-badges">
-                                <span class="company-badge">Touchnote</span>
-                                <span class="domain-badge">E-commerce</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h4>What it is</h4>
-                        <p>A UK consumer service for creating and sending physical postcards, greeting cards and
-                            photo products anywhere in the world, fulfilled through a print-on-demand network.</p>
-
-                        <h4>What I did</h4>
-                        <ul>
-                            <li>Traced where users were abandoning the payment funnel, then rebuilt checkout around
-                                the findings.</li>
-                            <li>Cut 30 seconds from every transaction, lifting conversion and average order value
-                                globally.</li>
-                            <li>Mapped and shipped a new e-commerce feature worth $25K+/month in net-new revenue.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="project-card glass-panel reveal">
-                    <div class="project-header">
-                        <div class="project-icon-box"><i data-lucide="radio"></i></div>
-                        <div class="project-title-area">
-                            <h3>Hyper-local retail offers</h3>
-                            <div class="project-badges">
-                                <span class="company-badge">Amantya Technologies</span>
-                                <span class="domain-badge">Retail Tech</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h4>What it is</h4>
-                        <p>An iOS app that pushes personalised, hyper-local promotions to shoppers while they are
-                            physically inside a shopping mall, driving them into nearby brick-and-mortar stores.</p>
-
-                        <h4>What I did</h4>
-                        <ul>
-                            <li>Built the app and the offer-targeting behind it, tying promotions to a shopper's
-                                position within the mall.</li>
-                            <li>Lifted footfall and sales for participating retailers by 10%.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="project-card glass-panel reveal">
-                    <div class="project-header">
-                        <div class="project-icon-box"><i data-lucide="factory"></i></div>
-                        <div class="project-title-area">
-                            <h3>Enterprise IoT platform</h3>
-                            <div class="project-badges">
-                                <span class="company-badge">Cognizant</span>
-                                <span class="domain-badge">Industrial IoT</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h4>What it is</h4>
-                        <p>A platform for monitoring, managing and automating operations across large smart
-                            factories, tying heterogeneous hardware sensors into one data backbone.</p>
-
-                        <h4>What I did</h4>
-                        <ul>
-                            <li>Standardised and automated the setup process for new factory configurations.</li>
-                            <li>Collapsed deployment of a complete IoT installation from 5–6 days to one hour.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-brand">
-                <a href="index.html" class="logo">PR.</a>
-                <p>Product strategy, grounded in engineering.</p>
-            </div>
-            <div class="footer-socials">
-                <a href="mailto:parag.rahangdale@insead.edu" class="social-btn" aria-label="Email">
-                    <i data-lucide="mail"></i></a>
-                <a href="https://www.linkedin.com/in/paragr" target="_blank" rel="noopener noreferrer"
-                    class="social-btn" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
-            </div>
+        <div class="project-meta">Valeo Health · Prototype</div>
+      </a>
+      <a class="project-item" href="work/nutanix/">
+        <div>
+          <h3>Move — cross-hypervisor migration</h3>
+          <p>Enterprise tooling that lifts VMs off VMware, Hyper-V or AWS onto Nutanix with configurations preserved.</p>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Parag Rahangdale. Built with <i data-lucide="code" class="inline-icon"></i> and
-                <i data-lucide="coffee" class="inline-icon"></i>.
-            </p>
+        <div class="project-meta">Nutanix · Cloud infrastructure</div>
+      </a>
+      <a class="project-item" href="work.html">
+        <div>
+          <h3>Eleven01 Protocol</h3>
+          <p>Founding member. Architected the MVP, designed the networking layer, and led 10+ engineers through ICO.</p>
         </div>
-    </footer>
-
-    <script src="script.js" defer></script>
-    <script>
-        window.addEventListener('load', function () {
-            if (window.lucide) lucide.createIcons();
-        });
-    </script>
+        <div class="project-meta">Blockchain</div>
+      </a>
+      <a class="project-item" href="work.html">
+        <div>
+          <h3>Touchnote — personalised gifting</h3>
+          <p>Rebuilt checkout, cut 30 seconds per transaction, and shipped a feature worth $25K+/month in net-new revenue.</p>
+        </div>
+        <div class="project-meta">E-commerce</div>
+      </a>
+      <div class="project-item">
+        <div>
+          <h3>Hyper-local retail offers</h3>
+          <p>iOS app pushing personalised promotions to shoppers inside a mall. 10% lift in footfall and sales.</p>
+        </div>
+        <div class="project-meta">Amantya · Retail tech</div>
+      </div>
+      <div class="project-item">
+        <div>
+          <h3>Enterprise IoT platform</h3>
+          <p>Standardised factory setup and collapsed a complete IoT installation from 5–6 days to one hour.</p>
+        </div>
+        <div class="project-meta">Cognizant · Industrial IoT</div>
+      </div>
+      <a class="project-item" href="setld/">
+        <div>
+          <h3>Settld</h3>
+          <p>Relocation concierge product demo pairing newcomers with a trusted local buddy.</p>
+        </div>
+        <div class="project-meta">INSEAD · Product demo</div>
+      </a>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="giant-name">parag</div>
+    <div class="footer-base"><span>Singapore</span><a href="contact.html">Get in touch</a></div>
+  </footer>
 </body>
-
 </html>
