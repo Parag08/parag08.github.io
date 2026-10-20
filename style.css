@@ -918,8 +918,10 @@ p {
     display: none;
   }
 
-  .chip-hello { left: 0; }
-  .chip-connect { right: 0; }
+  /* Hero chips: sit them clear of the headline rather than floating over it */
+  .hero-stage { padding-top: 78px; }
+  .chip-hello { top: 0; left: 0; }
+  .chip-connect { top: 0; right: 0; }
   .tags { justify-content: flex-start; }
   .case-item, .project-item { grid-template-columns: 1fr; }
   .case-stat { text-align: left; }
@@ -944,6 +946,12 @@ p {
   .do-card {
     min-height: 180px;
   }
+}
+
+/* Very narrow phones: the two hero chips can't share a row, so stack them */
+@media (max-width: 360px) {
+  .hero-stage { padding-top: 7.4rem; }
+  .chip-connect { top: 3.6rem; right: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
