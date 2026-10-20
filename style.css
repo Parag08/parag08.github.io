@@ -310,8 +310,9 @@ p {
 
 /* Chips are placed in the headline's side gutters - one band per line - so they
    never cover the letterforms. Keep each chip's vertical band inside the line it
-   sits beside (see .hero-line ink bands). */
-.chip-hello { top: 25%; left: -1%; }
+   sits beside (see .hero-line ink bands). The greeting chip is the exception: it
+   sits directly above the headline as a kicker. */
+.chip-hello { top: -3.4rem; left: -1%; }
 .avatar {
   display: grid;
   width: 28px;
@@ -341,7 +342,7 @@ p {
   background: #34c759;
   box-shadow: 0 0 0 4px rgba(52, 199, 89, 0.16);
 }
-.chip-mail { top: 25%; right: 0; background: #ece9ff; color: #4c1d95; }
+.chip-mail { top: 30%; right: 0; background: #ece9ff; color: #4c1d95; }
 .chip-aside {
   top: 70%;
   left: -1.2rem;
