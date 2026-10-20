@@ -333,7 +333,8 @@ p {
   border-color: transparent;
   font-size: 0.75rem;
 }
-.chip-place { top: 48%; left: -1rem; right: auto; text-align: left; }
+.chip-place { top: 48%; left: -1rem; right: auto; text-align: left; gap: 5px; }
+.chip-flag { margin-left: 2px; font-size: 0.8em; }
 .chip-connect { top: 46%; right: -0.4rem; }
 .live {
   width: 8px;
@@ -344,13 +345,23 @@ p {
 }
 .chip-mail { top: 30%; right: 0; background: #ece9ff; color: #4c1d95; }
 .chip-gmail { top: 30%; left: 0; background: #ece9ff; color: #4c1d95; }
-.chip-cv {
-  top: 3%;
-  left: 0;
+/* Résumé sits centred directly under the hero copy. Absolute, so it does not
+   change .hero-stage's height - every chip's top: N% is measured against it. */
+.hero-cv {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 50%;
+  display: inline-flex;
+  transform: translateX(-50%);
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: var(--radius);
   background: var(--ink);
   color: #fff;
-  border-color: transparent;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: var(--shadow);
 }
 .chip-aside {
   top: 70%;
@@ -942,8 +953,7 @@ p {
   .chip-place,
   .chip-aside,
   .chip-mail,
-  .chip-gmail,
-  .chip-cv {
+  .chip-gmail {
     display: none;
   }
 
@@ -984,6 +994,12 @@ p {
 @media (max-width: 360px) {
   .hero-stage { padding-top: 7.4rem; }
   .chip-connect { top: 3.6rem; right: 0; }
+}
+
+/* Short laptop viewports: the hero copy and the rail would otherwise crowd the
+   centred résumé link, so give the rail a little more room at the bottom. */
+@media (max-height: 780px) {
+  .hero-rail { bottom: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
