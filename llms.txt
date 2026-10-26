@@ -1,0 +1,17 @@
+# Parag Rahangdale
+
+> Engineering leader and INSEAD MBA candidate based in Singapore, working across product strategy, technology leadership and AI-enabled operations. Leads engineering teams and ships products that move commercial metrics.
+
+## Pages
+
+- [Home](https://parag08.github.io/): Positioning, selected impact metrics, experience and skills.
+- [Case studies](https://parag08.github.io/work.html): Enterprise migration at Nutanix, route optimisation at Valeo Health, AI-enabled investment platform at EverHaus.
+- [Projects](https://parag08.github.io/projects.html): Platforms and tools built, scaled or turned around.
+- [About](https://parag08.github.io/about.html): Background, career history and areas of focus.
+- [Contact](https://parag08.github.io/contact.html): Email, LinkedIn and résumé.
+
+## Contact
+
+- Email: parag.rahangdale@insead.edu
+- LinkedIn: https://www.linkedin.com/in/paragr
+- GitHub: https://github.com/parag08

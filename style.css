@@ -1,12 +1,32 @@
+/* Inter is self-hosted (latin subset, variable 100-900) so the page no longer
+   waits on the fonts.googleapis.com -> fonts.gstatic.com chain. The fallback
+   face is metric-matched so the 7rem headline does not reflow on font swap. */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("assets/fonts/inter-var-latin.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter Fallback";
+  src: local("Arial"), local("Helvetica"), local("Liberation Sans");
+  size-adjust: 107.12%;
+  ascent-override: 90.2%;
+  descent-override: 22.48%;
+  line-gap-override: 0%;
+}
+
 :root {
   --bg: #f5f5f7;
   --bg-elevated: #ffffff;
   --ink: #1d1d1f;
   --muted: #6e6e73;
-  --faint: #86868b;
+  --faint: #6b6b70;
   --line: rgba(29, 29, 31, 0.1);
   --line-strong: rgba(29, 29, 31, 0.16);
-  --blue: #0071e3;
+  --blue: #0066cc;
   --indigo: #5e5ce6;
   --peach: #c93400;
   --gold: #b54400;
@@ -15,6 +35,12 @@
   --shadow: 0 18px 40px rgba(0, 0, 0, 0.06);
   --radius: 999px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
+  --dur-1: 0.16s;
+  --dur-2: 0.28s;
+  --dur-3: 0.5s;
+  --press: 0.12s;
+  --stagger: 45ms;
   --nav-h: 72px;
   --max: 1240px;
 }
@@ -34,10 +60,13 @@ body {
   min-width: 320px;
   color: var(--ink);
   background: var(--bg);
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+  font-family: "Inter", "Inter Fallback", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
   font-size: 16px;
   line-height: 1.5;
   letter-spacing: -0.011em;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body::before {
@@ -93,7 +122,7 @@ p {
   display: grid;
   place-items: center;
   background: #fff;
-  transition: opacity 0.5s var(--ease), visibility 0.5s var(--ease);
+  transition: opacity 0.34s var(--ease), visibility 0.34s var(--ease);
 }
 
 .loader.done {
@@ -131,6 +160,13 @@ p {
   justify-content: space-between;
   gap: 12px;
   pointer-events: none;
+  transition: transform var(--dur-2) var(--ease-soft), opacity var(--dur-2) var(--ease-soft);
+}
+
+/* Scrolling down tucks the bar away, scrolling up brings it back. */
+.site-nav.is-tucked {
+  transform: translateY(calc(-100% - 24px));
+  opacity: 0;
 }
 
 .site-nav a,
@@ -149,10 +185,23 @@ p {
   border: 1px solid var(--line-strong);
   border-radius: var(--radius);
   padding: 0 16px;
-  background: var(--chip);
+  background: rgba(255, 255, 255, 0.9);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-  backdrop-filter: saturate(180%) blur(18px);
-  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  transition: background var(--dur-2) var(--ease-soft), box-shadow var(--dur-2) var(--ease-soft),
+    transform var(--press) var(--ease-soft);
+}
+
+/* Real glass only where the GPU can afford it - phones get a solid pill, which
+   keeps scrolling compositing-free on mid-range Android. */
+@media (min-width: 1024px) and (hover: hover) {
+  .brand,
+  .nav-pill,
+  .nav-cta,
+  .menu-toggle {
+    background: var(--chip);
+    backdrop-filter: saturate(180%) blur(18px);
+    -webkit-backdrop-filter: saturate(180%) blur(18px);
+  }
 }
 
 .brand {
@@ -206,14 +255,36 @@ p {
   position: fixed;
   inset: 0;
   z-index: 50;
-  display: none;
-  padding: 88px 22px 32px;
-  background: rgba(245, 245, 247, 0.96);
-  backdrop-filter: blur(18px);
+  padding: calc(88px + env(safe-area-inset-top)) 22px 32px;
+  background: var(--bg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  /* visibility is only delayed on the way out, so opening is instant even if
+     transitions are skipped. */
+  transition: opacity var(--dur-2) var(--ease-soft), transform var(--dur-2) var(--ease-soft),
+    visibility 0s linear var(--dur-2);
 }
 
 .mobile-menu.open {
-  display: block;
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity var(--dur-2) var(--ease-soft), transform var(--dur-2) var(--ease-soft),
+    visibility 0s linear 0s;
+}
+
+/* Staggered rows make the sheet feel like it is unfolding rather than appearing. */
+.mobile-menu a {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--dur-2) var(--ease-soft), transform var(--dur-2) var(--ease-soft);
+}
+
+.mobile-menu.open a {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(var(--i, 0) * 40ms + 60ms);
 }
 
 .mobile-menu nav {
@@ -240,14 +311,93 @@ p {
   position: relative;
   display: grid;
   min-height: 100vh;
+  min-height: 100svh;
   place-items: center;
-  padding: 108px 20px 88px;
+  padding: calc(108px + env(safe-area-inset-top)) 20px calc(88px + env(safe-area-inset-bottom));
+}
+
+/* Slow, blurred colour field behind the headline: ambient motion that costs one
+   composited layer and never repaints. */
+.hero-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 0;
+  width: min(720px, 92vw);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  background:
+    radial-gradient(circle at 32% 34%, rgba(94, 92, 230, 0.3), transparent 58%),
+    radial-gradient(circle at 68% 42%, rgba(201, 52, 0, 0.2), transparent 56%),
+    radial-gradient(circle at 52% 70%, rgba(15, 118, 110, 0.24), transparent 58%);
+  filter: blur(52px);
+  opacity: 0.72;
+  pointer-events: none;
+  animation: glowDrift 26s var(--ease-soft) infinite alternate;
+}
+
+@keyframes glowDrift {
+  0% { translate: -52% -50%; scale: 1; }
+  50% { translate: -46% -47%; scale: 1.06; }
+  100% { translate: -50% -53%; scale: 0.98; }
 }
 
 .hero-stage {
   position: relative;
+  z-index: 1;
   width: min(980px, 100%);
   text-align: center;
+}
+
+/* Chips live in their own layer so their drift + pointer parallax never
+   interferes with the headline's own animation. */
+.chip-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.chip-layer > .chip {
+  pointer-events: auto;
+}
+
+/* Entrance choreography. Deferred until html.is-ready, i.e. after the preloader
+   is gone and the font has settled, so nothing animates against a font swap. */
+/* No blur here on purpose: a blurred 7rem headline both reads as "slow" and
+   costs real paint time on phones. A short rise is enough to feel alive. */
+.js .hero-rise {
+  opacity: 0;
+  transform: translateY(0.3em);
+}
+
+.js.is-ready .hero-rise {
+  animation: riseIn 0.5s var(--ease) forwards;
+  animation-delay: calc(var(--i, 0) * 45ms);
+}
+
+@keyframes riseIn {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* The résumé pill is centred with transform, so it gets an opacity-only
+   entrance and keeps its position. */
+.js .hero-fade {
+  opacity: 0;
+}
+
+.js.is-ready .hero-fade {
+  animation: fadeIn var(--dur-3) var(--ease) forwards;
+  animation-delay: 180ms;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }
 
 .hero-line {
@@ -297,6 +447,49 @@ p {
   font-size: 0.86rem;
   font-weight: 600;
   white-space: nowrap;
+  transition: box-shadow var(--dur-2) var(--ease-soft), border-color var(--dur-2) var(--ease-soft);
+  animation: chipDrift var(--drift-dur, 22s) ease-in-out infinite alternate;
+  animation-delay: var(--drift-delay, 0s);
+}
+
+.chip:hover {
+  border-color: rgba(29, 29, 31, 0.3);
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.1);
+}
+
+/* Ambient drift uses transform; the JS pointer parallax uses the separate
+   `translate` property, so the two motions add up instead of fighting. */
+@keyframes chipDrift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(var(--drift-x, 5px), var(--drift-y, -6px), 0); }
+}
+
+.chip-hello { --drift-dur: 19s; --drift-x: 6px; --drift-y: -7px; --drift-delay: -2s; }
+.chip-tag { --drift-dur: 23s; --drift-x: -5px; --drift-y: 6px; --drift-delay: -6s; }
+.chip-place { --drift-dur: 27s; --drift-x: 5px; --drift-y: 5px; --drift-delay: -11s; }
+.chip-connect { --drift-dur: 21s; --drift-x: -6px; --drift-y: -5px; --drift-delay: -4s; }
+.chip-mail,
+.chip-gmail { --drift-dur: 25s; --drift-x: 4px; --drift-y: -4px; --drift-delay: -8s; }
+.chip-dev { --drift-dur: 29s; --drift-x: -4px; --drift-y: -6px; --drift-delay: -14s; }
+
+/* Chips fade in once the headline has started to land. */
+.js .chip {
+  opacity: 0;
+  scale: 0.94;
+}
+
+.js.is-ready .chip {
+  animation:
+    chipDrift var(--drift-dur, 22s) ease-in-out infinite alternate,
+    chipIn 0.45s var(--ease) forwards;
+  animation-delay: var(--drift-delay, 0s), calc(var(--i, 0) * 40ms + 150ms);
+}
+
+@keyframes chipIn {
+  to {
+    opacity: 1;
+    scale: 1;
+  }
 }
 
 .chip small {
@@ -400,6 +593,28 @@ p {
   font-size: 0.86rem;
 }
 
+/* Live readout in the hero rail: local time plus a breathing status dot. */
+.rail-readout {
+  display: grid;
+  gap: 3px;
+  text-align: left;
+}
+
+.rail-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--faint);
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+}
+
+.rail-live .live {
+  width: 6px;
+  height: 6px;
+}
+
 .socials,
 .icon-row {
   display: flex;
@@ -408,6 +623,7 @@ p {
 }
 
 .social {
+  position: relative;
   display: grid;
   width: 38px;
   height: 38px;
@@ -415,6 +631,22 @@ p {
   border: 1px solid var(--line-strong);
   border-radius: 50%;
   background: #fff;
+  transition: background var(--dur-2) var(--ease-soft), color var(--dur-2) var(--ease-soft),
+    transform var(--press) var(--ease-soft);
+}
+
+/* The glyph is drawn from data-icon so the link's accessible name stays a real
+   word ("LinkedIn") instead of the two-letter abbreviation. */
+.social::before {
+  content: attr(data-icon);
+}
+
+/* Keeps the 38px circle but gives it a 44px tap target. */
+.social::after {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  content: "";
 }
 
 .social:hover {
@@ -703,7 +935,12 @@ p {
   align-items: center;
   border-top: 1px solid var(--line-strong);
   padding: 28px 4px;
-  transition: background 0.2s var(--ease);
+  transition: background var(--dur-2) var(--ease-soft), translate var(--dur-2) var(--ease-soft);
+}
+
+.case-stat strong,
+.project-meta {
+  transition: color var(--dur-2) var(--ease-soft);
 }
 
 .case-item:hover,
@@ -777,6 +1014,11 @@ p {
   display: block;
   color: var(--muted);
   font-size: 0.92rem;
+}
+
+/* 24px minimum tap target for the footer link stacks. */
+.footer-grid a {
+  padding: 3px 0;
 }
 
 .footer-grid a:hover {
@@ -912,12 +1154,24 @@ p {
   animation: rise 0.7s var(--ease) forwards;
 }
 
+/* The hidden state above exists only for the no-JS animation. Once script.js
+   runs it must explicitly clear it: hiding is then handled by .ts-reveal, which
+   is added only when an IntersectionObserver is actually wired up. */
 .js .reveal {
   animation: none;
+  opacity: 1;
+  transform: none;
 }
 
-.js .is-visible {
-  animation: rise 0.7s var(--ease) forwards;
+/* Transform only, never opacity: body copy stays at full contrast while it
+   slides into place, which also keeps contrast audits honest. */
+.ts-reveal .reveal {
+  transform: translateY(24px);
+  transition: transform var(--dur-3) var(--ease);
+}
+
+.ts-reveal .reveal.is-visible {
+  transform: none;
 }
 
 @keyframes rise {
@@ -930,6 +1184,11 @@ p {
 @media (max-width: 980px) {
   .nav-pill {
     display: none;
+  }
+
+  /* Keep the CTA and the menu button together on the right. */
+  .nav-cta {
+    margin-left: auto;
   }
 
   .menu-toggle {
@@ -950,20 +1209,37 @@ p {
     grid-template-columns: 1fr 1fr;
   }
 
-  .chip-place,
+  /* Chips stop floating and become a wrapping strip above the headline. This
+     replaces four hand-tuned per-chip overrides with one rule that cannot
+     collide with the letterforms at any width. */
+  .chip-layer {
+    position: static;
+    display: flex;
+    max-width: 32rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin: 0 auto 22px;
+    pointer-events: auto;
+  }
+
+  .chip {
+    position: static;
+    inset: auto;
+    transform: none;
+    animation: none;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  }
+
   .chip-aside,
   .chip-mail,
   .chip-gmail {
     display: none;
   }
 
-  .rail-contact { display: inline-flex; }
+  .chip-place small { display: none; }
 
-  /* Hero chips: sit them clear of the headline rather than floating over it */
-  .hero-stage { padding-top: 78px; }
-  .chip-hello { top: 0; left: 0; }
-  .chip-tag { top: 0; right: auto; left: 50%; transform: translateX(-50%); }
-  .chip-connect { top: 0; right: 0; }
+  .rail-contact { display: inline-flex; }
   .tags { justify-content: flex-start; }
   .case-item, .project-item { grid-template-columns: 1fr; }
   .case-stat { text-align: left; }
@@ -990,23 +1266,377 @@ p {
   }
 }
 
-/* Very narrow phones: the two hero chips can't share a row, so stack them */
-@media (max-width: 360px) {
-  .hero-stage { padding-top: 7.4rem; }
-  .chip-connect { top: 3.6rem; right: 0; }
-}
-
 /* Short laptop viewports: the hero copy and the rail would otherwise crowd the
    centred résumé link, so give the rail a little more room at the bottom. */
 @media (max-height: 780px) {
   .hero-rail { bottom: 12px; }
 }
 
+/* ---------------------------------------------------------------------------
+   Live console - the "pick a lens" panel. Keeps the page feeling like a running
+   product instead of a static brochure.
+   --------------------------------------------------------------------------- */
+.console {
+  padding-top: 16px;
+}
+
+.console-top {
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.console-top .kicker {
+  margin-bottom: 0;
+}
+
+.console-top h2 {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.console-panel {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 20px;
+  border: 1px solid var(--line-strong);
+  border-radius: 26px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: var(--shadow);
+}
+
+.console-tabs {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+}
+
+.console-tab {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  padding: 0 12px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-align: left;
+  transition: background var(--dur-2) var(--ease-soft), color var(--dur-2) var(--ease-soft),
+    transform var(--press) var(--ease-soft);
+}
+
+.console-tab::after {
+  content: "→";
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity var(--dur-2) var(--ease-soft), transform var(--dur-2) var(--ease-soft);
+}
+
+.console-tab:hover {
+  background: #fff;
+  color: var(--ink);
+}
+
+.console-tab[aria-selected="true"] {
+  border-color: var(--line-strong);
+  background: #fff;
+  color: var(--ink);
+}
+
+.console-tab[aria-selected="true"]::after {
+  opacity: 1;
+  transform: none;
+}
+
+.console-pane[hidden] {
+  display: none;
+}
+
+.console-pane {
+  animation: paneIn 0.36s var(--ease) both;
+}
+
+@keyframes paneIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.console-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.console-stats li {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 16px;
+  background: #fff;
+}
+
+.console-stats strong {
+  display: block;
+  font-size: clamp(1.55rem, 3vw, 2.05rem);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.045em;
+}
+
+.console-stats span {
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.console-log {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-top: 10px;
+  overflow: hidden;
+  border-radius: 14px;
+  padding: 10px 14px;
+  background: var(--ink);
+  color: rgba(255, 255, 255, 0.94);
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  font-size: 0.76rem;
+  letter-spacing: 0;
+}
+
+.console-log .prompt {
+  margin-right: 8px;
+  color: #9ae6b4;
+}
+
+.console-caret {
+  display: inline-block;
+  width: 7px;
+  height: 1em;
+  flex: none;
+  margin-left: 3px;
+  background: currentColor;
+  animation: caret 1.05s steps(1) infinite;
+}
+
+@keyframes caret {
+  50% { opacity: 0; }
+}
+
+/* ---------------------------------------------------------------------------
+   Marquee - a continuous keyword band under the hero.
+   --------------------------------------------------------------------------- */
+.marquee {
+  display: flex;
+  overflow: hidden;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 13px 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 600;
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  flex: none;
+  align-items: center;
+  gap: 26px;
+  padding-right: 26px;
+  animation: marquee 46s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-track span {
+  white-space: nowrap;
+}
+
+.marquee-track .sep {
+  color: var(--indigo);
+}
+
+@keyframes marquee {
+  to { transform: translate3d(-100%, 0, 0); }
+}
+
+/* ---------------------------------------------------------------------------
+   Interaction layer: press physics, live indicators, scroll instruments.
+   --------------------------------------------------------------------------- */
+/* Tactile press - the surface sinks and the shadow tightens (HUD's trick,
+   adapted to this palette's soft shadows). */
+:is(.btn, .social, .mail-pill, .hero-cv, .nav-cta, .menu-toggle, .brand, .tag, .console-tab):active {
+  transform: translateY(1px) scale(0.985);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.live {
+  position: relative;
+}
+
+.live::after {
+  position: absolute;
+  inset: -5px;
+  border: 1px solid rgba(52, 199, 89, 0.55);
+  border-radius: 50%;
+  content: "";
+  animation: livePulse 2.8s var(--ease-soft) infinite;
+}
+
+@keyframes livePulse {
+  0% { transform: scale(0.55); opacity: 0.9; }
+  70%, 100% { transform: scale(1.65); opacity: 0; }
+}
+
+.brand-dot {
+  animation: brandBreathe 4.2s ease-in-out infinite;
+}
+
+@keyframes brandBreathe {
+  50% {
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08), 0 0 0 4px rgba(244, 231, 208, 0.6);
+  }
+}
+
+/* Injected by script.js; purely decorative instrumentation. */
+.scroll-bar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 60;
+  height: 2px;
+  transform: scaleX(var(--p, 0));
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, var(--indigo), var(--blue), var(--teal));
+  pointer-events: none;
+}
+
+/* Rows nudge toward you on hover; touch devices get press feedback instead. */
+@media (hover: hover) {
+  .case-item:hover,
+  .project-item:hover {
+    translate: 6px 0;
+  }
+
+  .case-item:hover .case-stat strong,
+  .project-item:hover .project-meta {
+    color: var(--ink);
+  }
+}
+
+@media (hover: none) {
+  .case-item:active,
+  .project-item:active {
+    background: #fff;
+  }
+}
+
+/* Off-screen sections skip layout and paint entirely. */
+@supports (content-visibility: auto) {
+  .section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 760px;
+  }
+}
+
+[id] {
+  scroll-margin-top: calc(var(--nav-h) + 16px);
+}
+
+/* Cross-document view transitions: page changes cross-fade and the brand plus
+   nav pill stay put, so navigation reads as continuous rather than a reload. */
+@view-transition {
+  navigation: auto;
+}
+
+.brand {
+  view-transition-name: brand;
+}
+
+.nav-pill {
+  view-transition-name: nav-pill;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+}
+
+@media (max-width: 980px) {
+  .console-panel {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .console-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .console-tab::after {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .console-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-glow {
+    filter: blur(34px);
+    opacity: 0.7;
+  }
+}
+
+/* Everything above is decoration: with reduced motion on, all of it collapses
+   back to the static layout, and no state is left invisible. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+
   *, *::before, *::after {
     animation: none !important;
     transition: none !important;
   }
-  .reveal, .js .reveal { opacity: 1; transform: none; }
+
+  .reveal,
+  .js .reveal,
+  .js .hero-rise,
+  .js .hero-fade,
+  .js .chip,
+  .mobile-menu a {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    scale: 1 !important;
+    translate: none !important;
+  }
+
+  .hero-glow,
+  .marquee-track,
+  .console-caret,
+  .live::after,
+  .brand-dot {
+    animation: none !important;
+  }
+
+  .marquee-track {
+    transform: none !important;
+  }
 }
