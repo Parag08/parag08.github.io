@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Projects — Parag Rahangdale</title>
-  <meta name="description" content="Platforms and tools Parag Rahangdale has built, scaled or turned around.">
+  <meta name="description" content="Case studies, working demos and project summaries covering the platforms and tools Parag Rahangdale has built, scaled or turned around.">
   <meta name="theme-color" content="#f5f5f7">
   <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=5">
+  <link rel="stylesheet" href="style.css?v=6">
   <script src="script.js?v=5" defer></script>
 </head>
 <body>
@@ -39,57 +39,127 @@
     <section class="page-hero reveal">
       <p class="kicker">My Projects</p>
       <h1>Platforms and tools I’ve built, scaled, or turned around.</h1>
+      <p class="lede">Each entry links to a case study, a working demo, or a short project summary. Employer and client work is summarised where code and customer data are confidential.</p>
     </section>
+
     <section class="section reveal">
-      <a class="project-item" href="valeohealth.html">
-        <div>
-          <h3>Valeo Smart Tracker</h3>
-          <p>Medication and health-habit adherence prototype — daily care plan, refill alerts, and recovery-friendly streaks.</p>
-        </div>
-        <div class="project-meta">Valeo Health · Prototype</div>
-      </a>
-      <a class="project-item" href="work/nutanix/">
+      <h2 class="help-title">Selected case studies</h2>
+      <a class="project-item" id="nutanix-move" href="work/nutanix/">
         <div>
           <h3>Move — cross-hypervisor migration</h3>
           <p>Enterprise tooling that lifts VMs off VMware, Hyper-V or AWS onto Nutanix with configurations preserved.</p>
         </div>
-        <div class="project-meta">Nutanix · Cloud infrastructure</div>
+        <div class="project-meta">Nutanix · Case study →</div>
       </a>
-      <a class="project-item" href="work.html">
+      <a class="project-item" id="valeo-routing" href="work/valeo-health/">
         <div>
-          <h3>Eleven01 Protocol</h3>
-          <p>Founding member. Architected the MVP, designed the networking layer, and led 10+ engineers through ICO.</p>
+          <h3>Valeo routing application</h3>
+          <p>Operations routing product that reached 100% adoption in a week and removed 20,000 km of monthly distance.</p>
         </div>
-        <div class="project-meta">Blockchain</div>
+        <div class="project-meta">Valeo Health · Case study →</div>
       </a>
-      <a class="project-item" href="work.html">
+      <a class="project-item" id="everhaus" href="work/everhaus/">
         <div>
-          <h3>Touchnote — personalised gifting</h3>
-          <p>Rebuilt checkout, cut 30 seconds per transaction, and shipped a feature worth $25K+/month in net-new revenue.</p>
+          <h3>EverHaus — AI-enabled investment platform</h3>
+          <p>Product strategy and feature definition for a regulated investment platform built by a lean team.</p>
         </div>
-        <div class="project-meta">E-commerce</div>
+        <div class="project-meta">EverHaus · Case study →</div>
       </a>
-      <div class="project-item">
+    </section>
+
+    <section class="section reveal">
+      <h2 class="help-title">Working demos</h2>
+      <a class="project-item" href="valeohealth.html" target="_blank" rel="noopener">
         <div>
-          <h3>Hyper-local retail offers</h3>
-          <p>iOS app pushing personalised promotions to shoppers inside a mall. 10% lift in footfall and sales.</p>
+          <h3>Valeo Smart Tracker</h3>
+          <p>Medication and health-habit adherence prototype — daily care plan, refill alerts, and recovery-friendly streaks.</p>
         </div>
-        <div class="project-meta">Amantya · Retail tech</div>
-      </div>
-      <div class="project-item">
-        <div>
-          <h3>Enterprise IoT platform</h3>
-          <p>Standardised factory setup and collapsed a complete IoT installation from 5–6 days to one hour.</p>
-        </div>
-        <div class="project-meta">Cognizant · Industrial IoT</div>
-      </div>
-      <a class="project-item" href="setld/">
+        <div class="project-meta">Prototype · Live demo →</div>
+      </a>
+      <a class="project-item" href="setld/" target="_blank" rel="noopener">
         <div>
           <h3>Settld</h3>
           <p>Relocation concierge product demo pairing newcomers with a trusted local buddy.</p>
         </div>
-        <div class="project-meta">INSEAD · Product demo</div>
+        <div class="project-meta">INSEAD · Live demo →</div>
       </a>
+    </section>
+
+    <section class="section reveal" aria-labelledby="summaries-title">
+      <h2 class="help-title" id="summaries-title">Project summaries</h2>
+      <a class="project-item" href="#eleven01">
+        <div>
+          <h3>Eleven01 Protocol</h3>
+          <p>Founding member. Architected the MVP, designed the networking layer, and led 10+ engineers through ICO.</p>
+        </div>
+        <div class="project-meta">Blockchain · Read summary ↓</div>
+      </a>
+      <a class="project-item" href="#touchnote">
+        <div>
+          <h3>Touchnote — personalised gifting</h3>
+          <p>Rebuilt checkout, cut 30 seconds per transaction, and shipped a feature worth $25K+/month in net-new revenue.</p>
+        </div>
+        <div class="project-meta">E-commerce · Read summary ↓</div>
+      </a>
+      <a class="project-item" href="#retail">
+        <div>
+          <h3>Hyper-local retail offers</h3>
+          <p>iOS app pushing personalised promotions to shoppers inside a mall. Associated with a 10% lift in footfall and sales.</p>
+        </div>
+        <div class="project-meta">Retail tech · Read summary ↓</div>
+      </a>
+      <a class="project-item" href="#iot">
+        <div>
+          <h3>Enterprise IoT platform</h3>
+          <p>Standardised factory setup and collapsed a complete IoT installation from 5–6 days to one hour.</p>
+        </div>
+        <div class="project-meta">Industrial IoT · Read summary ↓</div>
+      </a>
+    </section>
+
+    <section class="section reveal" aria-label="Detailed project summaries">
+      <div class="help-list">
+        <article class="help-item" id="eleven01">
+          <strong>01</strong>
+          <div>
+            <h3>Eleven01 Protocol</h3>
+            <p class="lede">Founding member and blockchain developer at Eleven01. Architected the MVP, designed the networking layer, and led a development team of 10+ through the ICO.</p>
+            <p class="lede">What it shows: founding-team product definition, platform architecture, and leading a technical team through a fundraising milestone.</p>
+            <div class="tags"><span class="tag">Blockchain</span><span class="tag">MVP architecture</span><span class="tag">Team leadership</span><span class="tag">Founding team</span></div>
+          </div>
+        </article>
+        <article class="help-item" id="touchnote">
+          <strong>02</strong>
+          <div>
+            <h3>Touchnote — personalised gifting</h3>
+            <p class="lede">Rebuilt the checkout flow, reducing checkout time by 30 seconds per purchase and shipping a feature worth $25K+/month in net-new revenue.</p>
+            <p class="lede">What it shows: checkout conversion work tied directly to a measurable commercial outcome.</p>
+            <div class="tags"><span class="tag">E-commerce</span><span class="tag">Checkout</span><span class="tag">Conversion</span><span class="tag">Product delivery</span></div>
+          </div>
+        </article>
+        <article class="help-item" id="retail">
+          <strong>03</strong>
+          <div>
+            <h3>Hyper-local retail offers</h3>
+            <p class="lede">Built an iOS app that pushed personalised promotions to shoppers inside a mall. The work was associated with a recorded 10% increase in retailer footfall and sales.</p>
+            <p class="lede">What it shows: mobile product delivery and retail personalisation.</p>
+            <div class="tags"><span class="tag">iOS</span><span class="tag">Retail tech</span><span class="tag">Personalisation</span><span class="tag">Promotions</span></div>
+          </div>
+        </article>
+        <article class="help-item" id="iot">
+          <strong>04</strong>
+          <div>
+            <h3>Enterprise IoT platform</h3>
+            <p class="lede">Standardised factory setup and collapsed a complete IoT installation from 5–6 days to one hour.</p>
+            <p class="lede">What it shows: deployment standardisation and operational efficiency at scale.</p>
+            <div class="tags"><span class="tag">Industrial IoT</span><span class="tag">Deployment automation</span><span class="tag">Standardisation</span><span class="tag">Delivery</span></div>
+          </div>
+        </article>
+      </div>
+      <div class="contact-actions">
+        <a class="btn btn-dark" href="contact.html">Contact Me →</a>
+        <a class="btn" href="work.html">All case studies →</a>
+      </div>
     </section>
   </main>
   <footer class="site-footer">
