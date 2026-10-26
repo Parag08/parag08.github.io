@@ -1,13 +1,13 @@
 # Parag Rahangdale
 
-> Engineering leader and INSEAD MBA candidate based in Singapore, targeting program management and product strategy roles. Leads cross-functional delivery, turns customer and business needs into product direction, and ships work that moves commercial metrics.
+> INSEAD MBA candidate based in Singapore, targeting product manager and program manager roles. Leads cross-functional delivery, turns customer and business needs into product priorities, and ships work that moves commercial metrics.
 
 ## Pages
 
-- [Home](https://parag08.github.io/): Positioning for program management and product strategy roles, selected impact metrics, experience and skills.
+- [Home](https://parag08.github.io/): Positioning for product manager and program manager roles, selected impact metrics, experience and skills.
 - [Case studies](https://parag08.github.io/work.html): Enterprise migration at Nutanix, route optimisation at Valeo Health, AI-enabled investment platform at EverHaus.
 - [Projects](https://parag08.github.io/projects.html): Case studies, working demos and project summaries for platforms and tools built, scaled or turned around.
-- [About](https://parag08.github.io/about.html): Background, career history and the capabilities brought to program and product roles.
+- [About](https://parag08.github.io/about.html): Background, career history and the capabilities brought to product manager and program manager roles.
 - [Contact](https://parag08.github.io/contact.html): Email, LinkedIn and résumé.
 
 ## Contact
