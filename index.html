@@ -10,9 +10,12 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=16">
+  <link rel="stylesheet" href="home-hero.css?v=10">
   <script src="script.js?v=5" defer></script>
+  <script type="importmap">{"imports":{"three":"./mountain-demo/vendor/three.module.js"}}</script>
+  <script type="module" src="home-workspace.js?v=3"></script>
 </head>
-<body>
+<body class="home-page">
   <a class="skip-link" href="#main">Skip to content</a>
   <div class="loader" aria-hidden="true">
     <div class="loader-copy">
@@ -42,36 +45,47 @@
   </div>
 
   <main id="main">
-    <section class="hero">
+    <section class="hero hero--workspace">
       <div class="hero-glow" aria-hidden="true"></div>
       <div class="hero-stage">
-        <div class="chip-layer">
-          <div class="chip chip-hello" style="--i:0"><span class="avatar">PR</span> Hello, I'm Parag</div>
-          <div class="chip chip-place" style="--i:2"><small>// Based in</small>Singapore<span class="chip-flag">🇸🇬</span></div>
-          <div class="chip chip-connect" style="--i:3"><span class="live"></span> Let's Connect</div>
-          <a class="chip chip-gmail" style="--i:5" href="mailto:parag.m.rahangdale@gmail.com">parag.m.rahangdale@gmail.com</a>
-          <div class="chip chip-aside" style="--i:6">// Product with<br>purpose &amp; impact</div>
-          <div class="chip chip-dev" style="--i:7">INSEAD MBA</div>
-        </div>
+        <div class="hero-copy">
+        <p class="hero-greeting"><span class="chip chip-hello"><span class="avatar" aria-hidden="true">👋</span> Hello, I'm Parag</span></p>
         <h1>
           <span class="hero-line line-eng hero-rise" style="--i:0">PRODUCT</span>
           <span class="hero-line line-lead hero-rise" style="--i:1">MANAGER</span>
           <span class="hero-line line-prod hero-rise" style="--i:2">&amp; PROGRAM</span>
           <span class="hero-line line-strat hero-rise" style="--i:3">MANAGER</span>
         </h1>
+        <p class="hero-experience hero-rise" style="--i:4"><strong>10 years</strong> across engineering, product &amp; delivery.</p>
         <p class="hero-sub hero-rise" style="--i:4">I connect <em class="em-blue">customer needs</em>, <em class="em-gold">product priorities</em> and <em class="em-teal">program delivery</em>.</p>
         <a class="hero-cv hero-fade" style="--i:5" href="Parag%20Rahangdale%202026.pdf" target="_blank" rel="noopener">Résumé ↗</a>
-      </div>
-      <div class="hero-rail">
-        <div class="rail-readout">
-          <span>// Product management, program delivery</span>
-          <span class="rail-live"><span class="live"></span> SGT <span data-clock>--:--</span></span>
         </div>
+        <figure class="workspace" aria-label="A person typing on a laptop beside a steaming cup of coffee">
+          <div class="workspace__stage" aria-hidden="true"></div>
+          <figcaption>
+            <span class="workspace__caption"><span class="live" aria-hidden="true"></span> Ideas, coffee, and a little code.</span>
+            <button class="workspace__sound" type="button" data-typing-sound aria-label="Enable typing sounds" aria-pressed="false" hidden>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path class="sound-waves" d="M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/><path class="sound-slash" d="m16 9 5 6m0-6-5 6"/></svg>
+            </button>
+          </figcaption>
+        </figure>
+      </div>
+      <div class="hero-bottom">
+        <div class="hero-details">
+          <span class="chip chip-place">Singapore<span class="chip-flag" aria-hidden="true">🇸🇬</span></span>
+          <a class="chip chip-gmail" href="mailto:parag.m.rahangdale@gmail.com">parag.m.rahangdale@gmail.com</a>
+          <div class="hero-education" aria-label="Education">
+            <span class="chip chip-degree">INSEAD MBA</span>
+            <span class="chip chip-degree chip-degree--iit">IIT Jodhpur · B.Tech</span>
+          </div>
+        </div>
+      <div class="hero-rail">
         <div class="socials">
           <a class="social" href="https://www.linkedin.com/in/paragr" target="_blank" rel="noopener" aria-label="LinkedIn" data-icon="in"></a>
           <a class="social" href="https://github.com/parag08" target="_blank" rel="noopener" aria-label="GitHub" data-icon="gh"></a>
           <a class="social" href="contact.html" aria-label="Contact" data-icon="@"></a>
         </div>
+      </div>
       </div>
     </section>
 
@@ -228,7 +242,7 @@
     <div class="giant-name">parag</div>
     <div class="footer-base">
       <span>parag ©<span id="year">2026</span></span>
-      <span>Singapore 🇸🇬 · <span data-clock>--:--</span> SGT</span>
+      <span>Singapore 🇸🇬</span>
     </div>
   </footer>
 </body>

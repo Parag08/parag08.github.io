@@ -1,0 +1,132 @@
+/* Homepage only: the original neutral surface, with a separate 3D workspace. */
+.home-page { --max: 1160px; --home-gutter: 24px; }
+.home-page .wrap { width: min(var(--max), calc(100% - var(--home-gutter) * 2)); }
+.home-page .section { padding: 48px 0; }
+.home-page .intro { align-items: start; gap: 40px; }
+.home-page .intro-copy { padding-top: 32px; gap: 20px; }
+.home-page .intro-copy .rule-row { display: none; }
+.home-page .skill-row {
+  grid-template-columns: minmax(240px, .75fr) minmax(0, 1.1fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 32px;
+}
+.home-page .skill-name { font-size: clamp(26px, 2.5vw, 34px); line-height: 1.2; }
+.home-page .tags { justify-content: flex-start; }
+.home-page .case-item,
+.home-page .project-item { padding-inline: 0; }
+.home-page .center-btn { justify-content: flex-start; padding: 20px 0 0; }
+.home-page .site-footer {
+  width: min(calc(var(--max) + 56px), calc(100% - 24px));
+  padding: 28px 0 18px;
+}
+.home-page .footer-grid,
+.home-page .giant-name,
+.home-page .footer-base { width: min(var(--max), calc(100% - 22px)); margin-inline: auto; }
+
+.hero--workspace {
+  overflow: clip;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+  padding: calc(100px + env(safe-area-inset-top)) var(--home-gutter) calc(24px + env(safe-area-inset-bottom));
+}
+.hero--workspace .hero-stage {
+  width: min(1160px, 100%);
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(300px, 1fr);
+  gap: 28px 20px;
+  align-items: center;
+}
+.hero-greeting { margin: 0 0 20px; }
+.hero--workspace .hero-copy { text-align: left; }
+.hero--workspace .hero-greeting .chip { font-size: 14px; }
+.hero--workspace .hero-greeting .avatar { font-size: 18px; background: transparent; transform-origin: 70% 75%; animation: hello-wave 4.8s ease-in-out infinite; }
+@keyframes hello-wave {
+  0%, 28%, 100% { transform: rotate(0); }
+  4%, 12% { transform: rotate(20deg); }
+  8%, 16% { transform: rotate(-12deg); }
+  21% { transform: rotate(10deg); }
+}
+.hero-bottom {
+  width: min(1160px, 100%);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.hero-details { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; }
+.hero--workspace .chip {
+  position: static;
+  inset: auto;
+  font-size: 12px;
+  animation: none;
+  translate: none;
+  transform: none;
+}
+.js .hero--workspace .chip,
+.js.is-ready .hero--workspace .chip {
+  animation: none;
+  opacity: 1;
+  scale: 1;
+  translate: none;
+  transform: none;
+}
+.hero--workspace .hero-details .chip { min-height: 38px; padding: 8px 12px; line-height: 20px; }
+.hero--workspace .chip-aside { display: none; }
+.hero-education { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; }
+.hero--workspace .chip-degree { background: var(--blue); color: #fff; border-color: transparent; }
+.hero--workspace .chip-degree--iit { background: var(--teal); }
+.hero--workspace .hero-rail { position: static; width: auto; margin: 0; flex-shrink: 0; gap: 20px; justify-content: flex-end; }
+.hero--workspace .hero-line { font-size: clamp(44px, 7vw, 80px); }
+.hero-experience { margin: 18px 0 0; font-size: 13px; line-height: 1.6; color: var(--muted); }
+.hero-experience strong { color: var(--ink); font-weight: 700; }
+.hero--workspace .hero-sub { font-size: clamp(16px, 1.6vw, 20px); margin: 16px 0 0; }
+.hero--workspace .hero-cv { position: relative; top: auto; left: auto; transform: none; margin-top: 20px; }
+.workspace { margin: 0; min-width: 0; align-self: center; }
+.workspace__stage { width: 100%; height: clamp(300px, 32vw, 410px); }
+.workspace canvas { display: block; width: 100%; height: 100%; }
+.workspace figcaption { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 12px; color: var(--muted); font-size: 11px; margin-top: -12px; }
+.workspace__caption { display: inline-flex; align-items: center; gap: 10px; }
+.workspace__sound { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; flex-shrink: 0; border: 1px solid var(--line-strong); border-radius: 50%; background: #ffffffa6; padding: 0; color: var(--muted); }
+.workspace__sound[hidden] { display: none; }
+.workspace__sound:hover { background: #fff; color: var(--ink); }
+.workspace__sound:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+.workspace__sound[aria-pressed="true"] { color: var(--blue); background: #edf4fc; }
+.workspace__sound .sound-waves,
+.workspace__sound[aria-pressed="true"] .sound-slash { display: none; }
+.workspace__sound[aria-pressed="true"] .sound-waves { display: block; }
+.workspace .live { width: 5px; height: 5px; box-shadow: 0 0 0 3px #34c75912; }
+.workspace__fallback { padding: 40px 20px; font-size: 13px; color: var(--muted); }
+
+@media (max-width: 980px) {
+  .home-page .intro { gap: 24px; }
+  .home-page .intro-copy { padding-top: 0; }
+  .home-page .skill-row { grid-template-columns: 1fr; gap: 14px; }
+  .hero--workspace { padding-top: 100px; padding-bottom: 30px; }
+  .hero--workspace .hero-copy { text-align: center; }
+  .hero--workspace .hero-stage { grid-template-columns: 1fr; max-width: 640px; gap: 18px; }
+  .hero-bottom { max-width: 640px; justify-content: center; gap: 18px; }
+  .hero--workspace .hero-rail { width: 100%; justify-content: center; }
+  .hero--workspace .hero-line { font-size: clamp(40px, 8vw, 64px); }
+  .hero--workspace .hero-sub { max-width: 32rem; font-size: 17px; margin-inline: auto; }
+  .workspace { width: min(360px, 100%); justify-self: center; }
+  .workspace__stage { height: 290px; }
+}
+
+@media (max-width: 640px) {
+  .home-page .section { padding: 36px 0; }
+  .hero--workspace { padding-top: 80px; gap: 16px; }
+  .hero--workspace .chip { font-size: 11px; padding: 6px 10px; }
+  .hero-greeting { margin-bottom: 14px; }
+  .hero--workspace .hero-greeting .chip { font-size: 13px; }
+  .hero-experience { font-size: 12px; margin-top: 14px; }
+  .hero--workspace .hero-sub { font-size: 16px; margin-top: 10px; }
+  .hero--workspace .hero-details .chip { min-height: 34px; padding: 6px 10px; }
+  .hero--workspace .hero-cv { margin-top: 16px; }
+  .workspace { width: min(300px, 100%); }
+  .workspace__stage { height: 205px; }
+  .workspace figcaption { font-size: 10px; }
+  .hero--workspace .hero-rail { flex-wrap: nowrap; gap: 12px; }
+}
