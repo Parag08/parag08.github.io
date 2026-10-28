@@ -1,0 +1,91 @@
+/* Integration only: the shared navigation and main-site palette frame the journey. */
+body.about-journey {
+  --paper: #f5f5f7;
+  --ink: #1d1d1f;
+  --muted: #6e6e73;
+  --orange: var(--blue);
+  color: var(--ink);
+  background: var(--paper);
+}
+.about-journey::before { background: radial-gradient(circle at 50% -10%, #ffffffeb, transparent 42%); }
+.about-journey .site-nav { z-index: 60; }
+.about-journey:has(.mobile-menu.open) .site-nav { transform: none; opacity: 1; }
+.about-journey .mobile-menu a[aria-current="page"] { color: var(--blue); }
+.about-journey main > .chapter { scroll-margin-top: 0; }
+.about-journey .about-greeting { margin: 0 0 19px; color: var(--ink); font-size: clamp(14px, 1.25vw, 18px); font-weight: 500; line-height: 1.6; letter-spacing: -.025em; }
+.about-journey .about-hero-title { font-size: clamp(56px, 6.2vw, 96px); margin-bottom: 25px; }
+.about-journey .about-summary { max-width: 36rem; line-height: 1.85; }
+.about-journey .scroll-cue { max-width: 100%; line-height: 1.6; }
+.about-journey .scroll-cue__icon { flex-shrink: 0; border-color: var(--line-strong); }
+.about-journey .scroll-cue__arrow { display: block; color: var(--blue); animation: about-scroll-nudge 2.6s ease-in-out infinite; }
+.about-journey .scroll-cue:hover > span { transform: none; border-color: var(--blue); }
+.about-journey[data-chapter]:not([data-chapter="hero"]) .scroll-cue__arrow { animation-play-state: paused; }
+@keyframes about-scroll-nudge {
+  0%, 22%, 68%, 100% { transform: translateY(0); }
+  38% { transform: translateY(6px); }
+  52% { transform: translateY(0); }
+  60% { transform: translateY(3px); }
+}
+.about-journey .chapter--hero .eyebrow,
+.about-journey .description,
+.about-journey .small-note,
+.about-journey .scroll-cue,
+.about-journey .experience-meta,
+.about-journey .company-description,
+.about-journey .experience-summary,
+.about-journey .experience-outcomes li,
+.about-journey .education-item p:not(.degree),
+.about-journey .career-intro,
+.about-journey .career-languages { color: var(--muted); }
+.about-journey .experience-outcomes strong,
+.about-journey .education-item .degree { color: var(--ink); }
+.about-journey .company-description a { text-decoration-color: var(--line-strong); }
+.about-journey .contact-links { color: var(--blue); }
+.about-journey .chapter[data-chapter] { border-top-color: var(--line-strong); box-shadow: inset 4px 0 0 var(--role-accent); }
+.about-journey #valeo { --chapter-paper: #ffffff; --role-accent: var(--teal); }
+.about-journey #everhaus { --chapter-paper: #f5f5f7; --role-accent: var(--gold); }
+.about-journey #nutanix-lead { --chapter-paper: #ffffff; --role-accent: var(--blue); }
+.about-journey #nutanix-engineer { --chapter-paper: #f5f5f7; --role-accent: var(--indigo); }
+.about-journey #touchnote { --chapter-paper: #ffffff; --role-accent: var(--peach); }
+.about-journey #eleven01 { --chapter-paper: #f5f5f7; --role-accent: var(--gold); }
+.about-journey #amantya { --chapter-paper: #ffffff; --role-accent: var(--teal); }
+.about-journey #cognizant { --chapter-paper: #f5f5f7; --role-accent: var(--indigo); }
+.about-journey #education { --chapter-paper: #ffffff; --role-accent: var(--indigo); }
+.about-journey #basecamp { --chapter-paper: #f5f5f7; --role-accent: var(--blue); }
+.about-journey .chapter-next,
+.about-journey .education-item,
+.about-journey .contact-links a { border-color: var(--line-strong); }
+.about-journey .education-item h3 span,
+.about-journey .contact-links span { color: var(--blue); }
+.about-journey .descent__view { background: #ffffffdf; color: var(--muted); border-color: var(--line-strong); }
+.about-journey .descent__view[aria-pressed="true"] { background: #e8eff9; }
+.about-journey .descent__readout { color: var(--muted); }
+.about-journey .descent__status i,
+.about-journey .descent__meter > span { background: var(--blue); }
+.about-journey .descent__meter { background: var(--line-strong); }
+
+/* Keep the site's signature footer compact and clear of the fixed hiker. */
+.about-journey .site-footer {
+  width: 100%;
+  margin: 0;
+  padding: 28px 49% 28px 8%;
+  border: 0;
+  border-radius: 0;
+  background: var(--paper);
+}
+.about-journey .giant-name { margin: 0 0 18px; font-size: clamp(32px, 4vw, 48px); }
+.about-journey .footer-base { gap: 12px; font-size: 11px; line-height: 1.7; }
+@media (max-width: 760px) {
+  .about-journey .descent__stage::before { inset: -5% -3% 0 0; }
+  .about-journey .about-greeting { font-size: 13px; margin-bottom: 17px; }
+  .about-journey .about-hero-title { font-size: clamp(34px, 7vw, 64px); margin-bottom: 22px; }
+  .about-journey .about-summary { font-size: 12px; line-height: 1.8; }
+  .about-journey .chapter--experience,
+  .about-journey .chapter--education,
+  .about-journey .chapter--career-end { padding-top: 80px; padding-bottom: 72px; }
+  .about-journey .site-footer { padding: 24px calc(34vw + 20px) 30px 24px; }
+  .about-journey .footer-base { font-size: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .about-journey .scroll-cue__arrow { animation: none; transform: none; }
+}

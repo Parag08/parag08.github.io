@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f6f2">
+  <title>The descent — a scroll experiment</title>
+  <link rel="preload" as="image" href="assets/summit-sunrise.jpg">
+  <link rel="stylesheet" href="descent.css">
+  <script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
+  <script type="module" src="descent.js"></script>
+</head>
+<body>
+  <header class="demo-header">
+    <a class="wordmark" href="#summit" aria-label="Back to the summit"><span class="mountain-mark" aria-hidden="true">△</span> THE DESCENT</a>
+    <span class="header-note">A small experiment in moving slowly.</span>
+    <span class="edition">SCROLL STUDY / 001</span>
+  </header>
+
+  <!-- Standalone 3D component; see README.md for integration. -->
+  <aside class="descent" aria-label="A hiker watches the sunrise, then follows a descending trail as you scroll">
+    <div class="descent__stage" aria-hidden="true"></div>
+    <button class="descent__view" type="button" aria-pressed="false">Closer look <span>↗</span></button>
+    <div class="descent__readout" aria-hidden="true">
+      <span class="descent__status"><i></i><span data-descent-state>Loading climber…</span></span>
+      <span data-descent-percent>00%</span>
+      <span class="descent__meter"><span></span></span>
+    </div>
+  </aside>
+
+  <main>
+    <section class="chapter chapter--hero" id="summit">
+      <div class="chapter__copy">
+        <p class="eyebrow"><span></span> FIRST LIGHT AT THE SUMMIT</p>
+        <h1>A little<br> way <em>down.</em></h1>
+        <p class="description">Watch the sunrise. Take a breath.<br> The trail will wait for you.</p>
+        <a class="scroll-cue" href="#valeo"><span>↓</span> Scroll to start the descent</a>
+      </div>
+      <span class="chapter-number">01 / 11</span>
+    </section>
+    <section class="chapter chapter--experience" id="valeo" data-chapter="experience" aria-labelledby="valeo-title">
+      <div class="chapter__copy">
+        <p class="eyebrow">EXPERIENCE / 01 OF 08</p>
+        <h2 class="experience-title" id="valeo-title">Valeo <em>Health</em></h2>
+        <h3 class="experience-role">Management Intern</h3>
+        <p class="experience-meta"><span>July – August 2026</span><span>Dubai, UAE</span></p>
+        <p class="company-description"><a href="https://feelvaleo.com" target="_blank" rel="noopener">A UAE healthtech company providing healthcare services at home. <span aria-hidden="true">↗</span></a></p>
+        <p class="experience-summary">Worked with the operations team and leadership on cost, staffing and logistics, using data analysis and an AI-assisted app.</p>
+        <ul class="experience-outcomes">
+          <li><strong>30% lower operations costs.</strong> Analysed ten months of UAE appointment data to improve staffing capacity, schedules and locations.</li>
+          <li><strong>20,000 km and AED 12,200 saved every month.</strong> Specified and prototyped an AI-assisted route-optimisation app after frontline research. It reached 100% adoption by the operations team in one week.</li>
+          <li><strong>Two fleet-cost strategies approved.</strong> Won CEO and operations-leadership approval after diagnosing an 18% rise in fleet operating costs while revenue stayed flat.</li>
+        </ul>
+        <a class="chapter-next" href="#everhaus">Earlier: EverHaus Group <span aria-hidden="true">↓</span></a>
+      </div>
+      <span class="chapter-number">02 / 11</span>
+    </section>
+    <section class="chapter chapter--experience" id="everhaus" data-chapter="experience" aria-labelledby="everhaus-title">
+      <div class="chapter__copy">
+        <p class="eyebrow">EXPERIENCE / 02 OF 08</p>
+        <h2 class="experience-title" id="everhaus-title">EverHaus <em>Group</em></h2>
+        <h3 class="experience-role">Product Strategy Manager · Part-time</h3>
+        <p class="experience-meta"><span>February – June 2026</span><span>Singapore</span></p>
+        <p class="company-description">A proptech startup building a property investment platform.</p>
+        <p class="experience-summary">Built the product roadmap from a blank page, turned regulatory research into product requirements, and set up an AI-first operating model for the founders.</p>
+        <ul class="experience-outcomes">
+          <li><strong>20+ core features defined; 15 built and validated.</strong> Used AI-assisted market and user research, with validation through founder review.</li>
+          <li><strong>MAS research translated into product requirements.</strong> Covered data modelling, data residency, investment limits and onboarding documents.</li>
+          <li><strong>Platform setup cut from six months to two.</strong> Designed an AI-first operating model using Notion, Linear and AI coding agents, so non-technical founders could manage engineering delivery.</li>
+        </ul>
+        <a class="chapter-next" href="#nutanix-lead">Earlier: Nutanix <span aria-hidden="true">↓</span></a>
+      </div>
+      <span class="chapter-number">03 / 11</span>
+    </section>
+    <section class="chapter chapter--experience" id="nutanix-lead" data-chapter="experience" aria-labelledby="nutanix-lead-title">
+      <div class="chapter__copy">
+        <p class="eyebrow">EXPERIENCE / 03 OF 08</p>
+        <h2 class="experience-title" id="nutanix-lead-title"><em>Nutanix</em></h2>
+        <h3 class="experience-role">Development Team Lead / Engineering Manager</h3>
+        <p class="experience-meta"><span>July 2024 – January 2026</span><span>Bengaluru, India</span></p>
+        <p class="company-description"><a href="https://www.nutanix.com" target="_blank" rel="noopener">Enterprise cloud software for running and managing applications across private and public clouds. <span aria-hidden="true">↗</span></a></p>
+        <p class="experience-summary">Led the migration-software engineering team, aligning Sales, Product, Legal and Compliance and handling major customer escalations.</p>
+        <ul class="experience-outcomes">
+          <li><strong>11+ engineers led against a $500K budget.</strong> Delivered migration software recognised by Gartner as best in class, while developing the team.</li>
+          <li><strong>$40–50M in annual contract value enabled.</strong> Aligned Sales, Product and Engineering on a customer-led roadmap to support enterprise deals.</li>
+          <li><strong>VM migration failures cut from 10% to about 1%.</strong> Grouped failures by cause and coordinated fixes for the largest categories for a government customer.</li>
+          <li><strong>400+ critical security risks reduced to 20.</strong> Also eliminated 500+ licensing risks through technical due diligence across product, legal and compliance teams.</li>
+        </ul>
+        <a class="chapter-next" href="#nutanix-engineer">Earlier: Nutanix · Member of Technical Staff <span aria-hidden="true">↓</span></a>
+      </div>
+      <span class="chapter-number">04 / 11</span>
+    </section>
+    <section class="chapter chapter--experience" id="nutanix-engineer" data-chapter="experience" aria-labelledby="nutanix-engineer-title">
+      <div class="chapter__copy">
+        <p class="eyebrow">EXPERIENCE / 04 OF 08</p>
+        <h2 class="experience-title" id="nutanix-engineer-title"><em>Nutanix</em></h2>
+        <h3 class="experience-role">Member of Technical Staff</h3>
+        <p class="experience-meta"><span>June 2022 – August 2024</span><span>Bengaluru, India</span></p>
+        <p class="company-description"><a href="https://www.nutanix.com" target="_blank" rel="noopener">Enterprise cloud software for running and managing applications across private and public clouds. <span aria-hidden="true">↗</span></a></p>
+        <p class="experience-summary">Built new capabilities on Nutanix’s migration software and onboarded large enterprise customers moving their workloads onto Nutanix.</p>
+        <ul class="experience-outcomes">
+          <li><strong>$1M+ in recurring revenue unlocked.</strong> Onboarded enterprise customers holding more than 10 petabytes of data onto a new file-migration capability.</li>
+          <li><strong>20,000 workloads at a global custodian bank.</strong> Supported banking customers moving workloads from public cloud to on-premises infrastructure.</li>
+        </ul>
+        <a class="chapter-next" href="#touchnote">Earlier: Touchnote <span aria-hidden="true">↓</span></a>
+      </div>
+      <span class="chapter-number">05 / 11</span>
+    </section>
+    <section class="chapter chapter--experience" id="touchnote" data-chapter="experience" aria-labelledby="touchnote-title">
+      <div class="chapter__copy">
+        <p class="eyebrow">EXPERIENCE / 05 OF 08</p>
+        <h2 class="experience-title" id="touchnote-title"><em>Touchnote</em></h2>
+        <h3 class="experience-role">Senior Backend Developer</h3>
+        <p class="experience-meta"><span>February 2020 – June 2022</span><span>Hyderabad, India</span></p>
+        <p class="company-description"><a href="https://www.touchnote.com" target="_blank" rel="noopener">A UK consumer company that lets people send personalised cards and gifts. <span aria-hidden="true">↗</span></a></p>
+        <p class="experience-summary">Built backend systems for the customer-facing product, including checkout, new revenue features and performance.</p>
+        <ul class="experience-outcomes">
+          <li><strong>30 seconds saved per purchase.</strong> Rebuilt checkout to improve conversion and order value while reducing cart abandonment.</li>
+          <li><strong>$25K+ in new monthly revenue in the UK.</strong> Identified and launched a new e-commerce feature with the Product team.</li>
+          <li><strong>20% better API response times.</strong> Resolved production performance issues.</li>
+        </ul>
+        <a class="chapter-next" href="#eleven01">Earlier: Eleven01 <span aria-hidden="true">↓</span></a>
+      </div>
+      <span class="chapter-number">06 / 11</span>
+    </section>
+    <section class="chapter chapter--experience" id="eleven01" data-chapter="experience" aria-labelledby="eleven01-title">
+      <div class="chapter__copy">
+        <p class="eyebrow">EXPERIENCE / 06 OF 08</p>
+        <h2 class="experience-title" id="eleven01-title"><em>Eleven01</em></h2>
+        <h3 class="experience-role">Founding Member &amp; Blockchain Developer</h3>
+        <p class="experience-meta"><span>September 2018 – February 2020</span><span>Hyderabad, India</span></p>
+        <p class="company-description">A Hyderabad startup building a blockchain protocol for emerging markets, positioned as India’s first native blockchain protocol.</p>
+        <p class="experience-summary">Joined as a founding member, helped build the blockchain platform from scratch, led the development team and represented the company publicly.</p>
+        <ul class="experience-outcomes">
+          <li><strong>Zero to MVP and Initial Coin Offering in one year.</strong> Led a team of 10+ developers to build and launch the blockchain platform.</li>
+          <li><strong>Customer insights from 10 events across India.</strong> Spoke for the company and brought those insights back into the product roadmap.</li>
+        </ul>
+        <a class="chapter-next" href="#amantya">Earlier: Amantya Technologies <span aria-hidden="true">↓</span></a>
+      </div>
+      <span class="chapter-number">07 / 11</span>
+    </section>
+    <section class="chapter chapter--experience" id="amantya" data-chapter="experience" aria-labelledby="amantya-title">
+      <div class="chapter__copy">
+        <p class="eyebrow">EXPERIENCE / 07 OF 08</p>
+        <h2 class="experience-title" id="amantya-title">Amantya <em>Technologies</em></h2>
+        <h3 class="experience-role">Software Engineer</h3>
+        <p class="experience-meta"><span>2018</span><span>Gurugram, India</span></p>
+        <p class="company-description"><a href="https://www.amantyatech.com/" target="_blank" rel="noopener">A technology company building software for 5G, telecom and IoT. <span aria-hidden="true">↗</span></a></p>
+        <p class="experience-summary">Built applications for telecom and retail clients, from network data analysis for a major US telecom provider to an iOS app for in-store offers.</p>
+        <ul class="experience-outcomes">
+          <li><strong>Problems identified 3 times faster; coverage up 20%.</strong> Developed an application for Verizon to analyse mobile tower connection data.</li>
+          <li><strong>About 30% more revenue for a retail client.</strong> Built a Swift iOS app that sent offers to shoppers’ phones when they came near a display.</li>
+        </ul>
+        <a class="chapter-next" href="#cognizant">Earlier: Cognizant <span aria-hidden="true">↓</span></a>
+      </div>
+      <span class="chapter-number">08 / 11</span>
+    </section>
+    <section class="chapter chapter--experience" id="cognizant" data-chapter="experience" aria-labelledby="cognizant-title">
+      <div class="chapter__copy">
+        <p class="eyebrow">EXPERIENCE / 08 OF 08</p>
+        <h2 class="experience-title" id="cognizant-title"><em>Cognizant</em></h2>
+        <h3 class="experience-role">Associate</h3>
+        <p class="experience-meta"><span>July 2016 – April 2018</span><span>India</span></p>
+        <p class="company-description"><a href="https://www.cognizant.com" target="_blank" rel="noopener">A global IT services and consulting company building and running technology for large enterprises. <span aria-hidden="true">↗</span></a></p>
+        <p class="experience-summary">Helped build Cognizant’s IoT platform for industrial customers, leading deployment tooling and DevOps automation.</p>
+        <ul class="experience-outcomes">
+          <li><strong>Deployment cut from 5–6 days to 1 hour.</strong> Led a cross-team initiative to build a deployment platform with Kubernetes and Helm.</li>
+          <li><strong>50% faster, more reliable system execution.</strong> Led development of a new mesh network library based on the team’s requirements.</li>
+          <li><strong>Recognised as a Trendsetter.</strong> Received the title for bringing new technologies into the project.</li>
+        </ul>
+        <a class="chapter-next" href="#education">Education <span aria-hidden="true">↓</span></a>
+      </div>
+      <span class="chapter-number">09 / 11</span>
+    </section>
+    <section class="chapter chapter--education" id="education" data-chapter="education" aria-labelledby="education-title">
+      <div class="chapter__copy">
+        <p class="eyebrow">EDUCATION / STILL LEARNING</p>
+        <h2 class="experience-title" id="education-title">A wider <em>perspective.</em></h2>
+        <div class="education-list">
+          <article class="education-item">
+            <p class="experience-meta">CLASS OF DECEMBER 2026</p>
+            <h3><a href="https://www.insead.edu" target="_blank" rel="noopener">INSEAD <span aria-hidden="true">↗</span></a></h3>
+            <p class="degree">MBA</p>
+            <p>Campuses: Singapore, France and Abu Dhabi.</p>
+            <p class="education-highlight">President, Fintech &amp; Blockchain Club.</p>
+          </article>
+          <article class="education-item">
+            <p class="experience-meta">2012 – 2016</p>
+            <h3><a href="https://www.iitj.ac.in" target="_blank" rel="noopener">IIT Jodhpur <span aria-hidden="true">↗</span></a></h3>
+            <p class="degree">B.Tech, System Science</p>
+            <p class="education-highlight">Generated ₹1M in revenue for Ignus, the annual college festival, through partnerships and sales as Workshop Head on the Technical Council.</p>
+          </article>
+        </div>
+        <a class="chapter-next" href="#basecamp">The next chapter <span aria-hidden="true">↓</span></a>
+      </div>
+      <span class="chapter-number">10 / 11</span>
+    </section>
+    <section class="chapter chapter--end chapter--career-end" id="basecamp" data-chapter="closing" aria-labelledby="basecamp-title">
+      <div class="chapter__copy">
+        <p class="eyebrow">BACK ON LEVEL GROUND / PARAG RAHANGDALE</p>
+        <h2 id="basecamp-title">Made it.<br> <em>Take a breath.</em></h2>
+        <p class="career-intro">Software engineer turned product and programme leader, now finishing an INSEAD MBA (Class of December 2026). Based in Singapore.</p>
+        <p class="career-intro">Ten years across blockchain startups, consumer e-commerce, enterprise cloud software and healthtech operations, turning ambiguous problems into delivered products and measurable business results.</p>
+        <p class="career-languages">English · Hindi · Spanish (beginner)</p>
+        <div class="contact-links">
+          <a href="https://www.linkedin.com/in/paragr" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a>
+          <a href="mailto:parag.m.rahangdale@gmail.com">parag.m.rahangdale@gmail.com <span aria-hidden="true">↗</span></a>
+        </div>
+        <a class="restart" href="#summit">Back to the summit <span>↗</span></a>
+      </div>
+      <span class="chapter-number">11 / 11</span>
+    </section>
+  </main>
+  <footer class="demo-footer"><span>MADE TO MOVE WITH YOU</span><span>A 3D SCROLL EXPERIMENT</span></footer>
+</body>
+</html>
