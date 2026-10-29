@@ -45,3 +45,35 @@ test('mobile reduces tree instances while keeping the same terrain and summit',(
   group.userData.setCompact(false);
   assert.equal(trunks.count,total); assert.equal(crowns.count,total*3);
 });
+
+test('snow caps sit outside the foliage instead of sharing the same faces',()=> {
+  const group=landscape();
+  const crowns=group.getObjectByName('Evergreen crowns');
+  const caps=group.getObjectByName('Snow on evergreen crowns');
+  assert.ok(caps.count>0,'exercise the snowy trees in the transition below the summit');
+  const geometry=crowns.geometry,position=geometry.getAttribute('position'),index=geometry.getIndex();
+  const sides=geometry.groups.find(part=>part.materialIndex===0);
+  const capMatrix=new THREE.Matrix4(),crownMatrix=new THREE.Matrix4(),inverse=new THREE.Matrix4();
+  const capCenter=new THREE.Vector3(),crownCenter=new THREE.Vector3();
+  for(let cap=0;cap<caps.count;cap++) {
+    caps.getMatrixAt(cap,capMatrix); capCenter.setFromMatrixPosition(capMatrix);
+    const capTip=new THREE.Vector3(0,.5,0).applyMatrix4(capMatrix);
+    let nearest=Infinity,match=null;
+    for(let crown=0;crown<crowns.count;crown++) {
+      crowns.getMatrixAt(crown,crownMatrix); crownCenter.setFromMatrixPosition(crownMatrix);
+      if(Math.hypot(capCenter.x-crownCenter.x,capCenter.z-crownCenter.z)>.00001) continue;
+      const gap=capTip.distanceTo(new THREE.Vector3(0,.5,0).applyMatrix4(crownMatrix));
+      if(gap<nearest) { nearest=gap; match=crownMatrix.clone(); }
+    }
+    assert.ok(match,'each snow cap must remain aligned with its tree tier');
+    inverse.copy(match).invert();
+    for(let triangle=sides.start;triangle<sides.start+sides.count;triangle+=3) {
+      const vertices=[0,1,2].map(k=>new THREE.Vector3().fromBufferAttribute(position,index.getX(triangle+k)));
+      const plane=new THREE.Plane().setFromCoplanarPoints(...vertices);
+      if(plane.normal.lengthSq()<.5) continue; // cone-tip triangles can be degenerate
+      const snowFace=vertices[0].clone().add(vertices[1]).add(vertices[2]).divideScalar(3)
+        .applyMatrix4(capMatrix).applyMatrix4(inverse);
+      assert.ok(plane.distanceToPoint(snowFace)>.0001,'coplanar snow and foliage cause striped z-fighting');
+    }
+  }
+});

@@ -109,7 +109,12 @@ export function createMountainLandscape({routeLength,at,direction}) {
       crowns.setMatrixAt(i*3+tier,transform.matrix);
       leafColor.set('#365d49').lerp(new THREE.Color('#658166'),tree.shade*.6+tier*.06);
       crowns.setColorAt(i*3+tier,leafColor);
-      if(tree.snow>.055) snowyCrowns.push({point:tree.point.clone().add(V(0,y+height*.2,0)),radius:radius*.6,height:height*.6,turn:tree.turn});
+      if(tree.snow>.055) {
+        // The smaller cone otherwise lies exactly on the upper foliage faces,
+        // making the depth buffer alternate between snow and green (z-fighting).
+        const thickness=Math.max(.003,tree.height*.004);
+        snowyCrowns.push({point:tree.point.clone().add(V(0,y+height*.2+thickness,0)),radius:radius*.6+thickness,height:height*.6,turn:tree.turn});
+      }
     }
   });
   const snowCaps=new THREE.InstancedMesh(crownGeometry,peakSnow,snowyCrowns.length);

@@ -4,7 +4,7 @@ import { createMotionState, advanceMotion } from './motion.mjs';
 import { createTrailPoints, trailClimate } from './trail.mjs';
 import { createMountainSound } from './sound.mjs';
 import { createSleeveGeometry } from './avatar.mjs';
-import { createMountainLandscape } from './landscape.mjs?v=2';
+import { createMountainLandscape } from './landscape.mjs?v=3';
 import { createRenderLoop } from './render-loop.mjs';
 import { createTrailStones } from './scenery.mjs';
 
