@@ -45,7 +45,6 @@ body.about-journey {
 .about-journey #valeo { --chapter-paper: #ffffff; --role-accent: var(--teal); }
 .about-journey #everhaus { --chapter-paper: #f5f5f7; --role-accent: var(--gold); }
 .about-journey #nutanix-lead { --chapter-paper: #ffffff; --role-accent: var(--blue); }
-.about-journey #nutanix-engineer { --chapter-paper: #f5f5f7; --role-accent: var(--indigo); }
 .about-journey #touchnote { --chapter-paper: #ffffff; --role-accent: var(--peach); }
 .about-journey #eleven01 { --chapter-paper: #f5f5f7; --role-accent: var(--gold); }
 .about-journey #amantya { --chapter-paper: #ffffff; --role-accent: var(--teal); }
@@ -57,7 +56,9 @@ body.about-journey {
 .about-journey .contact-links a { border-color: var(--line-strong); }
 .about-journey .education-item h3 span,
 .about-journey .contact-links span { color: var(--blue); }
+.about-journey .descent__sound,
 .about-journey .descent__view { background: #ffffffdf; color: var(--muted); border-color: var(--line-strong); }
+.about-journey .descent__sound[aria-pressed="true"],
 .about-journey .descent__view[aria-pressed="true"] { background: #e8eff9; }
 .about-journey .descent__readout { color: var(--muted); }
 .about-journey .descent__status i,

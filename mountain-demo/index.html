@@ -20,7 +20,16 @@
   <!-- Standalone 3D component; see README.md for integration. -->
   <aside class="descent" aria-label="A hiker watches the sunrise, then follows a descending trail as you scroll">
     <div class="descent__stage" aria-hidden="true"></div>
-    <button class="descent__view" type="button" aria-pressed="false">Closer look <span>↗</span></button>
+    <div class="descent__controls">
+      <button class="descent__sound" type="button" data-mountain-sound aria-label="Enable mountain sounds" aria-pressed="false" title="Enable mountain sounds" hidden>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M11 5 6 9H3v6h3l5 4z"/>
+          <path class="sound-waves" d="M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/>
+          <path class="sound-slash" d="m16 9 5 6m0-6-5 6"/>
+        </svg>
+      </button>
+      <button class="descent__view" type="button" aria-pressed="false">Closer look <span>↗</span></button>
+    </div>
     <div class="descent__readout" aria-hidden="true">
       <span class="descent__status"><i></i><span data-descent-state>Loading climber…</span></span>
       <span data-descent-percent>00%</span>
@@ -36,11 +45,11 @@
         <p class="description">Watch the sunrise. Take a breath.<br> The trail will wait for you.</p>
         <a class="scroll-cue" href="#valeo"><span>↓</span> Scroll to start the descent</a>
       </div>
-      <span class="chapter-number">01 / 11</span>
+      <span class="chapter-number">01 / 10</span>
     </section>
     <section class="chapter chapter--experience" id="valeo" data-chapter="experience" aria-labelledby="valeo-title">
       <div class="chapter__copy">
-        <p class="eyebrow">EXPERIENCE / 01 OF 08</p>
+        <p class="eyebrow">EXPERIENCE / 01 OF 07</p>
         <h2 class="experience-title" id="valeo-title">Valeo <em>Health</em></h2>
         <h3 class="experience-role">Management Intern</h3>
         <p class="experience-meta"><span>July – August 2026</span><span>Dubai, UAE</span></p>
@@ -53,11 +62,11 @@
         </ul>
         <a class="chapter-next" href="#everhaus">Earlier: EverHaus Group <span aria-hidden="true">↓</span></a>
       </div>
-      <span class="chapter-number">02 / 11</span>
+      <span class="chapter-number">02 / 10</span>
     </section>
     <section class="chapter chapter--experience" id="everhaus" data-chapter="experience" aria-labelledby="everhaus-title">
       <div class="chapter__copy">
-        <p class="eyebrow">EXPERIENCE / 02 OF 08</p>
+        <p class="eyebrow">EXPERIENCE / 02 OF 07</p>
         <h2 class="experience-title" id="everhaus-title">EverHaus <em>Group</em></h2>
         <h3 class="experience-role">Product Strategy Manager · Part-time</h3>
         <p class="experience-meta"><span>February – June 2026</span><span>Singapore</span></p>
@@ -70,45 +79,40 @@
         </ul>
         <a class="chapter-next" href="#nutanix-lead">Earlier: Nutanix <span aria-hidden="true">↓</span></a>
       </div>
-      <span class="chapter-number">03 / 11</span>
+      <span class="chapter-number">03 / 10</span>
     </section>
     <section class="chapter chapter--experience" id="nutanix-lead" data-chapter="experience" aria-labelledby="nutanix-lead-title">
       <div class="chapter__copy">
-        <p class="eyebrow">EXPERIENCE / 03 OF 08</p>
+        <p class="eyebrow">EXPERIENCE / 03 OF 07</p>
         <h2 class="experience-title" id="nutanix-lead-title"><em>Nutanix</em></h2>
-        <h3 class="experience-role">Development Team Lead / Engineering Manager</h3>
-        <p class="experience-meta"><span>July 2024 – January 2026</span><span>Bengaluru, India</span></p>
         <p class="company-description"><a href="https://www.nutanix.com" target="_blank" rel="noopener">Enterprise cloud software for running and managing applications across private and public clouds. <span aria-hidden="true">↗</span></a></p>
-        <p class="experience-summary">Led the migration-software engineering team, aligning Sales, Product, Legal and Compliance and handling major customer escalations.</p>
-        <ul class="experience-outcomes">
-          <li><strong>11+ engineers led against a $500K budget.</strong> Delivered migration software recognised by Gartner as best in class, while developing the team.</li>
-          <li><strong>$40–50M in annual contract value enabled.</strong> Aligned Sales, Product and Engineering on a customer-led roadmap to support enterprise deals.</li>
-          <li><strong>VM migration failures cut from 10% to about 1%.</strong> Grouped failures by cause and coordinated fixes for the largest categories for a government customer.</li>
-          <li><strong>400+ critical security risks reduced to 20.</strong> Also eliminated 500+ licensing risks through technical due diligence across product, legal and compliance teams.</li>
-        </ul>
-        <a class="chapter-next" href="#nutanix-engineer">Earlier: Nutanix · Member of Technical Staff <span aria-hidden="true">↓</span></a>
-      </div>
-      <span class="chapter-number">04 / 11</span>
-    </section>
-    <section class="chapter chapter--experience" id="nutanix-engineer" data-chapter="experience" aria-labelledby="nutanix-engineer-title">
-      <div class="chapter__copy">
-        <p class="eyebrow">EXPERIENCE / 04 OF 08</p>
-        <h2 class="experience-title" id="nutanix-engineer-title"><em>Nutanix</em></h2>
-        <h3 class="experience-role">Member of Technical Staff</h3>
-        <p class="experience-meta"><span>June 2022 – August 2024</span><span>Bengaluru, India</span></p>
-        <p class="company-description"><a href="https://www.nutanix.com" target="_blank" rel="noopener">Enterprise cloud software for running and managing applications across private and public clouds. <span aria-hidden="true">↗</span></a></p>
-        <p class="experience-summary">Built new capabilities on Nutanix’s migration software and onboarded large enterprise customers moving their workloads onto Nutanix.</p>
-        <ul class="experience-outcomes">
-          <li><strong>$1M+ in recurring revenue unlocked.</strong> Onboarded enterprise customers holding more than 10 petabytes of data onto a new file-migration capability.</li>
-          <li><strong>20,000 workloads at a global custodian bank.</strong> Supported banking customers moving workloads from public cloud to on-premises infrastructure.</li>
-        </ul>
+        <article class="experience-position" aria-labelledby="nutanix-lead-role">
+          <h3 class="experience-role" id="nutanix-lead-role">Development Team Lead / Engineering Manager</h3>
+          <p class="experience-meta"><span>July 2024 – January 2026</span><span>Bengaluru, India</span></p>
+          <p class="experience-summary">Led the migration-software engineering team, aligning Sales, Product, Legal and Compliance and handling major customer escalations.</p>
+          <ul class="experience-outcomes">
+            <li><strong>11+ engineers led against a $500K budget.</strong> Delivered migration software recognised by Gartner as best in class, while developing the team.</li>
+            <li><strong>$40–50M in annual contract value enabled.</strong> Aligned Sales, Product and Engineering on a customer-led roadmap to support enterprise deals.</li>
+            <li><strong>VM migration failures cut from 10% to about 1%.</strong> Grouped failures by cause and coordinated fixes for the largest categories for a government customer.</li>
+            <li><strong>400+ critical security risks reduced to 20.</strong> Also eliminated 500+ licensing risks through technical due diligence across product, legal and compliance teams.</li>
+          </ul>
+        </article>
+        <article class="experience-position" id="nutanix-engineer" aria-labelledby="nutanix-engineer-title">
+          <h3 class="experience-role" id="nutanix-engineer-title">Member of Technical Staff</h3>
+          <p class="experience-meta"><span>June 2022 – August 2024</span><span>Bengaluru, India</span></p>
+          <p class="experience-summary">Built new capabilities on Nutanix’s migration software and onboarded large enterprise customers moving their workloads onto Nutanix.</p>
+          <ul class="experience-outcomes">
+            <li><strong>$1M+ in recurring revenue unlocked.</strong> Onboarded enterprise customers holding more than 10 petabytes of data onto a new file-migration capability.</li>
+            <li><strong>20,000 workloads at a global custodian bank.</strong> Supported banking customers moving workloads from public cloud to on-premises infrastructure.</li>
+          </ul>
+        </article>
         <a class="chapter-next" href="#touchnote">Earlier: Touchnote <span aria-hidden="true">↓</span></a>
       </div>
-      <span class="chapter-number">05 / 11</span>
+      <span class="chapter-number">04 / 10</span>
     </section>
     <section class="chapter chapter--experience" id="touchnote" data-chapter="experience" aria-labelledby="touchnote-title">
       <div class="chapter__copy">
-        <p class="eyebrow">EXPERIENCE / 05 OF 08</p>
+        <p class="eyebrow">EXPERIENCE / 04 OF 07</p>
         <h2 class="experience-title" id="touchnote-title"><em>Touchnote</em></h2>
         <h3 class="experience-role">Senior Backend Developer</h3>
         <p class="experience-meta"><span>February 2020 – June 2022</span><span>Hyderabad, India</span></p>
@@ -121,11 +125,11 @@
         </ul>
         <a class="chapter-next" href="#eleven01">Earlier: Eleven01 <span aria-hidden="true">↓</span></a>
       </div>
-      <span class="chapter-number">06 / 11</span>
+      <span class="chapter-number">05 / 10</span>
     </section>
     <section class="chapter chapter--experience" id="eleven01" data-chapter="experience" aria-labelledby="eleven01-title">
       <div class="chapter__copy">
-        <p class="eyebrow">EXPERIENCE / 06 OF 08</p>
+        <p class="eyebrow">EXPERIENCE / 05 OF 07</p>
         <h2 class="experience-title" id="eleven01-title"><em>Eleven01</em></h2>
         <h3 class="experience-role">Founding Member &amp; Blockchain Developer</h3>
         <p class="experience-meta"><span>September 2018 – February 2020</span><span>Hyderabad, India</span></p>
@@ -137,11 +141,11 @@
         </ul>
         <a class="chapter-next" href="#amantya">Earlier: Amantya Technologies <span aria-hidden="true">↓</span></a>
       </div>
-      <span class="chapter-number">07 / 11</span>
+      <span class="chapter-number">06 / 10</span>
     </section>
     <section class="chapter chapter--experience" id="amantya" data-chapter="experience" aria-labelledby="amantya-title">
       <div class="chapter__copy">
-        <p class="eyebrow">EXPERIENCE / 07 OF 08</p>
+        <p class="eyebrow">EXPERIENCE / 06 OF 07</p>
         <h2 class="experience-title" id="amantya-title">Amantya <em>Technologies</em></h2>
         <h3 class="experience-role">Software Engineer</h3>
         <p class="experience-meta"><span>2018</span><span>Gurugram, India</span></p>
@@ -153,11 +157,11 @@
         </ul>
         <a class="chapter-next" href="#cognizant">Earlier: Cognizant <span aria-hidden="true">↓</span></a>
       </div>
-      <span class="chapter-number">08 / 11</span>
+      <span class="chapter-number">07 / 10</span>
     </section>
     <section class="chapter chapter--experience" id="cognizant" data-chapter="experience" aria-labelledby="cognizant-title">
       <div class="chapter__copy">
-        <p class="eyebrow">EXPERIENCE / 08 OF 08</p>
+        <p class="eyebrow">EXPERIENCE / 07 OF 07</p>
         <h2 class="experience-title" id="cognizant-title"><em>Cognizant</em></h2>
         <h3 class="experience-role">Associate</h3>
         <p class="experience-meta"><span>July 2016 – April 2018</span><span>India</span></p>
@@ -170,7 +174,7 @@
         </ul>
         <a class="chapter-next" href="#education">Education <span aria-hidden="true">↓</span></a>
       </div>
-      <span class="chapter-number">09 / 11</span>
+      <span class="chapter-number">08 / 10</span>
     </section>
     <section class="chapter chapter--education" id="education" data-chapter="education" aria-labelledby="education-title">
       <div class="chapter__copy">
@@ -193,7 +197,7 @@
         </div>
         <a class="chapter-next" href="#basecamp">The next chapter <span aria-hidden="true">↓</span></a>
       </div>
-      <span class="chapter-number">10 / 11</span>
+      <span class="chapter-number">09 / 10</span>
     </section>
     <section class="chapter chapter--end chapter--career-end" id="basecamp" data-chapter="closing" aria-labelledby="basecamp-title">
       <div class="chapter__copy">
@@ -208,7 +212,7 @@
         </div>
         <a class="restart" href="#summit">Back to the summit <span>↗</span></a>
       </div>
-      <span class="chapter-number">11 / 11</span>
+      <span class="chapter-number">10 / 10</span>
     </section>
   </main>
   <footer class="demo-footer"><span>MADE TO MOVE WITH YOU</span><span>A 3D SCROLL EXPERIMENT</span></footer>

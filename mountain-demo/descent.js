@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import { GLTFLoader } from './vendor/GLTFLoader.js';
 import { createMotionState, advanceMotion } from './motion.mjs';
+import { createTrailPoints, trailClimate } from './trail.mjs';
+import { createMountainSound } from './sound.mjs';
 
 const container = document.querySelector('.descent');
 const stage = container.querySelector('.descent__stage');
@@ -40,22 +42,20 @@ async function start() {
   Object.assign(sun.shadow.camera, { left: -6, right: 6, top: 7, bottom: -6, near: .1, far: 30 });
   sun.shadow.normalBias = .025;
   sun.shadow.bias = -.0001;
-  scene.add(sun);
+  scene.add(sun); scene.add(sun.target);
   const rim = new THREE.DirectionalLight(0xd6e5ee, 2);
   rim.position.set(5, 4, -4); scene.add(rim);
 
-  // A narrow strip of trail: its centerline defines both the ground and footsteps.
-  // The camera follows the hiker, so only the nearby ledge is in view.
-  const route = new THREE.CatmullRomCurve3([
-    V(-.8,2,-1.8), V(-.72,2,-1.25), V(-.15,1.56,-.55),
-    V(.12,1.03,.12), V(.02,.46,.83), V(.4,-.13,1.52),
-    V(.82,-.8,2.24), V(.86,-1.47,2.98), V(1.10,-1.96,3.48),
-    V(1.35,-2.12,3.9), V(1.48,-2.12,4.4)
-  ], false, 'centripetal');
+  // Each chapter adds distance to the winding descent. The following camera
+  // keeps the nearby hiker readable even as the full route grows much longer.
+  const chapterCount=document.querySelectorAll('main > .chapter').length;
+  const routePoints=createTrailPoints(chapterCount).map(([x,y,z])=>V(x,y,z));
+  const route = new THREE.CatmullRomCurve3(routePoints, false, 'centripetal');
+  const samples = routePoints.length*12;
+  route.arcLengthDivisions=samples*2;
   const routeLength = route.getLength();
   const at = (d) => route.getPointAt(clamp(d / routeLength, 0, 1));
   const direction = (d) => at(d + .06).sub(at(d - .06)).setY(0).normalize();
-  const samples = 110;
   const trailSamples = Array.from({length:samples+1}, (_,i)=>at(i/samples*routeLength));
   // A short flat summit behind the starting point gives the watcher room to stand.
   const before = at(0).addScaledVector(direction(0),-.72);
@@ -81,36 +81,51 @@ async function start() {
     mesh.castShadow=true; parent.add(mesh); return mesh;
   }
   const positions=[], colors=[], trailColor=new THREE.Color();
-  function triangle(a,b,c,color) {
-    trailColor.set(color);
+  const snowTint=new THREE.Color('#edf3f7');
+  const rockyTint=new THREE.Color('#a4a18c');
+  const greenTint=new THREE.Color('#6b8f50');
+  const roadTint=new THREE.Color('#c4b18f');
+  const summitRoadTint=new THREE.Color('#bbbfb8');
+  function triangle(a,b,c) {
     for(const p of [a,b,c]) {
+      const climate=trailClimate(p.progress);
+      const variation=.94+.06*Math.sin(p.progress*170+p.across*5);
+      if(Math.abs(p.across)<=1/3+.001) {
+        trailColor.copy(roadTint).lerp(summitRoadTint,climate.snow*.55);
+      } else {
+        trailColor.copy(rockyTint).lerp(greenTint,climate.green).lerp(snowTint,climate.snow);
+      }
+      trailColor.multiplyScalar(variation);
       positions.push(p.x,p.y,p.z);
       colors.push(trailColor.r,trailColor.g,trailColor.b,p.edgeOpacity);
     }
   }
   const crossSections=[];
+  const columns=12;
   for(let i=0;i<trailSamples.length;i++) {
     const center=trailSamples[i];
+    const progress=clamp((i-1)/samples,0,1),climate=trailClimate(progress);
     const tangent=trailSamples[Math.min(i+1,trailSamples.length-1)].clone().sub(trailSamples[Math.max(0,i-1)]).setY(0).normalize();
     const lateral=V(tangent.z,0,-tangent.x), row=[];
-    const width=.50+.035*Math.sin(i*.23)+(i<10?.13*(1-i/10):0);
-    for(let j=0;j<=8;j++) {
-      const across=(j/8*2-1)*width;
-      const p=center.clone().addScaledVector(lateral,across);
-      if(j<2||j>6) p.y+=Math.sin(i*.9+j*2.1)*.025;
-      // Keep the center solid underfoot and feather every outside edge into mist.
-      const edgeFade=1-THREE.MathUtils.smoothstep(Math.abs(j/4-1),.38,.98);
+    const width=.72+.035*Math.sin(i*.23)+(i<10?.13*(1-i/10):0);
+    for(let j=0;j<=columns;j++) {
+      const across=j/columns*2-1;
+      const p=center.clone().addScaledVector(lateral,across*width);
+      if(Math.abs(across)>1/3+.001) {
+        p.y+=Math.sin(i*.45+j*2.1)*.016+climate.snow*.075*Math.sin(Math.abs(across)*Math.PI);
+      }
+      // Solid snow/grass shoulders flank the dry center; only the outer edge fades.
+      const edgeFade=1-THREE.MathUtils.smoothstep(Math.abs(across),.66,1);
       const endFade=i===0||i===trailSamples.length-1?0:1;
-      p.edgeOpacity=edgeFade*endFade;
+      p.edgeOpacity=edgeFade*endFade; p.progress=progress; p.across=across;
       row.push(p);
     }
     crossSections.push(row);
   }
   for(let i=0;i<crossSections.length-1;i++) {
-    for(let j=0;j<8;j++) {
+    for(let j=0;j<columns;j++) {
       const a=crossSections[i][j], b=crossSections[i+1][j], c=crossSections[i][j+1], d=crossSections[i+1][j+1];
-      const color=j>=2&&j<=5 ? '#c4b18f' : (Math.floor(i/4)%3===0?'#9a9b85':'#8a927e');
-      triangle(a,b,c,color); triangle(c,b,d,color);
+      triangle(a,b,c); triangle(c,b,d);
     }
   }
   const terrainGeometry=new THREE.BufferGeometry();
@@ -142,13 +157,14 @@ async function start() {
     puff.position.copy(center); puff.scale.set(width,height,1); puff.renderOrder=2;
     scene.add(puff);
   }
-  for(let i=0;i<=22;i++) {
-    const distance=i/22*routeLength, p=at(distance), forward=direction(distance);
+  const cloudCount=Math.ceil(routeLength/.4);
+  for(let i=0;i<=cloudCount;i++) {
+    const distance=i/cloudCount*routeLength, p=at(distance), forward=direction(distance);
     const lateral=V(forward.z,0,-forward.x);
     for(const side of [-1,1]) {
-      const center=p.clone().addScaledVector(lateral,side*(.47+.045*Math.sin(i*1.7)));
+      const center=p.clone().addScaledVector(lateral,side*(.72+.045*Math.sin(i*1.7)));
       center.y-=.18+.025*Math.cos(i*1.3);
-      const strength=1-THREE.MathUtils.smoothstep(distance/routeLength,.72,.96);
+      const strength=(1-THREE.MathUtils.smoothstep(distance/routeLength,.72,.96))*.8;
       cloudBank(center,.84+.10*Math.sin(i*2.1+side),.36+.05*Math.cos(i*.9),strength);
     }
   }
@@ -156,15 +172,56 @@ async function start() {
 
   // Scattered stones stay at the edges, leaving a clear place for each footfall.
   const stoneGeometry=new THREE.DodecahedronGeometry(1,0);
-  for(let i=0;i<64;i++) {
-    const distance=(i+.5)/64*routeLength, p=at(distance), forward=direction(distance);
+  const stoneMaterials=['#949984','#a7a18a','#bcc6cb'].map(mat);
+  const stoneCount=Math.min(180,Math.ceil(routeLength/.15));
+  for(let i=0;i<stoneCount;i++) {
+    const distance=(i+.5)/stoneCount*routeLength, p=at(distance), forward=direction(distance);
     p.addScaledVector(V(forward.z,0,-forward.x),(i%2?1:-1)*(.29+.045*Math.sin(i*2.3)));
     p.y=heightAt(p.x,p.z)+.025;
-    const stone=new THREE.Mesh(stoneGeometry,mat(i%3?'#949984':'#a7a18a'));
+    const stone=new THREE.Mesh(stoneGeometry,stoneMaterials[trailClimate(distance/routeLength).snow>.6?2:i%2]);
     const size=.025+(i%4)*.014;
     stone.position.copy(p); stone.scale.set(size*1.5,size*.8,size); stone.rotation.set(i*.7,i*.43,i*.11);
     stone.castShadow=true; scene.add(stone);
   }
+  const snowPositions=[];
+  const grassPositions=[];
+  const detailCount=Math.ceil(routeLength/.18);
+  for(let i=0;i<detailCount;i++) {
+    const progress=(i+.5)/detailCount,climate=trailClimate(progress);
+    const p=at(progress*routeLength),forward=direction(progress*routeLength);
+    const lateral=V(forward.z,0,-forward.x);
+    for(const side of [-1,1]) {
+      const shoulder=p.clone().addScaledVector(lateral,side*(.39+.035*Math.sin(i*2.7)));
+      if(climate.snow>.03) snowPositions.push({p:shoulder,snow:climate.snow,i});
+      if(climate.green>.12&&i%3!==0) {
+        for(let blade=0;blade<5;blade++) {
+          const base=shoulder.clone().addScaledVector(forward,(blade-2)*.025);
+          base.y=heightAt(base.x,base.z)+.012;
+          const height=(.055+.045*(.5+.5*Math.sin(i*3.7+blade)))*climate.green;
+          const left=base.clone().addScaledVector(lateral,-.009);
+          const right=base.clone().addScaledVector(lateral,.009);
+          const tip=base.clone().addScaledVector(lateral,side*.025).add(V(0,height,0));
+          for(const v of [left,right,tip]) grassPositions.push(v.x,v.y,v.z);
+        }
+      }
+    }
+  }
+  const snowbanks=new THREE.InstancedMesh(new THREE.SphereGeometry(1,12,8),mat('#edf3f7'),snowPositions.length);
+  const snowTransform=new THREE.Object3D();
+  snowPositions.forEach(({p,snow,i},index)=> {
+    snowTransform.position.copy(p).add(V(0,.014+.065*snow,0));
+    snowTransform.scale.set(.105+.02*Math.sin(i*1.3),(.035+.015*Math.cos(i))*snow,.15);
+    snowTransform.rotation.set(0,i*.73,0); snowTransform.updateMatrix();
+    snowbanks.setMatrixAt(index,snowTransform.matrix);
+  });
+  snowbanks.instanceMatrix.needsUpdate=true;
+  snowbanks.receiveShadow=true; scene.add(snowbanks);
+  const grassMaterial=new THREE.MeshStandardMaterial({color:'#6e8d4d',roughness:1,side:THREE.DoubleSide});
+  const trailGrassGeometry=new THREE.BufferGeometry();
+  trailGrassGeometry.setAttribute('position',new THREE.Float32BufferAttribute(grassPositions,3));
+  trailGrassGeometry.computeVertexNormals();
+  scene.add(new THREE.Mesh(trailGrassGeometry,grassMaterial));
+
   const cairnPosition=at(0).add(V(-.36,0,-.23));
   for(let i=0;i<3;i++) {
     const stone=new THREE.Mesh(stoneGeometry,mat('#8b917f'));
@@ -193,7 +250,7 @@ async function start() {
   function groundTriangle(a,b,c) {
     for(const v of [a,b,c]) {
       const tint=.5+.5*Math.sin(v.across*5.7+v.along*3.2);
-      earth.set('#c4b594').lerp(new THREE.Color('#a4a17f'),tint*.20);
+      earth.set('#c4b594').lerp(greenTint,THREE.MathUtils.smoothstep(v.r,.22,.72)*(.72+tint*.18));
       groundPositions.push(v.p.x,v.p.y,v.p.z);
       groundColors.push(earth.r,earth.g,earth.b,1-THREE.MathUtils.smoothstep(v.r,.78,1));
       groundUVs.push(.5+v.across/3.8,.5+v.along/3.8);
@@ -227,7 +284,6 @@ async function start() {
   const clearing=new THREE.Mesh(groundGeometry,new THREE.MeshStandardMaterial({map:earthTexture,vertexColors:true,roughness:1,transparent:true,depthWrite:false,side:THREE.DoubleSide}));
   clearing.receiveShadow=true; scene.add(clearing);
 
-  const grassMaterial=new THREE.MeshStandardMaterial({color:'#87916c',roughness:1,side:THREE.DoubleSide});
   for(let i=0;i<30;i++) {
     const angle=i/30*Math.PI*2;
     const r=.62+randomGround()*.18;
@@ -544,6 +600,8 @@ async function start() {
     return p;
   }
 
+  const sound=createMountainSound(container.querySelector('[data-mountain-sound]'));
+
   let target=0, current=0, frame=0, lastTime=null, close=false, cameraBlend=0;
   let travelSign=1, facingYaw=sunriseYaw, ascentBlend=0, hipsY=null, poseSettling=false;
   let motionState=createMotionState(), initialized=false, lastDaylight=-1;
@@ -569,6 +627,7 @@ async function start() {
     const forward=V(Math.sin(facingYaw),0,Math.cos(facingYaw));
     const lateral=V(forward.z,0,-forward.x);
     const walking=THREE.MathUtils.smoothstep(heroProgress(progress),.018,.18)*clamp((1-progress)/.025,0,1);
+    sound.update(distance,trailClimate(progress),walking>.1&&!motion.matches&&Math.abs(motionState.velocity)*routeLength>.04);
     figure.rotation.y=facingYaw;
     figure.position.copy(p);
     for(const [bone,pose] of rest) { bone.quaternion.copy(pose.q); bone.position.copy(pose.p); }
@@ -620,6 +679,8 @@ async function start() {
     const closeOffset=V(2.3,1.35,4.6).multiplyScalar(fit);
     camera.position.copy(p).add(scenicOffset.lerp(closeOffset,cameraBlend));
     cameraTarget.copy(p).add(V(0,.65,0));
+    // Keep the original sunrise direction and contact shadows all the way down.
+    sun.position.copy(p).add(V(-3,7,-6)); sun.target.position.copy(p);
     camera.lookAt(cameraTarget); renderer.render(scene,camera);
   }
   function animate(time) {
@@ -685,7 +746,7 @@ async function start() {
   addEventListener('pageshow',()=> { initialized=false; hipsY=null; update(); });
   motion.addEventListener('change',update);
   new ResizeObserver(resize).observe(stage); new ResizeObserver(update).observe(document.body);
-  renderer.domElement.addEventListener('webglcontextlost',(event)=> { event.preventDefault(); if(frame) cancelAnimationFrame(frame); frame=0; status.textContent='3D paused — reload to resume'; });
-  renderer.domElement.addEventListener('webglcontextrestored',()=> { lastTime=null; schedule(); });
+  renderer.domElement.addEventListener('webglcontextlost',(event)=> { event.preventDefault(); if(frame) cancelAnimationFrame(frame); frame=0; sound.setPaused(true); status.textContent='3D paused — reload to resume'; });
+  renderer.domElement.addEventListener('webglcontextrestored',()=> { sound.setPaused(false); lastTime=null; schedule(); });
   resize();
 }

@@ -4,19 +4,20 @@ A standalone Three.js/WebGL scene with a rigged human avatar, a light climbing h
 a backpack, a narrow rocky trail, trekking poles, sunrise lighting, and real shadows.
 The scene sits on the right of the page. At the top, the hiker rests facing the
 sunrise; scrolling starts the trek downhill.
-The portfolio's About Me page now uses this journey at `../about.html`.
+The portfolio's homepage uses this journey at `../index.html`; `../about.html` redirects there.
+The previous homepage is available from **Old Site** at `../old-site.html`.
 The standalone prototype remains available in this folder.
 
 ## Website integration
 
-`about.html` reuses the career chapters and text unchanged, with a personalised
+`../index.html` reuses the career chapters and text unchanged, with a personalised
 opening introducing Parag as a Product Manager and a short career summary.
 The scroll arrow gently nudges downward, pauses outside the opening, and respects
 reduced-motion preferences. The existing site navigation, mobile menu, footer,
 page title and metadata are retained.
 `about-journey.css` applies the website's grey/white surfaces and its existing
 blue, indigo, gold, peach and teal accents. Alternating surfaces and accent
-dividers distinguish the roles. These integration styles apply only to About.
+dividers distinguish the roles. These integration styles apply only to the journey homepage.
 
 The site entry point loads the shared navigation script, this folder's CSS and
 ES module, and an import map pointing to the local Three.js library. Model and
@@ -37,16 +38,16 @@ feet, and arms oriented uphill. The camera follows along the trail, showing
 only the nearby ledge. **Closer look** zooms toward the avatar; **Trail view**
 restores the wider framing.
 
-The sunrise opening is followed by eight experience chapters, latest first:
-Valeo Health, EverHaus, the two Nutanix roles, Touchnote, Eleven01, Amantya and
-Cognizant. Each role has its own full-screen section with dates, location,
+The sunrise opening is followed by seven employer chapters, latest first:
+Valeo Health, EverHaus, Nutanix (both roles in one chapter), Touchnote, Eleven01, Amantya and
+Cognizant. Each employer has its own full-screen section with dates, location,
 company context, responsibilities and results. Education and a closing profile
 with contact links follow. On narrow screens content may grow rather than clip.
 The original opening copy and scene are retained; its scroll link now leads to
 the latest experience. The descent spans the entire career timeline, while the
 sunrise remains confined to the opening section.
 
-Every role has a distinct pastel background, matching heading accents and a
+Every employer has a distinct pastel background, matching heading accents and a
 visible chapter boundary. The canvas keeps the same size across all chapters,
 including the opening-to-first-role transition on mobile.
 
@@ -70,17 +71,36 @@ that move with the feet.
 The shorts have an above-knee hem and a relaxed fit. Bare knees and calves are
 attached to the existing leg bones so they follow the climbing and walking poses.
 
+The route is approximately 23 world metres for the current ten chapters, about
+three times the original distance. `trail.mjs` generates additional descending
+bends for each chapter added to `main`, preserving the flat summit and arrival.
+The path's shoulders start with raised snowbanks, gradually reveal rocky ground,
+and become green with grass tufts lower down. The center stays clear underfoot.
+Climate follows the position along the route, so going uphill returns to snow.
+Snowbanks use instancing and trail grass shares one geometry to limit draw calls.
+The sun and its shadow target follow the hiker along the longer route.
+
 The trail has no exposed vertical side walls. Vertex opacity feathers its outer
 edges, while static soft cloud banks follow both sides and the summit edge. The center
 stays readable underfoot, and the clouds require no ongoing idle animation.
 
 At the bottom, the trail levels onto a fixed clearing with gravel texture, small
-rocks, sparse grass, and contact shadows. Clouds thin out as the hiker approaches
+rocks, a green perimeter, grass, and contact shadows. Clouds thin out as the hiker approaches
 this solid ground. The clearing is stationary in the scene.
 
 The summit backdrop is a single static image (`assets/summit-sunrise.jpg`), with
 layered snowy peaks and a sunrise. It stays still behind the 3D hiker and softly
 fades as the summit is left behind. The image is approximately 280 KB.
+
+The speaker icon next to **Closer look** enables or mutes mountain sound, muted
+by default. `sound.mjs` creates soft wind and naturalistic walking textures locally
+with Web Audio after a click. Alternating footfalls follow the avatar's .60-metre
+stride in both directions; snow crunch gradually becomes gravel and grass.
+Footsteps stop when the hiker stops, and reduced-motion jumps do not trigger
+skipped footsteps. Wind continues softly while sound is enabled, using native
+audio nodes without an extra animation loop. Hiding the tab, leaving the page,
+or losing the WebGL context suspends sound. The icon has an accessible label and
+pressed state; unsupported browsers keep it hidden. No audio downloads are needed.
 
 Rendering stops when the scroll, pose and camera movement settle. The walk uses
 speed and acceleration limits, longer strides, and eased changes in direction
@@ -88,11 +108,11 @@ and body height. Deep links start at their actual scroll position, and elapsed
 time is capped after a paused tab. Pixel ratio is capped at 1.5 and shadows use a
 1024-pixel map. Reduced-motion preferences remove smoothing and stepping; direct
 scroll feedback remains. The overlay permits page clicks except on its camera
-button. On phones, the scene scales down; reserve space when integrating it.
+and sound buttons. On phones, the scene scales down; reserve space when integrating it.
 
 ## Add it to your website later
 
-1. Keep `descent.js`, `motion.mjs`, `assets/`, `models/`, and `vendor/` together in this directory.
+1. Keep `descent.js`, `motion.mjs`, `trail.mjs`, `sound.mjs`, `assets/`, `models/`, and `vendor/` together in this directory.
 2. Copy the `<aside class="descent">…</aside>` into your page.
 3. Copy the CSS beginning at `/* TRAIL COMPONENT`, plus the `.descent*`
    declarations inside the media queries. Demo page typography is independent.
@@ -106,9 +126,13 @@ prototype expects the named humanoid bones used by Ready Player Me/Mixamo.
 
 ## Motion checks
 
-From the repository root, run `node --test mountain-demo/tests/motion.test.mjs`.
+From the repository root, run `node --test mountain-demo/tests/*.test.mjs`.
 Checks cover large scroll jumps, long/negative frames, smooth reversals, exact
-arrival, reduced motion, and consistent pace at 30/60/120 FPS. Browser checks
+arrival, reduced motion, and consistent pace at 30/60/120 FPS. Trail checks cover
+route growth, walkable slopes, level arrival, and gradual snow-to-green transitions.
+Sound checks cover muted startup, toggling, hidden tabs, navigation, rapid clicks,
+permission failures, and footfall timing at 30/60/120 FPS in both directions.
+Earlier browser checks
 also verify identical canvas dimensions before and after entering the first role.
 
 ## Asset credits
