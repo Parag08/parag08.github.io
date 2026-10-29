@@ -3,8 +3,8 @@
 A standalone Three.js/WebGL scene with a rigged human avatar, a light climbing helmet,
 a backpack, a narrow rocky trail, trekking poles, sunrise lighting, and real shadows.
 The scene sits on the right of the page. At the top, the hiker stands upright
-facing the sunrise with hands resting on planted trekking poles. Breathing, occasional glances and
-a small weight shift suggest a quiet pause; scrolling eases into the trek downhill.
+facing the sunrise with hands resting on planted trekking poles. The resting pose
+stays still while reading; scrolling eases into the trek downhill.
 The portfolio's homepage uses this journey at `../index.html`; `../about.html` redirects there.
 The previous homepage is available from **Old Site** at `../old-site.html`.
 The standalone prototype remains available in this folder.
@@ -101,7 +101,7 @@ and its camera keeps the hiker larger while cropping the outer scenery.
 
 The walking strip has soft edges rather than exposed vertical side walls. Vertex opacity feathers its outer
 edges, while static soft cloud banks follow both sides and the summit edge. The center
-stays readable underfoot while the clouds drift gently in the wind.
+stays readable underfoot. Clouds and trees stay still, avoiding background rendering.
 
 At the bottom, the trail levels onto a fixed clearing with gravel texture, small
 rocks, a green perimeter, grass, and contact shadows. Clouds thin out as the hiker approaches
@@ -121,11 +121,12 @@ audio nodes without an extra animation loop. Hiding the tab, leaving the page,
 or losing the WebGL context suspends sound. The icon has an accessible label and
 pressed state; unsupported browsers keep it hidden. No audio downloads are needed.
 
-Idle motion uses a 30 FPS frame budget, while scroll, zoom and pose transitions
-keep full frame-rate feedback. Trees sway around their fixed roots, with crowns
-and snow caps following the same movement. Idle motion pauses when the tab is
-hidden or WebGL is unavailable; reduced-motion preferences keep the environment
-and summit pose still. Feet and pole tips stay anchored during the idle sequence. The walk uses
+Rendering runs on demand for scroll, zoom and pose transitions, and stops once
+they settle. `render-loop.mjs` coalesces requests and cancels pending frames when
+the tab is hidden or WebGL is unavailable. Camera-only changes reuse the existing
+avatar pose instead of repeating IK, and reuse the existing shadow map. The trail rocks use small static instance
+batches in `scenery.mjs`, retaining their positions, colors and shadows while
+reducing draw calls and scene objects. The snowy ridge and forest remain intact. The walk uses
 speed and acceleration limits, longer strides, and eased changes in direction
 and body height. Deep links start at their actual scroll position, and elapsed
 time is capped after a paused tab. Pixel ratio is capped at 1.5 and shadows use a
@@ -135,7 +136,7 @@ and sound buttons. On phones, the scene scales down; reserve space when integrat
 
 ## Add it to your website later
 
-1. Keep `descent.js`, `motion.mjs`, `trail.mjs`, `sound.mjs`, `avatar.mjs`, `landscape.mjs`, `idle.mjs`, `assets/`, `models/`, and `vendor/` together in this directory.
+1. Keep `descent.js`, `motion.mjs`, `trail.mjs`, `sound.mjs`, `avatar.mjs`, `landscape.mjs`, `render-loop.mjs`, `scenery.mjs`, `assets/`, `models/`, and `vendor/` together in this directory.
 2. Copy the `<aside class="descent">…</aside>` into your page.
 3. Copy the CSS beginning at `/* TRAIL COMPONENT`, plus the `.descent*`
    declarations inside the media queries. Demo page typography is independent.
@@ -157,7 +158,9 @@ Sound checks cover muted startup, toggling, hidden tabs, navigation, rapid click
 permission failures, and footfall timing at 30/60/120 FPS in both directions.
 Avatar checks use the shipped GLB to verify cuff weights and prevent stretched
 sleeve strips during arm movement. Landscape checks verify finite geometry,
-clear walking lanes, the tree line, and responsive tree density.
+clear walking lanes, the tree line, and responsive tree density. Render-loop checks
+verify zero continuing frames after settling, request coalescing, and visibility
+handling. Scenery checks verify the instance budget and preserved placement.
 Loader checks cover first-frame gating, cached state, model/import failures,
 slow connections, reduced motion, and compatibility with the previous homepage.
 Earlier browser checks

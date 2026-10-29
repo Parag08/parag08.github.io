@@ -4,8 +4,9 @@ import { createMotionState, advanceMotion } from './motion.mjs';
 import { createTrailPoints, trailClimate } from './trail.mjs';
 import { createMountainSound } from './sound.mjs';
 import { createSleeveGeometry } from './avatar.mjs';
-import { createMountainLandscape } from './landscape.mjs';
-import { summitIdlePose } from './idle.mjs';
+import { createMountainLandscape } from './landscape.mjs?v=2';
+import { createRenderLoop } from './render-loop.mjs';
+import { createTrailStones } from './scenery.mjs';
 
 const container = document.querySelector('.descent');
 const stage = container.querySelector('.descent__stage');
@@ -43,6 +44,8 @@ async function start() {
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
   renderer.setClearColor(scenePaper, 0);
   renderer.shadowMap.enabled = true;
+  renderer.shadowMap.autoUpdate = false;
+  renderer.shadowMap.needsUpdate = true;
   renderer.shadowMap.type = THREE.PCFShadowMap;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.25;
@@ -154,8 +157,7 @@ async function start() {
   const landscape=createMountainLandscape({routeLength,at,direction});
   scene.add(landscape);
 
-  // Slow wind moves the cloud banks gently around their original edge positions.
-  const cloudBanks=[];
+  // Static cloud banks soften the trail edges without an idle rendering loop.
   const mistCanvas=document.createElement('canvas');
   mistCanvas.width=256; mistCanvas.height=128;
   const mistContext=mistCanvas.getContext('2d');
@@ -170,12 +172,12 @@ async function start() {
   const mistTexture=new THREE.CanvasTexture(mistCanvas);
   const mistMaterial=new THREE.SpriteMaterial({map:mistTexture,color:scenePaper,transparent:true,opacity:.28,depthWrite:false,toneMapped:false});
   function cloudBank(center,width,height,strength=1) {
+    if(strength<=.001) return;
     const material=strength===1?mistMaterial:mistMaterial.clone();
     if(strength!==1) material.opacity*=strength;
     const puff=new THREE.Sprite(material);
     puff.position.copy(center); puff.scale.set(width,height,1); puff.renderOrder=2;
     scene.add(puff);
-    cloudBanks.push({puff,origin:center.clone(),phase:cloudBanks.length*.73});
   }
   const cloudCount=Math.ceil(routeLength/.4);
   for(let i=0;i<=cloudCount;i++) {
@@ -192,17 +194,7 @@ async function start() {
 
   // Scattered stones stay at the edges, leaving a clear place for each footfall.
   const stoneGeometry=new THREE.DodecahedronGeometry(1,0);
-  const stoneMaterials=['#949984','#a7a18a','#bcc6cb'].map(mat);
-  const stoneCount=Math.min(180,Math.ceil(routeLength/.15));
-  for(let i=0;i<stoneCount;i++) {
-    const distance=(i+.5)/stoneCount*routeLength, p=at(distance), forward=direction(distance);
-    p.addScaledVector(V(forward.z,0,-forward.x),(i%2?1:-1)*(.29+.045*Math.sin(i*2.3)));
-    p.y=heightAt(p.x,p.z)+.025;
-    const stone=new THREE.Mesh(stoneGeometry,stoneMaterials[trailClimate(distance/routeLength).snow>.6?2:i%2]);
-    const size=.025+(i%4)*.014;
-    stone.position.copy(p); stone.scale.set(size*1.5,size*.8,size); stone.rotation.set(i*.7,i*.43,i*.11);
-    stone.castShadow=true; scene.add(stone);
-  }
+  scene.add(createTrailStones({routeLength,at,direction,heightAt}));
   const snowPositions=[];
   const grassPositions=[];
   const detailCount=Math.ceil(routeLength/.18);
@@ -614,13 +606,14 @@ async function start() {
     tip.y=heightAt(tip.x,tip.z)+.015;
     return tip;
   });
-  let idleTime=0,motionSettling=false;
+  let renderLoop;
+  let lastPose=null;
   let scenePrepared=false,contextAvailable=true;
-  let target=0, current=0, frame=0, lastTime=null, close=false, cameraBlend=0;
+  let target=0, current=0, close=false, cameraBlend=0;
   let travelSign=1, facingYaw=sunriseYaw, ascentBlend=0, hipsY=null, poseSettling=false;
   let motionState=createMotionState(), initialized=false, lastDaylight=-1;
   let initialAnchorApplied=false;
-  let stageWidth=0, stageHeight=0;
+  let stageWidth=0, stageHeight=0,compactView=null;
   let scrollRange=1, heroHeight=innerHeight;
   const hero=document.getElementById('summit');
   const journeyMain=document.querySelector('main');
@@ -638,55 +631,55 @@ async function start() {
   }
   function draw(progress,dt) {
     const distance=progress*routeLength, p=at(distance);
-    const forward=V(Math.sin(facingYaw),0,Math.cos(facingYaw));
-    const lateral=V(forward.z,0,-forward.x);
-    const walking=THREE.MathUtils.smoothstep(heroProgress(progress),.06,.36)*clamp((1-progress)/.025,0,1);
-    sound.update(distance,trailClimate(progress),walking>.1&&!motion.matches&&Math.abs(motionState.velocity)*routeLength>.04);
-    figure.rotation.y=facingYaw;
-    figure.position.copy(p);
-    for(const [bone,pose] of rest) { bone.quaternion.copy(pose.q); bone.position.copy(pose.p); }
-    bones.Spine.rotation.x+=THREE.MathUtils.lerp(-.045,.12,ascentBlend)*walking;
-    const resting=1-THREE.MathUtils.smoothstep(heroProgress(progress),.06,.36);
-    const idle=summitIdlePose(idleTime,{reducedMotion:motion.matches});
-    figure.position.addScaledVector(lateral,idle.weightShift*resting);
-    bones.Spine.rotation.z+=idle.lean*resting;
-    bones.Spine2.rotation.x+=idle.chestPitch*resting;
-    bones.Spine2.position.y+=idle.chestLift*resting;
-    bones.Head.rotation.x+=(-.045+idle.lookPitch)*resting;
-    bones.Head.rotation.y+=idle.lookYaw*resting;
-    const feet=[step(distance,0,1,lateral),step(distance,.5,-1,lateral)];
-    const desiredHips=Math.min(feet[0].y,feet[1].y)+legReach*THREE.MathUtils.lerp(.96,.89,walking)-hipsOffset;
-    hipsY=hipsY===null||motion.matches?desiredHips:THREE.MathUtils.lerp(hipsY,desiredHips,1-Math.exp(-dt*22));
-    figure.position.y=hipsY;
-    poseSettling=Math.abs(hipsY-desiredHips)>.0003;
-    figure.updateMatrixWorld(true);
-    ['Left','Right'].forEach((side,i)=>{
-      solveIK(bones[side+'UpLeg'],bones[side+'Leg'],bones[side+'Foot'],feet[i],forward);
-      const world=figure.quaternion.clone().multiply(footRotations[i]);
-      bones[side+'Foot'].quaternion.copy(bones[side+'Foot'].parent.getWorldQuaternion(new THREE.Quaternion()).invert().multiply(world));
-      figure.updateMatrixWorld(true);
-    });
+    const heroPhase=heroProgress(progress);
+    const walking=THREE.MathUtils.smoothstep(heroPhase,.06,.36)*clamp((1-progress)/.025,0,1);
+    const resting=1-THREE.MathUtils.smoothstep(heroPhase,.06,.36);
     const uphill=travelSign<0;
-    const stridePhase=Math.sin(distance/.60*Math.PI*2)*walking;
-    for(const [i,side] of ['Left','Right'].entries()) {
-      const sign=i===0?1:-1;
-      // At the summit both hands rest on fixed pole grips, with relaxed elbows.
-      const summitHand=plantedTips[i].clone().add(V(0,.86,0)).addScaledVector(summitForward,-.035);
-      const restingHand=figure.localToWorld(V(sign*.18,.70,.045)).lerp(summitHand,resting);
-      const movingHand=p.clone().addScaledVector(forward,THREE.MathUtils.lerp(.18,.26,ascentBlend)+stridePhase*.055*sign)
-        .addScaledVector(lateral,sign*.16).add(V(0,THREE.MathUtils.lerp(.72,.85,ascentBlend)+stridePhase*.04*sign,0));
-      const handTarget=restingHand.lerp(movingHand,walking);
-      const elbow=lateral.clone().multiplyScalar(sign*.18).add(V(0,-1,0));
-      solveIK(bones[side+'Arm'],bones[side+'ForeArm'],bones[side+'Hand'],handTarget,elbow);
+    sound.update(distance,trailClimate(progress),walking>.1&&!motion.matches&&Math.abs(motionState.velocity)*routeLength>.04);
+    const poseChanged=hipsY===null||!lastPose||lastPose.progress!==progress||lastPose.yaw!==facingYaw||lastPose.ascent!==ascentBlend||lastPose.heroPhase!==heroPhase||lastPose.reduced!==motion.matches||poseSettling;
+    if(poseChanged) {
+      renderer.shadowMap.needsUpdate=true;
+      const forward=V(Math.sin(facingYaw),0,Math.cos(facingYaw));
+      const lateral=V(forward.z,0,-forward.x);
+      figure.rotation.y=facingYaw;
+      figure.position.copy(p);
+      for(const [bone,pose] of rest) { bone.quaternion.copy(pose.q); bone.position.copy(pose.p); }
+      bones.Spine.rotation.x+=THREE.MathUtils.lerp(-.045,.12,ascentBlend)*walking;
+      bones.Head.rotation.x-=.045*resting;
+      const feet=[step(distance,0,1,lateral),step(distance,.5,-1,lateral)];
+      const desiredHips=Math.min(feet[0].y,feet[1].y)+legReach*THREE.MathUtils.lerp(.96,.89,walking)-hipsOffset;
+      hipsY=hipsY===null||motion.matches?desiredHips:THREE.MathUtils.lerp(hipsY,desiredHips,1-Math.exp(-dt*22));
+      figure.position.y=hipsY;
+      poseSettling=Math.abs(hipsY-desiredHips)>.0003;
       figure.updateMatrixWorld(true);
-      const hand=bones[side+'Hand'].getWorldPosition(V());
-      const walkingTip=p.clone().addScaledVector(forward,.24).addScaledVector(lateral,sign*.26);
-      walkingTip.y=heightAt(walkingTip.x,walkingTip.z)+.01;
-      const tip=plantedTips[i].clone().lerp(walkingTip,1-resting);
-      const top=hand.clone().add(V(0,.045,0)), axis=top.clone().sub(tip);
-      poles[i].position.copy(top).add(tip).multiplyScalar(.5);
-      poles[i].quaternion.setFromUnitVectors(V(0,1,0),axis.clone().normalize());
-      poles[i].scale.y=axis.length();
+      ['Left','Right'].forEach((side,i)=>{
+        solveIK(bones[side+'UpLeg'],bones[side+'Leg'],bones[side+'Foot'],feet[i],forward);
+        const world=figure.quaternion.clone().multiply(footRotations[i]);
+        bones[side+'Foot'].quaternion.copy(bones[side+'Foot'].parent.getWorldQuaternion(new THREE.Quaternion()).invert().multiply(world));
+        figure.updateMatrixWorld(true);
+      });
+      const stridePhase=Math.sin(distance/.60*Math.PI*2)*walking;
+      for(const [i,side] of ['Left','Right'].entries()) {
+        const sign=i===0?1:-1;
+        // At the summit both hands rest on fixed pole grips, with relaxed elbows.
+        const summitHand=plantedTips[i].clone().add(V(0,.86,0)).addScaledVector(summitForward,-.035);
+        const restingHand=figure.localToWorld(V(sign*.18,.70,.045)).lerp(summitHand,resting);
+        const movingHand=p.clone().addScaledVector(forward,THREE.MathUtils.lerp(.18,.26,ascentBlend)+stridePhase*.055*sign)
+          .addScaledVector(lateral,sign*.16).add(V(0,THREE.MathUtils.lerp(.72,.85,ascentBlend)+stridePhase*.04*sign,0));
+        const handTarget=restingHand.lerp(movingHand,walking);
+        const elbow=lateral.clone().multiplyScalar(sign*.18).add(V(0,-1,0));
+        solveIK(bones[side+'Arm'],bones[side+'ForeArm'],bones[side+'Hand'],handTarget,elbow);
+        figure.updateMatrixWorld(true);
+        const hand=bones[side+'Hand'].getWorldPosition(V());
+        const walkingTip=p.clone().addScaledVector(forward,.24).addScaledVector(lateral,sign*.26);
+        walkingTip.y=heightAt(walkingTip.x,walkingTip.z)+.01;
+        const tip=plantedTips[i].clone().lerp(walkingTip,1-resting);
+        const top=hand.clone().add(V(0,.045,0)), axis=top.clone().sub(tip);
+        poles[i].position.copy(top).add(tip).multiplyScalar(.5);
+        poles[i].quaternion.setFromUnitVectors(V(0,1,0),axis.clone().normalize());
+        poles[i].scale.y=axis.length();
+      }
+      lastPose={progress,yaw:facingYaw,ascent:ascentBlend,heroPhase,reduced:motion.matches};
     }
     meter.style.transform=`scaleX(${progress})`;
     const nextPercent=`${String(Math.round(progress*100)).padStart(2,'0')}%`;
@@ -705,29 +698,10 @@ async function start() {
     cameraTarget.copy(p).add(V(0,.70,0)).addScaledVector(cameraRight,.18);
     // Keep the original sunrise direction and contact shadows all the way down.
     sun.position.copy(p).add(V(-3,7,-6)); sun.target.position.copy(p);
-    landscape.userData.updateWind(idleTime,motion.matches);
-    for(const {puff,origin,phase} of cloudBanks) {
-      puff.position.copy(origin);
-      if(!motion.matches) {
-        puff.position.x+=(Math.sin(idleTime*.24+phase)-Math.sin(phase))*.085;
-        puff.position.y+=(Math.sin(idleTime*.31+phase)-Math.sin(phase))*.018;
-        puff.position.z+=(Math.cos(idleTime*.17+phase)-Math.cos(phase))*.035;
-      }
-    }
     camera.lookAt(cameraTarget); renderer.render(scene,camera);
   }
-  function animate(time) {
-    if(document.hidden||!contextAvailable) { frame=0; return; }
-    // Ambient-only frames run at 30 FPS. Scroll, zoom and pose transitions retain
-    // full frame-rate feedback, including when an idle frame was just painted.
-    const moving=motionSettling||current!==target||motionState.velocity!==0||cameraBlend!==(close?1:0);
-    if(!motion.matches&&!moving&&lastTime!==null&&time-lastTime<1000/30-.1) {
-      frame=requestAnimationFrame(animate); return;
-    }
-    // Use only RAF timestamps, and cap elapsed time after a suspended tab.
-    const dt=lastTime===null?1/60:clamp((time-lastTime)/1000,0,.05); lastTime=time;
+  function animate(dt) {
     const smoothing=motion.matches?1:1-Math.exp(-dt*8);
-    if(!motion.matches) idleTime+=dt;
     const previous=current;
     motionState=advanceMotion(motionState,target,dt,routeLength,{reducedMotion:motion.matches});
     current=motionState.position;
@@ -742,11 +716,9 @@ async function start() {
     const yawDelta=Math.atan2(Math.sin(yawTarget-facingYaw),Math.cos(yawTarget-facingYaw));
     facingYaw=Math.abs(yawDelta)<.0001?yawTarget:facingYaw+yawDelta*smoothing;
     draw(current,dt);
-    motionSettling=current!==target||motionState.velocity!==0||cameraBlend!==(close?1:0)||Math.abs(yawDelta)>=.0001||poseSettling||ascentBlend!==desiredAscent;
-    const ambienceActive=!motion.matches;
-    frame=(ambienceActive||motionSettling)&&!document.hidden&&contextAvailable?requestAnimationFrame(animate):0;
+    return current!==target||motionState.velocity!==0||cameraBlend!==(close?1:0)||Math.abs(yawDelta)>=.0001||poseSettling||ascentBlend!==desiredAscent;
   }
-  function schedule() { if(scenePrepared&&contextAvailable&&!document.hidden&&!frame) { lastTime=null; frame=requestAnimationFrame(animate); } }
+  function schedule() { if(scenePrepared&&contextAvailable) renderLoop.request(); }
   function update(event) {
     // The site footer can follow the journey without delaying arrival at camp.
     const journeyEnd=journeyMain?journeyMain.offsetTop+journeyMain.offsetHeight:document.documentElement.scrollHeight;
@@ -777,7 +749,11 @@ async function start() {
     schedule();
   }
   function resize() {
-    landscape.userData.setCompact(innerWidth<=760);
+    const compact=innerWidth<=760;
+    if(compactView!==compact) {
+      compactView=compact; landscape.userData.setCompact(compact);
+      renderer.shadowMap.needsUpdate=true;
+    }
     const w=Math.round(stage.clientWidth),h=Math.round(stage.clientHeight);
     if(w>0&&h>0&&(w!==stageWidth||h!==stageHeight)) {
       stageWidth=w; stageHeight=h;
@@ -785,17 +761,18 @@ async function start() {
     }
     update();
   }
+  renderLoop=createRenderLoop(animate);
   viewButton.addEventListener('click',()=> { close=!close; viewButton.setAttribute('aria-pressed',String(close)); viewButton.innerHTML=close?'Trail view <span>↙</span>':'Closer look <span>↗</span>'; schedule(); });
   addEventListener('scroll',update,{passive:true});
   addEventListener('pageshow',()=> { initialized=false; hipsY=null; update(); });
   motion.addEventListener('change',update);
   document.addEventListener('visibilitychange',()=> {
-    if(document.hidden) { if(frame) cancelAnimationFrame(frame); frame=0; lastTime=null; }
-    else schedule();
+    if(document.hidden) renderLoop.pause();
+    else { renderLoop.resume(); schedule(); }
   });
   new ResizeObserver(resize).observe(stage); new ResizeObserver(update).observe(document.body);
-  renderer.domElement.addEventListener('webglcontextlost',(event)=> { event.preventDefault(); contextAvailable=false; if(frame) cancelAnimationFrame(frame); frame=0; sound.setPaused(true); status.textContent='3D paused — reload to resume'; });
-  renderer.domElement.addEventListener('webglcontextrestored',()=> { contextAvailable=true; sound.setPaused(false); lastTime=null; schedule(); });
+  renderer.domElement.addEventListener('webglcontextlost',(event)=> { event.preventDefault(); contextAvailable=false; renderLoop.pause(); sound.setPaused(true); status.textContent='3D paused — reload to resume'; });
+  renderer.domElement.addEventListener('webglcontextrestored',()=> { contextAvailable=true; renderer.shadowMap.needsUpdate=true; sound.setPaused(false); renderLoop.resume(); schedule(); });
   loadProgress(85,'Preparing the first view…');
   await Promise.all([backdropReady,document.fonts?.ready]);
   resize();

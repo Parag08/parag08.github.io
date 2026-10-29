@@ -45,31 +45,3 @@ test('mobile reduces tree instances while keeping the same terrain and summit',(
   group.userData.setCompact(false);
   assert.equal(trunks.count,total); assert.equal(crowns.count,total*3);
 });
-
-test('wind keeps tree roots fixed, snow attached, and reduced motion restores still trees',()=> {
-  const group=landscape();
-  const trunks=group.getObjectByName('Evergreen trunks'),crowns=group.getObjectByName('Evergreen crowns'),caps=group.getObjectByName('Snow on evergreen crowns');
-  const baseline=[trunks,crowns,caps].map(mesh=>mesh.instanceMatrix.array.slice());
-  const matrix=new THREE.Matrix4();
-  const worldPoint=(mesh,index,local)=> {
-    mesh.getMatrixAt(index,matrix);
-    return local.clone().applyMatrix4(matrix);
-  };
-  const roots=Array.from({length:trunks.count},(_,i)=>worldPoint(trunks,i,new THREE.Vector3(0,-.5,0)));
-  const crownStart=worldPoint(crowns,0,new THREE.Vector3());
-  const snowDistance=caps.count?crownStart.distanceTo(worldPoint(caps,0,new THREE.Vector3())):0;
-  let changed=false;
-  for(const time of [1,3.5,8,17]) {
-    group.userData.updateWind(time);
-    for(let i=0;i<trunks.count;i++) {
-      const root=worldPoint(trunks,i,new THREE.Vector3(0,-.5,0));
-      assert.ok(root.distanceTo(roots[i])<.00001,'a tree root slides off its ground');
-    }
-    const crown=worldPoint(crowns,0,new THREE.Vector3());
-    changed ||= crown.distanceTo(crownStart)>.001;
-    if(caps.count) assert.ok(Math.abs(crown.distanceTo(worldPoint(caps,0,new THREE.Vector3()))-snowDistance)<.00001,'snow separates from its tree');
-  }
-  assert.ok(changed,'the wind should move the crowns');
-  group.userData.updateWind(17,true);
-  [trunks,crowns,caps].forEach((mesh,i)=>assert.deepEqual(mesh.instanceMatrix.array,baseline[i]));
-});

@@ -109,7 +109,7 @@ export function createMountainLandscape({routeLength,at,direction}) {
       crowns.setMatrixAt(i*3+tier,transform.matrix);
       leafColor.set('#365d49').lerp(new THREE.Color('#658166'),tree.shade*.6+tier*.06);
       crowns.setColorAt(i*3+tier,leafColor);
-      if(tree.snow>.055) snowyCrowns.push({treeIndex:i,point:tree.point.clone().add(V(0,y+height*.2,0)),radius:radius*.6,height:height*.6,turn:tree.turn});
+      if(tree.snow>.055) snowyCrowns.push({point:tree.point.clone().add(V(0,y+height*.2,0)),radius:radius*.6,height:height*.6,turn:tree.turn});
     }
   });
   const snowCaps=new THREE.InstancedMesh(crownGeometry,peakSnow,snowyCrowns.length);
@@ -123,47 +123,10 @@ export function createMountainLandscape({routeLength,at,direction}) {
   }
   if(crowns.instanceColor) crowns.instanceColor.needsUpdate=true;
   crowns.castShadow=true;
-  const baseTrunks=trunks.instanceMatrix.array.slice();
-  const baseCrowns=crowns.instanceMatrix.array.slice();
-  const baseSnow=snowCaps.instanceMatrix.array.slice();
-  const pivot=new THREE.Matrix4(),baseMatrix=new THREE.Matrix4(),posed=new THREE.Matrix4();
-  const angles=new THREE.Euler(),offset=new THREE.Vector3();
-  const pivots=ordered.map(()=>new THREE.Matrix4());
-  let windAt=null,windReduced=false;
-  group.userData.updateWind=(time,reduced=false)=> {
-    if(windAt===time&&windReduced===reduced) return;
-    windAt=time; windReduced=reduced;
-    if(reduced) {
-      trunks.instanceMatrix.array.set(baseTrunks);
-      crowns.instanceMatrix.array.set(baseCrowns);
-      snowCaps.instanceMatrix.array.set(baseSnow);
-    } else {
-      for(let i=0;i<trunks.count;i++) {
-        const tree=ordered[i],phase=i*1.73;
-        const sway=Math.sin(time*.82+phase)*.013+Math.sin(time*1.37+phase*.6)*.004;
-        angles.set(sway,0,Math.sin(time*.67+phase)*.012);
-        pivot.makeRotationFromEuler(angles);
-        offset.copy(tree.point).applyMatrix4(pivot).multiplyScalar(-1).add(tree.point);
-        pivot.setPosition(offset); pivots[i].copy(pivot);
-        trunks.setMatrixAt(i,posed.multiplyMatrices(pivot,baseMatrix.fromArray(baseTrunks,i*16)));
-        for(let tier=0;tier<3;tier++) {
-          const index=i*3+tier;
-          crowns.setMatrixAt(index,posed.multiplyMatrices(pivot,baseMatrix.fromArray(baseCrowns,index*16)));
-        }
-      }
-      if(snowCaps.visible) for(let i=0;i<snowyCrowns.length;i++) {
-        snowCaps.setMatrixAt(i,posed.multiplyMatrices(pivots[snowyCrowns[i].treeIndex],baseMatrix.fromArray(baseSnow,i*16)));
-      }
-    }
-    trunks.instanceMatrix.needsUpdate=true;
-    crowns.instanceMatrix.needsUpdate=true;
-    if(reduced||snowCaps.visible) snowCaps.instanceMatrix.needsUpdate=true;
-  };
   group.userData.treeCount=ordered.length;
   group.userData.surface=surface;
   group.userData.summitSlope=flank;
   group.userData.setCompact=compact=> {
-    windAt=null;
     const count=compact?Math.ceil(ordered.length/2):ordered.length;
     trunks.count=count; crowns.count=count*3;
     snowCaps.visible=!compact;
