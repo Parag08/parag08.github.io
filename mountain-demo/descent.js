@@ -3,6 +3,9 @@ import { GLTFLoader } from './vendor/GLTFLoader.js';
 import { createMotionState, advanceMotion } from './motion.mjs';
 import { createTrailPoints, trailClimate } from './trail.mjs';
 import { createMountainSound } from './sound.mjs';
+import { createSleeveGeometry } from './avatar.mjs';
+import { createMountainLandscape } from './landscape.mjs';
+import { summitIdlePose } from './idle.mjs';
 
 const container = document.querySelector('.descent');
 const stage = container.querySelector('.descent__stage');
@@ -148,8 +151,11 @@ async function start() {
   const terrain=new THREE.Mesh(terrainGeometry,new THREE.MeshStandardMaterial({vertexColors:true,flatShading:true,roughness:1,side:THREE.DoubleSide,transparent:true,depthWrite:false}));
   terrain.renderOrder=1; terrain.receiveShadow=true; scene.add(terrain);
 
-  // Static soft cloud banks follow both edges in world space. They need no idle
-  // animation and leave the middle of the path readable as the camera follows.
+  const landscape=createMountainLandscape({routeLength,at,direction});
+  scene.add(landscape);
+
+  // Slow wind moves the cloud banks gently around their original edge positions.
+  const cloudBanks=[];
   const mistCanvas=document.createElement('canvas');
   mistCanvas.width=256; mistCanvas.height=128;
   const mistContext=mistCanvas.getContext('2d');
@@ -169,6 +175,7 @@ async function start() {
     const puff=new THREE.Sprite(material);
     puff.position.copy(center); puff.scale.set(width,height,1); puff.renderOrder=2;
     scene.add(puff);
+    cloudBanks.push({puff,origin:center.clone(),phase:cloudBanks.length*.73});
   }
   const cloudCount=Math.ceil(routeLength/.4);
   for(let i=0;i<=cloudCount;i++) {
@@ -377,27 +384,17 @@ async function start() {
       const material = object.material; material.roughness = .9;
       if (/Outfit_Top/.test(object.name)) {
         jacketSource=object;
-        // Reshape the sample's long coat into a hip-length technical shell,
-        // keeping the original skeleton and sleeves for natural movement.
-        const geometry=object.geometry.clone();
+        // Keep the sleeves in their bind pose and preserve every original arm
+        // weight. Only the separate torso shell is shortened to jacket length.
+        const geometry=createSleeveGeometry(object.geometry,object.skeleton.bones.map(bone=>bone.name));
         const position=geometry.getAttribute('position');
-        const joints=geometry.getAttribute('skinIndex'), weights=geometry.getAttribute('skinWeight');
-        const hipsIndex=object.skeleton.bones.findIndex(b=>b.name==='Hips');
         const jacketColors=[], blue=new THREE.Color('#087fc9'), navy=new THREE.Color('#07568c');
         for(let i=0;i<position.count;i++) {
-          let x=position.getX(i), y=position.getY(i), z=position.getZ(i);
-          if(y<1.045) {
-            y=1.015+(y-1.045)*.055;
-            x=clamp(x,-.17,.17);
-            if(hipsIndex>=0) { joints.setXYZW(i,hipsIndex,0,0,0); weights.setXYZW(i,1,0,0,0); }
-          }
-          if(y>1.05&&y<1.45&&Math.abs(x)<.12&&z>.13) z=.13+(z-.13)*.12;
-          position.setXYZ(i,x,y,z);
+          const x=position.getX(i),y=position.getY(i);
           const panel=(y>1.48&&Math.abs(x)>.12)||y<1.055;
           const color=panel?navy:blue;
           jacketColors.push(color.r,color.g,color.b);
         }
-        position.needsUpdate=true; joints.needsUpdate=true; weights.needsUpdate=true;
         geometry.setAttribute('color',new THREE.Float32BufferAttribute(jacketColors,3));
         geometry.computeVertexNormals(); object.geometry=geometry;
         material.map=null; material.normalMap=null; material.color.set('#ffffff');
@@ -470,15 +467,6 @@ async function start() {
     kneecap.scale.z=.94; kneecap.position.copy(shin.worldToLocal(avatar.localToWorld(knee.clone())));
     kneecap.castShadow=true; shin.add(kneecap);
   }
-  const sleevePosition=jacketSource.geometry.getAttribute('position');
-  const originalIndices=jacketSource.geometry.getIndex();
-  const sleeveIndices=[];
-  for(let i=0;i<originalIndices.count;i+=3) {
-    const ids=[originalIndices.getX(i),originalIndices.getX(i+1),originalIndices.getX(i+2)];
-    const meanX=ids.reduce((sum,index)=>sum+Math.abs(sleevePosition.getX(index)),0)/3;
-    if(meanX>.175||(meanX>.145&&ids.every(index=>sleevePosition.getY(index)>1.40))) sleeveIndices.push(...ids);
-  }
-  jacketSource.geometry.setIndex(sleeveIndices);
   const torsoBones=['Hips','Spine','Spine1','Spine2','Neck'].map(name=>({
     index:jacketSource.skeleton.bones.indexOf(bones[name]),
     height:bones[name].getWorldPosition(V()).y/scale
@@ -619,7 +607,15 @@ async function start() {
 
   const sound=createMountainSound(container.querySelector('[data-mountain-sound]'));
 
-  let scenePrepared=false;
+  const summitForward=V(Math.sin(sunriseYaw),0,Math.cos(sunriseYaw));
+  const summitLateral=V(summitForward.z,0,-summitForward.x);
+  const plantedTips=[1,-1].map(sign=> {
+    const tip=at(0).addScaledVector(summitForward,.22).addScaledVector(summitLateral,sign*.30);
+    tip.y=heightAt(tip.x,tip.z)+.015;
+    return tip;
+  });
+  let idleTime=0,motionSettling=false;
+  let scenePrepared=false,contextAvailable=true;
   let target=0, current=0, frame=0, lastTime=null, close=false, cameraBlend=0;
   let travelSign=1, facingYaw=sunriseYaw, ascentBlend=0, hipsY=null, poseSettling=false;
   let motionState=createMotionState(), initialized=false, lastDaylight=-1;
@@ -636,7 +632,7 @@ async function start() {
   function desiredYaw(progress) {
     const forward=direction(progress*routeLength).multiplyScalar(travelSign);
     const heading=Math.atan2(forward.x,forward.z);
-    const departure=THREE.MathUtils.smoothstep(heroProgress(progress),.018,.18);
+    const departure=THREE.MathUtils.smoothstep(heroProgress(progress),.06,.36);
     const delta=Math.atan2(Math.sin(heading-sunriseYaw),Math.cos(heading-sunriseYaw));
     return sunriseYaw+delta*departure;
   }
@@ -644,15 +640,22 @@ async function start() {
     const distance=progress*routeLength, p=at(distance);
     const forward=V(Math.sin(facingYaw),0,Math.cos(facingYaw));
     const lateral=V(forward.z,0,-forward.x);
-    const walking=THREE.MathUtils.smoothstep(heroProgress(progress),.018,.18)*clamp((1-progress)/.025,0,1);
+    const walking=THREE.MathUtils.smoothstep(heroProgress(progress),.06,.36)*clamp((1-progress)/.025,0,1);
     sound.update(distance,trailClimate(progress),walking>.1&&!motion.matches&&Math.abs(motionState.velocity)*routeLength>.04);
     figure.rotation.y=facingYaw;
     figure.position.copy(p);
     for(const [bone,pose] of rest) { bone.quaternion.copy(pose.q); bone.position.copy(pose.p); }
     bones.Spine.rotation.x+=THREE.MathUtils.lerp(-.045,.12,ascentBlend)*walking;
-    bones.Head.rotation.x-=.07*(1-walking);
+    const resting=1-THREE.MathUtils.smoothstep(heroProgress(progress),.06,.36);
+    const idle=summitIdlePose(idleTime,{reducedMotion:motion.matches});
+    figure.position.addScaledVector(lateral,idle.weightShift*resting);
+    bones.Spine.rotation.z+=idle.lean*resting;
+    bones.Spine2.rotation.x+=idle.chestPitch*resting;
+    bones.Spine2.position.y+=idle.chestLift*resting;
+    bones.Head.rotation.x+=(-.045+idle.lookPitch)*resting;
+    bones.Head.rotation.y+=idle.lookYaw*resting;
     const feet=[step(distance,0,1,lateral),step(distance,.5,-1,lateral)];
-    const desiredHips=Math.min(feet[0].y,feet[1].y)+legReach*.89-hipsOffset;
+    const desiredHips=Math.min(feet[0].y,feet[1].y)+legReach*THREE.MathUtils.lerp(.96,.89,walking)-hipsOffset;
     hipsY=hipsY===null||motion.matches?desiredHips:THREE.MathUtils.lerp(hipsY,desiredHips,1-Math.exp(-dt*22));
     figure.position.y=hipsY;
     poseSettling=Math.abs(hipsY-desiredHips)>.0003;
@@ -667,8 +670,9 @@ async function start() {
     const stridePhase=Math.sin(distance/.60*Math.PI*2)*walking;
     for(const [i,side] of ['Left','Right'].entries()) {
       const sign=i===0?1:-1;
-      // Arms hang naturally during the sunrise pause; pole placement alternates on the trail.
-      const restingHand=figure.localToWorld(V(sign*.18,.70,.045));
+      // At the summit both hands rest on fixed pole grips, with relaxed elbows.
+      const summitHand=plantedTips[i].clone().add(V(0,.86,0)).addScaledVector(summitForward,-.035);
+      const restingHand=figure.localToWorld(V(sign*.18,.70,.045)).lerp(summitHand,resting);
       const movingHand=p.clone().addScaledVector(forward,THREE.MathUtils.lerp(.18,.26,ascentBlend)+stridePhase*.055*sign)
         .addScaledVector(lateral,sign*.16).add(V(0,THREE.MathUtils.lerp(.72,.85,ascentBlend)+stridePhase*.04*sign,0));
       const handTarget=restingHand.lerp(movingHand,walking);
@@ -676,8 +680,9 @@ async function start() {
       solveIK(bones[side+'Arm'],bones[side+'ForeArm'],bones[side+'Hand'],handTarget,elbow);
       figure.updateMatrixWorld(true);
       const hand=bones[side+'Hand'].getWorldPosition(V());
-      const tip=p.clone().addScaledVector(forward,.24*walking).addScaledVector(lateral,sign*.26);
-      tip.y=heightAt(tip.x,tip.z)+.01;
+      const walkingTip=p.clone().addScaledVector(forward,.24).addScaledVector(lateral,sign*.26);
+      walkingTip.y=heightAt(walkingTip.x,walkingTip.z)+.01;
+      const tip=plantedTips[i].clone().lerp(walkingTip,1-resting);
       const top=hand.clone().add(V(0,.045,0)), axis=top.clone().sub(tip);
       poles[i].position.copy(top).add(tip).multiplyScalar(.5);
       poles[i].quaternion.setFromUnitVectors(V(0,1,0),axis.clone().normalize());
@@ -692,19 +697,37 @@ async function start() {
     if(daylight!==lastDaylight) { container.style.setProperty('--sunrise',String(daylight)); lastDaylight=daylight; }
 
     const aspect=stage.clientWidth/stage.clientHeight;
-    const fit=Math.max(1,.49/aspect);
-    const scenicOffset=V(3.2,1.8,6.8).multiplyScalar(fit);
+    const fit=clamp(.49/aspect,1,1.3);
+    const scenicOffset=V(3.2,1.8,6.8).lerp(V(3.6,1.55,7.5),resting).multiplyScalar(fit);
     const closeOffset=V(2.3,1.35,4.6).multiplyScalar(fit);
     camera.position.copy(p).add(scenicOffset.lerp(closeOffset,cameraBlend));
-    cameraTarget.copy(p).add(V(0,.65,0));
+    const cameraRight=V(scenicOffset.z,0,-scenicOffset.x).normalize();
+    cameraTarget.copy(p).add(V(0,.70,0)).addScaledVector(cameraRight,.18);
     // Keep the original sunrise direction and contact shadows all the way down.
     sun.position.copy(p).add(V(-3,7,-6)); sun.target.position.copy(p);
+    landscape.userData.updateWind(idleTime,motion.matches);
+    for(const {puff,origin,phase} of cloudBanks) {
+      puff.position.copy(origin);
+      if(!motion.matches) {
+        puff.position.x+=(Math.sin(idleTime*.24+phase)-Math.sin(phase))*.085;
+        puff.position.y+=(Math.sin(idleTime*.31+phase)-Math.sin(phase))*.018;
+        puff.position.z+=(Math.cos(idleTime*.17+phase)-Math.cos(phase))*.035;
+      }
+    }
     camera.lookAt(cameraTarget); renderer.render(scene,camera);
   }
   function animate(time) {
+    if(document.hidden||!contextAvailable) { frame=0; return; }
+    // Ambient-only frames run at 30 FPS. Scroll, zoom and pose transitions retain
+    // full frame-rate feedback, including when an idle frame was just painted.
+    const moving=motionSettling||current!==target||motionState.velocity!==0||cameraBlend!==(close?1:0);
+    if(!motion.matches&&!moving&&lastTime!==null&&time-lastTime<1000/30-.1) {
+      frame=requestAnimationFrame(animate); return;
+    }
     // Use only RAF timestamps, and cap elapsed time after a suspended tab.
     const dt=lastTime===null?1/60:clamp((time-lastTime)/1000,0,.05); lastTime=time;
     const smoothing=motion.matches?1:1-Math.exp(-dt*8);
+    if(!motion.matches) idleTime+=dt;
     const previous=current;
     motionState=advanceMotion(motionState,target,dt,routeLength,{reducedMotion:motion.matches});
     current=motionState.position;
@@ -719,9 +742,11 @@ async function start() {
     const yawDelta=Math.atan2(Math.sin(yawTarget-facingYaw),Math.cos(yawTarget-facingYaw));
     facingYaw=Math.abs(yawDelta)<.0001?yawTarget:facingYaw+yawDelta*smoothing;
     draw(current,dt);
-    frame=current!==target||motionState.velocity!==0||cameraBlend!==(close?1:0)||Math.abs(yawDelta)>=.0001||poseSettling||ascentBlend!==desiredAscent?requestAnimationFrame(animate):0;
+    motionSettling=current!==target||motionState.velocity!==0||cameraBlend!==(close?1:0)||Math.abs(yawDelta)>=.0001||poseSettling||ascentBlend!==desiredAscent;
+    const ambienceActive=!motion.matches;
+    frame=(ambienceActive||motionSettling)&&!document.hidden&&contextAvailable?requestAnimationFrame(animate):0;
   }
-  function schedule() { if(scenePrepared&&!frame) { lastTime=null; frame=requestAnimationFrame(animate); } }
+  function schedule() { if(scenePrepared&&contextAvailable&&!document.hidden&&!frame) { lastTime=null; frame=requestAnimationFrame(animate); } }
   function update(event) {
     // The site footer can follow the journey without delaying arrival at camp.
     const journeyEnd=journeyMain?journeyMain.offsetTop+journeyMain.offsetHeight:document.documentElement.scrollHeight;
@@ -752,6 +777,7 @@ async function start() {
     schedule();
   }
   function resize() {
+    landscape.userData.setCompact(innerWidth<=760);
     const w=Math.round(stage.clientWidth),h=Math.round(stage.clientHeight);
     if(w>0&&h>0&&(w!==stageWidth||h!==stageHeight)) {
       stageWidth=w; stageHeight=h;
@@ -763,9 +789,13 @@ async function start() {
   addEventListener('scroll',update,{passive:true});
   addEventListener('pageshow',()=> { initialized=false; hipsY=null; update(); });
   motion.addEventListener('change',update);
+  document.addEventListener('visibilitychange',()=> {
+    if(document.hidden) { if(frame) cancelAnimationFrame(frame); frame=0; lastTime=null; }
+    else schedule();
+  });
   new ResizeObserver(resize).observe(stage); new ResizeObserver(update).observe(document.body);
-  renderer.domElement.addEventListener('webglcontextlost',(event)=> { event.preventDefault(); if(frame) cancelAnimationFrame(frame); frame=0; sound.setPaused(true); status.textContent='3D paused — reload to resume'; });
-  renderer.domElement.addEventListener('webglcontextrestored',()=> { sound.setPaused(false); lastTime=null; schedule(); });
+  renderer.domElement.addEventListener('webglcontextlost',(event)=> { event.preventDefault(); contextAvailable=false; if(frame) cancelAnimationFrame(frame); frame=0; sound.setPaused(true); status.textContent='3D paused — reload to resume'; });
+  renderer.domElement.addEventListener('webglcontextrestored',()=> { contextAvailable=true; sound.setPaused(false); lastTime=null; schedule(); });
   loadProgress(85,'Preparing the first view…');
   await Promise.all([backdropReady,document.fonts?.ready]);
   resize();

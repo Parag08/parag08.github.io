@@ -2,8 +2,9 @@
 
 A standalone Three.js/WebGL scene with a rigged human avatar, a light climbing helmet,
 a backpack, a narrow rocky trail, trekking poles, sunrise lighting, and real shadows.
-The scene sits on the right of the page. At the top, the hiker rests facing the
-sunrise; scrolling starts the trek downhill.
+The scene sits on the right of the page. At the top, the hiker stands upright
+facing the sunrise with hands resting on planted trekking poles. Breathing, occasional glances and
+a small weight shift suggest a quiet pause; scrolling eases into the trek downhill.
 The portfolio's homepage uses this journey at `../index.html`; `../about.html` redirects there.
 The previous homepage is available from **Old Site** at `../old-site.html`.
 The standalone prototype remains available in this folder.
@@ -90,9 +91,17 @@ Climate follows the position along the route, so going uphill returns to snow.
 Snowbanks use instancing and trail grass shares one geometry to limit draw calls.
 The sun and its shadow target follow the hiker along the longer route.
 
-The trail has no exposed vertical side walls. Vertex opacity feathers its outer
+A continuous snowy summit ridge follows the trail elevation smoothly downhill,
+with lower distant peaks showing the height of the vista. The ridge extends behind
+the opening stance to support the hiker and planted poles. Shared vertices give
+the terrain smooth shading. Solid terrain fills the outer side of the scene, away
+from the text, dropping from snow into rocky ground and meadow. Instanced evergreen trees appear below the snow line and become more
+frequent lower down. The walking lane stays clear. Mobile shows half the trees,
+and its camera keeps the hiker larger while cropping the outer scenery.
+
+The walking strip has soft edges rather than exposed vertical side walls. Vertex opacity feathers its outer
 edges, while static soft cloud banks follow both sides and the summit edge. The center
-stays readable underfoot, and the clouds require no ongoing idle animation.
+stays readable underfoot while the clouds drift gently in the wind.
 
 At the bottom, the trail levels onto a fixed clearing with gravel texture, small
 rocks, a green perimeter, grass, and contact shadows. Clouds thin out as the hiker approaches
@@ -112,7 +121,11 @@ audio nodes without an extra animation loop. Hiding the tab, leaving the page,
 or losing the WebGL context suspends sound. The icon has an accessible label and
 pressed state; unsupported browsers keep it hidden. No audio downloads are needed.
 
-Rendering stops when the scroll, pose and camera movement settle. The walk uses
+Idle motion uses a 30 FPS frame budget, while scroll, zoom and pose transitions
+keep full frame-rate feedback. Trees sway around their fixed roots, with crowns
+and snow caps following the same movement. Idle motion pauses when the tab is
+hidden or WebGL is unavailable; reduced-motion preferences keep the environment
+and summit pose still. Feet and pole tips stay anchored during the idle sequence. The walk uses
 speed and acceleration limits, longer strides, and eased changes in direction
 and body height. Deep links start at their actual scroll position, and elapsed
 time is capped after a paused tab. Pixel ratio is capped at 1.5 and shadows use a
@@ -122,7 +135,7 @@ and sound buttons. On phones, the scene scales down; reserve space when integrat
 
 ## Add it to your website later
 
-1. Keep `descent.js`, `motion.mjs`, `trail.mjs`, `sound.mjs`, `assets/`, `models/`, and `vendor/` together in this directory.
+1. Keep `descent.js`, `motion.mjs`, `trail.mjs`, `sound.mjs`, `avatar.mjs`, `landscape.mjs`, `idle.mjs`, `assets/`, `models/`, and `vendor/` together in this directory.
 2. Copy the `<aside class="descent">…</aside>` into your page.
 3. Copy the CSS beginning at `/* TRAIL COMPONENT`, plus the `.descent*`
    declarations inside the media queries. Demo page typography is independent.
@@ -142,6 +155,9 @@ arrival, reduced motion, and consistent pace at 30/60/120 FPS. Trail checks cove
 route growth, walkable slopes, level arrival, and gradual snow-to-green transitions.
 Sound checks cover muted startup, toggling, hidden tabs, navigation, rapid clicks,
 permission failures, and footfall timing at 30/60/120 FPS in both directions.
+Avatar checks use the shipped GLB to verify cuff weights and prevent stretched
+sleeve strips during arm movement. Landscape checks verify finite geometry,
+clear walking lanes, the tree line, and responsive tree density.
 Loader checks cover first-frame gating, cached state, model/import failures,
 slow connections, reduced motion, and compatibility with the previous homepage.
 Earlier browser checks
