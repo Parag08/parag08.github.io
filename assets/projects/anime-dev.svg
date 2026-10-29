@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-labelledby="t d">
+<title id="t">Anime developer at work</title>
+<desc id="d">An original anime-style character with dark hair, bangs and a vermilion hair tie, wearing an indigo hoodie, sits cross-legged on a zabuton cushion typing on a laptop, with a steaming cup of tea beside them.</desc>
+<style>
+.bb{fill:none}
+.piv{transform-box:fill-box;transform-origin:40px 40px}
+.tail{animation:sway 3.6s ease-in-out infinite alternate}
+.lock{animation:sway 2.8s ease-in-out infinite alternate-reverse}
+@keyframes sway{from{transform:rotate(-5deg)}to{transform:rotate(6deg)}}
+.eyes{transform-box:fill-box;transform-origin:center;animation:blink 4.5s infinite}
+@keyframes blink{0%,92%,97%,100%{transform:scaleY(1)}94.5%{transform:scaleY(.1)}}
+.handA{animation:type .32s ease-in-out infinite alternate}
+.handB{animation:type .28s ease-in-out infinite alternate-reverse}
+@keyframes type{from{transform:translateY(0)}to{transform:translateY(-1.6px)}}
+.glow{animation:glow 3.5s ease-in-out infinite alternate}
+@keyframes glow{from{opacity:.6}to{opacity:1}}
+.steam{animation:steam 3s ease-out infinite}
+@keyframes steam{0%{transform:translateY(4px);opacity:0}35%{opacity:.8}100%{transform:translateY(-12px);opacity:0}}
+@media (prefers-reduced-motion: reduce){*{animation:none !important}}
+</style>
+<defs><radialGradient id="glow"><stop offset="0" stop-color="#dfe5ff" stop-opacity=".8"/><stop offset="1" stop-color="#dfe5ff" stop-opacity="0"/></radialGradient></defs>
+<g transform="translate(16,-4)">
+<ellipse cx="120" cy="217" rx="76" ry="4" fill="#1d1d1f" opacity=".08"/>
+<rect x="58" y="197" width="136" height="19" rx="9" fill="#d3ccc0"/>
+<rect x="62" y="197" width="128" height="5" rx="2.5" fill="#ddd7cc"/>
+<circle cx="126" cy="207" r="1.6" fill="#b9b1a4"/>
+<path d="M84,199 Q80,180 100,178 L150,176 Q172,176 174,190 Q174,202 160,203 L96,204 Q84,204 84,199Z" fill="#45454d"/>
+<path d="M162,192 L106,198" stroke="#55555e" stroke-width="12" stroke-linecap="round"/>
+<ellipse cx="99" cy="198.5" rx="7" ry="4.5" fill="#e6e1d8"/>
+<ellipse cx="171" cy="186" rx="6" ry="4" fill="#e6e1d8"/>
+<path d="M130,158 L156,168" stroke="#343e6b" stroke-width="8" stroke-linecap="round"/>
+<rect x="105" y="108" width="13" height="26" rx="4" fill="#ecc9b0"/>
+<path d="M88,192 Q84,152 92,136 Q98,127 110,127 Q124,128 128,140 Q134,166 132,190Z" fill="#3f4a7d"/>
+<path d="M90,144 Q77,128 89,117 Q100,112 109,124 L103,141Z" fill="#343e6b"/>
+<path d="M116,130 L118,146 M121,130 L124,144" stroke="#e9e3d6" stroke-width="1.4" stroke-linecap="round"/>
+<ellipse class="glow" cx="152" cy="150" rx="40" ry="32" fill="url(#glow)"/>
+<path d="M118,177 L172,174 L172,178 L118,181Z" fill="#c4c6cc"/>
+<path d="M167,176 L171,176 L184,131 L180,130Z" fill="#9a9ca4"/>
+<path d="M167.4,175.4 L180.2,130.6" stroke="#eef1ff" stroke-width="1"/>
+<g class="handB"><circle cx="158" cy="168" r="4.4" fill="#e7c2a8"/></g>
+<path d="M110,134 L118,164 L144,172" stroke="#46508a" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<g class="handA"><circle cx="147" cy="172" r="4.6" fill="#f2d3bd"/></g>
+<g transform="translate(107.8,235.8) scale(1.4)">
+ <g transform="translate(-16,-110)"><g class="piv tail"><rect class="bb" x="-40" y="-40" width="1" height="1"/><path d="M-2,-4 Q-18,2 -14,20 Q-12,25 -8,21 Q-10,10 2,4Z" fill="#2c2733"/><ellipse cx="-1.5" cy="0" rx="2.4" ry="3.6" fill="#c93400" transform="rotate(-30 -1.5 0)"/></g></g>
+ <ellipse cx="-1" cy="-110" rx="23" ry="22" fill="#2c2733"/>
+ <path d="M-15,-110 Q-16,-92 4,-87 Q21,-90 22,-108 Q22,-126 4,-127 Q-15,-127 -15,-110Z" fill="#f6dcc8"/>
+ <ellipse cx="-9" cy="-103" rx="3" ry="4" fill="#efc9b0"/>
+ <g transform="translate(-4,-117)"><g class="piv lock"><rect class="bb" x="-40" y="-40" width="1" height="1"/><path d="M0,0 Q-6,10 -3,23 Q0,18 3,3Z" fill="#2c2733"/></g></g>
+ <path d="M-17,-109 Q-16,-133 3,-133 Q24,-132 23,-106 L21,-108 L19,-103 L15,-110 L11,-104 L7,-111 L3,-105.5 L-1,-112 L-5,-107 L-9,-112 L-13,-105Z" fill="#2c2733"/>
+ <g class="eyes">
+  <ellipse cx="3" cy="-100" rx="3.2" ry="5.2" fill="#2a2440"/><ellipse cx="3.3" cy="-98.2" rx="2.4" ry="3" fill="#5e5ce6" opacity=".8"/>
+  <circle cx="4.1" cy="-101.8" r="1.4" fill="#fff"/><circle cx="2.2" cy="-97.4" r=".65" fill="#fff"/>
+  <ellipse cx="14.5" cy="-100" rx="3.6" ry="5.2" fill="#2a2440"/><ellipse cx="14.8" cy="-98.2" rx="2.7" ry="3" fill="#5e5ce6" opacity=".8"/>
+  <circle cx="15.7" cy="-101.8" r="1.5" fill="#fff"/><circle cx="13.6" cy="-97.4" r=".7" fill="#fff"/>
+  <path d="M-0.6,-104.6 Q3,-106.6 6.4,-104.6 M10.6,-104.6 Q14.5,-106.8 18.6,-104.6" stroke="#2a2440" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+ </g>
+ <ellipse cx="-1" cy="-93.5" rx="3" ry="1.4" fill="#ee8f8f" opacity=".55"/>
+ <ellipse cx="16" cy="-93.3" rx="2.6" ry="1.3" fill="#ee8f8f" opacity=".55"/>
+ <path d="M7.2,-91.4 Q9.2,-89.6 11.2,-91.4" stroke="#9a4a3a" stroke-width="1" fill="none" stroke-linecap="round"/>
+</g>
+<g transform="translate(0,0)">
+<ellipse cx="44" cy="214" rx="15" ry="3" fill="#cfc8bc"/>
+<path d="M35,196 h18 v12 q0,5 -5,5 h-8 q-5,0 -5,-5z" fill="#a9bdb3"/>
+<rect x="35" y="196" width="18" height="3" rx="1.5" fill="#97ada2"/>
+<path class="steam" style="animation-delay:0s" d="M41,176 q-3,-4 0,-8 q3,-4 0,-8" stroke="#a9a5a0" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".55"/><path class="steam" style="animation-delay:-1.5s" d="M47,176 q-3,-4 0,-8 q3,-4 0,-8" stroke="#a9a5a0" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".55"/>
+</g>
+</g>
+</svg>

@@ -10,6 +10,7 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=16">
+  <link rel="stylesheet" href="projects-japan.css?v=1">
   <script src="script.js?v=5" defer></script>
 </head>
 <body>
@@ -35,13 +36,90 @@
   </div>
 
   <main id="main" class="wrap">
-    <section class="page-hero reveal">
-      <p class="kicker">My Projects</p>
-      <h1>Platforms and tools I’ve built, scaled, or turned around.</h1>
-      <p class="lede">Each entry links to a case study, a working demo, or a short project summary. Employer and client work is summarised where code and customer data are confidential.</p>
+    <section class="page-hero kobo-hero reveal">
+      <div class="kobo-petals" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="kobo-hero-text">
+        <p class="kicker">My Projects</p>
+        <h1>Platforms and tools I’ve built, scaled, or turned around.</h1>
+        <p class="lede">Recent things I’ve built end to end, with the code, a working demo or a clip of each.</p>
+      </div>
+      <img class="kobo-mascot" src="assets/projects/anime-dev.svg" width="240" height="240" alt="">
     </section>
 
-    <section class="section reveal">
+    <section class="kobo reveal" aria-labelledby="kobo-title">
+      <h2 class="help-title" id="kobo-title">Recent builds <span class="kobo-ja" lang="ja">新作</span></h2>
+
+      <div class="kobo-grid">
+        <article class="kobo-card" id="jobsearch">
+          <span class="hanko" lang="ja" aria-hidden="true">道</span>
+          <p class="kobo-meta">Personal product</p>
+          <h3>JobSearch</h3>
+          <div class="kobo-media">
+            <video src="assets/projects/jobsearch.webm" poster="assets/projects/jobsearch-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="JobSearch: the landing card plays the whole job-search loop, the process map opens two stages, then an application page shows its interview prep panel"></video>
+          </div>
+          <p class="kobo-caption">The whole loop on one card, then the interview prep panel on an application. Demo workspace.</p>
+          <p>A job-search operating system built around one loop: source roles from company boards, tailor the CV as a reviewed diff from a master, practise interviews with AI scoring, and run live case interviews.</p>
+          <ul class="kobo-facts">
+            <li><strong>6</strong>loop stages</li>
+            <li><strong>581</strong>tests</li>
+            <li><strong>₹0</strong>free-tier stack</li>
+          </ul>
+          <div class="tags"><span class="tag">Next.js 15</span><span class="tag">Supabase</span><span class="tag">LLM routing</span><span class="tag">TDD</span></div>
+          <div class="kobo-links">
+            <a class="btn btn-dark" href="https://jobsearch-roan.vercel.app" target="_blank" rel="noopener">Open the app →</a>
+            <a class="btn" href="https://github.com/Parag08/jobsearch" target="_blank" rel="noopener">Code →</a>
+          </div>
+        </article>
+
+        <article class="kobo-card" id="microduck">
+          <span class="hanko" lang="ja" aria-hidden="true">歩</span>
+          <p class="kobo-meta">Robot learning</p>
+          <h3>MicroDuck learns to walk</h3>
+          <div class="kobo-media">
+            <video src="assets/projects/microduck-trained.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Simulated MicroDuck biped walking steadily forward after training"></video>
+          </div>
+          <p class="kobo-caption">Trained policy in simulation, commanded at 0.3 m/s.</p>
+          <p>Trained a walking policy for Pollen Robotics' 14-servo MicroDuck biped in NVIDIA Isaac Lab 3.0, with reinforcement learning on a laptop GPU. It walks steadily; tracking the commanded speed and standing still are the next steps.</p>
+          <ul class="kobo-facts">
+            <li><strong>14</strong>servos</li>
+            <li><strong>7,638</strong>PPO iterations</li>
+            <li><strong>1,024</strong>parallel sims</li>
+          </ul>
+          <div class="tags"><span class="tag">Isaac Lab</span><span class="tag">PPO</span><span class="tag">Sim-to-real</span></div>
+        </article>
+
+        <article class="kobo-card" id="support-agent">
+          <span class="hanko" lang="ja" aria-hidden="true">助</span>
+          <p class="kobo-meta">AI agent</p>
+          <h3>Pluggable support agent</h3>
+          <div class="kobo-media">
+            <video src="assets/projects/support-agent.webm" poster="assets/projects/support-agent-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Demo store chat: the agent answers a sizing question, asks the customer to sign in before showing an order, then turns down a return outside the 30-day window"></video>
+          </div>
+          <p class="kobo-caption">Demo store with the pipeline inspector open. Live model, real replies.</p>
+          <div class="kobo-chat" aria-label="Excerpt from the recorded conversation">
+            <p class="kobo-msg kobo-msg-you">I want to return order SS90002</p>
+            <p class="kobo-msg kobo-msg-bot">Order SS90002 was delivered on September 14, 2026, which is outside our 30-day return window, so I can't start a return or exchange for it.</p>
+            <p class="kobo-trace"><span>return_request 0.95</span><span>policy: deny</span><span>RETURN_WINDOW_EXPIRED</span></p>
+          </div>
+          <p>A drop-in AI support agent for online stores: sizing advice, order tracking, returns, exchanges and cancellations. The model classifies and phrases; deterministic rules make every decision, and every message is screened for prompt injection first.</p>
+          <ul class="kobo-facts">
+            <li><strong>5</strong>pluggable ports</li>
+            <li><strong>181</strong>tests</li>
+            <li><strong>0</strong>actions decided by the LLM</li>
+          </ul>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Ports &amp; adapters</span><span class="tag">Evals</span><span class="tag">Guardrails</span></div>
+          <div class="kobo-links">
+            <a class="btn btn-dark" href="https://github.com/Parag08/pluggable-support-agent" target="_blank" rel="noopener">Code →</a>
+          </div>
+        </article>
+      </div>
+      <div class="contact-actions">
+        <a class="btn btn-dark" href="contact.html">Contact Me →</a>
+      </div>
+    </section>
+
+    <!-- Earlier work, hidden for now. Remove "hidden" to bring a section back. -->
+    <section class="section reveal" hidden>
       <h2 class="help-title">Selected case studies</h2>
       <a class="project-item" id="nutanix-move" href="work/nutanix/">
         <div>
@@ -66,7 +144,7 @@
       </a>
     </section>
 
-    <section class="section reveal">
+    <section class="section reveal" hidden>
       <h2 class="help-title">Working demos</h2>
       <a class="project-item" href="valeohealth.html" target="_blank" rel="noopener">
         <div>
@@ -84,7 +162,7 @@
       </a>
     </section>
 
-    <section class="section reveal" aria-labelledby="summaries-title">
+    <section class="section reveal" hidden aria-labelledby="summaries-title">
       <h2 class="help-title" id="summaries-title">Project summaries</h2>
       <a class="project-item" href="#eleven01">
         <div>
@@ -116,7 +194,7 @@
       </a>
     </section>
 
-    <section class="section reveal" aria-label="Detailed project summaries">
+    <section class="section reveal" hidden aria-label="Detailed project summaries">
       <div class="help-list">
         <article class="help-item" id="eleven01">
           <strong>01</strong>
@@ -154,10 +232,6 @@
             <div class="tags"><span class="tag">Industrial IoT</span><span class="tag">Deployment automation</span><span class="tag">Standardisation</span><span class="tag">Delivery</span></div>
           </div>
         </article>
-      </div>
-      <div class="contact-actions">
-        <a class="btn btn-dark" href="contact.html">Contact Me →</a>
-        <a class="btn" href="work.html">All case studies →</a>
       </div>
     </section>
   </main>
