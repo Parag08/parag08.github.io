@@ -19,6 +19,16 @@ page title and metadata are retained.
 blue, indigo, gold, peach and teal accents. Alternating surfaces and accent
 dividers distinguish the roles. These integration styles apply only to the journey homepage.
 
+The homepage restores the original loading screen, cycling Hello → नमस्ते
+(Hindi) → 你好 (Singapore Mandarin) every 900 ms while loading. `../journey-loader.js`
+waits for `journey:ready`, emitted only after the hiker is loaded and rigged,
+the backdrop and fonts are ready, shaders are compiled, and the first scene frame
+is rendered. Download progress and preparation milestones update its percentage.
+Repeat visits and reduced-motion settings still wait for that first frame; the
+old homepage retains its quick loader. Scene errors release the page, and slow
+connections expose an optional Continue button after eight seconds. With JavaScript
+disabled, the loading overlay is hidden and the career text stays accessible.
+
 The site entry point loads the shared navigation script, this folder's CSS and
 ES module, and an import map pointing to the local Three.js library. Model and
 module paths resolve relative to `descent.js`; the site's footer is excluded
@@ -39,7 +49,7 @@ only the nearby ledge. **Closer look** zooms toward the avatar; **Trail view**
 restores the wider framing.
 
 The sunrise opening is followed by seven employer chapters, latest first:
-Valeo Health, EverHaus, Nutanix (both roles in one chapter), Touchnote, Eleven01, Amantya and
+Valeo Health, Strymin (formerly EverHaus Group), Nutanix (both roles in one chapter), Touchnote, Eleven01, Amantya and
 Cognizant. Each employer has its own full-screen section with dates, location,
 company context, responsibilities and results. Education and a closing profile
 with contact links follow. On narrow screens content may grow rather than clip.
@@ -132,6 +142,8 @@ arrival, reduced motion, and consistent pace at 30/60/120 FPS. Trail checks cove
 route growth, walkable slopes, level arrival, and gradual snow-to-green transitions.
 Sound checks cover muted startup, toggling, hidden tabs, navigation, rapid clicks,
 permission failures, and footfall timing at 30/60/120 FPS in both directions.
+Loader checks cover first-frame gating, cached state, model/import failures,
+slow connections, reduced motion, and compatibility with the previous homepage.
 Earlier browser checks
 also verify identical canvas dimensions before and after entering the first role.
 

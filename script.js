@@ -13,6 +13,7 @@
      and skipped completely on repeat visits. */
   const loader = document.querySelector(".loader");
   const percent = document.querySelector(".loader-pct");
+  const journeyLoader = loader?.hasAttribute("data-journey-loader");
   const SEEN_KEY = "pr-seen";
   const MAX_WAIT = 350;
 
@@ -24,13 +25,15 @@
     }
   })();
 
-  const markReady = () => root.classList.add("is-ready");
+  const markReady = () => { if (!journeyLoader) root.classList.add("is-ready"); };
 
   // Failsafe: if anything above throws on an exotic browser, never leave the
   // hero hidden behind its entrance animation.
   window.setTimeout(markReady, 2000);
 
   const finish = ({ instant = false } = {}) => {
+    // The mountain journey is released only by its own first-frame controller.
+    if (journeyLoader) return;
     if (percent) percent.textContent = "100%";
     try {
       sessionStorage.setItem(SEEN_KEY, "1");
@@ -54,7 +57,7 @@
     window.setTimeout(() => loader.remove(), 400);
   };
 
-  if (loader && !reduced && !seenBefore) {
+  if (loader && !journeyLoader && !reduced && !seenBefore) {
     let value = 0;
     const paint = (next) => {
       value = Math.max(value, next);

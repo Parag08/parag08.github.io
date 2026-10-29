@@ -14,14 +14,27 @@ const motion = matchMedia('(prefers-reduced-motion: reduce)');
 const clamp = THREE.MathUtils.clamp;
 const V = (x = 0, y = 0, z = 0) => new THREE.Vector3(x, y, z);
 
+function loadProgress(percent,label) {
+  container.dataset.loadProgress=String(percent);
+  container.dataset.loadLabel=label;
+  container.dispatchEvent(new CustomEvent('journey:progress',{bubbles:true}));
+}
+
 try { await start(); } catch (error) {
   console.error('The 3D climber could not start:', error);
+  container.dataset.sceneState='error';
   status.textContent = 'Mountain view unavailable';
   viewButton.hidden = true;
+  container.dispatchEvent(new CustomEvent('journey:error',{bubbles:true}));
   stage.innerHTML = '<p style="padding:40px;color:#6e6e73;font:12px/1.8 Arial">The mountain view could not load. You can still scroll through the full career journey.</p>';
 }
 
 async function start() {
+  container.dataset.sceneState='loading';
+  loadProgress(5,'Preparing the mountain…');
+  const backdrop=new Image();
+  backdrop.src=new URL('./assets/summit-sunrise.jpg',import.meta.url).href;
+  const backdropReady=backdrop.decode().catch(()=> {});
   const scenePaper=container.dataset.scenePaper||'#f7f6f2';
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'low-power' });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
@@ -313,7 +326,11 @@ async function start() {
   const sunrisePosition=at(0).add(V(-2,1.9,-5.5));
   const sunriseYaw=Math.atan2(sunrisePosition.x-at(0).x,sunrisePosition.z-at(0).z);
 
-  const gltf = await new GLTFLoader().loadAsync(new URL('./models/climber.glb', import.meta.url).href);
+  loadProgress(25,'Loading the hiker…');
+  const gltf = await new GLTFLoader().loadAsync(new URL('./models/climber.glb', import.meta.url).href,event=> {
+    if(event.total>0) loadProgress(25+Math.min(40,event.loaded/event.total*40),'Loading the hiker…');
+  });
+  loadProgress(70,'Preparing the hiker…');
   const avatar = gltf.scene;
   const bounds = new THREE.Box3().setFromObject(avatar);
   const scale = 1.4 / bounds.getSize(V()).y;
@@ -602,6 +619,7 @@ async function start() {
 
   const sound=createMountainSound(container.querySelector('[data-mountain-sound]'));
 
+  let scenePrepared=false;
   let target=0, current=0, frame=0, lastTime=null, close=false, cameraBlend=0;
   let travelSign=1, facingYaw=sunriseYaw, ascentBlend=0, hipsY=null, poseSettling=false;
   let motionState=createMotionState(), initialized=false, lastDaylight=-1;
@@ -703,7 +721,7 @@ async function start() {
     draw(current,dt);
     frame=current!==target||motionState.velocity!==0||cameraBlend!==(close?1:0)||Math.abs(yawDelta)>=.0001||poseSettling||ascentBlend!==desiredAscent?requestAnimationFrame(animate):0;
   }
-  function schedule() { if(!frame) { lastTime=null; frame=requestAnimationFrame(animate); } }
+  function schedule() { if(scenePrepared&&!frame) { lastTime=null; frame=requestAnimationFrame(animate); } }
   function update(event) {
     // The site footer can follow the journey without delaying arrival at camp.
     const journeyEnd=journeyMain?journeyMain.offsetTop+journeyMain.offsetHeight:document.documentElement.scrollHeight;
@@ -748,5 +766,18 @@ async function start() {
   new ResizeObserver(resize).observe(stage); new ResizeObserver(update).observe(document.body);
   renderer.domElement.addEventListener('webglcontextlost',(event)=> { event.preventDefault(); if(frame) cancelAnimationFrame(frame); frame=0; sound.setPaused(true); status.textContent='3D paused — reload to resume'; });
   renderer.domElement.addEventListener('webglcontextrestored',()=> { sound.setPaused(false); lastTime=null; schedule(); });
+  loadProgress(85,'Preparing the first view…');
+  await Promise.all([backdropReady,document.fonts?.ready]);
   resize();
+  // Prepare every avatar material before exposing the page. The initial render
+  // also uploads textures and draws the hiker at the restored URL/scroll position.
+  await renderer.compileAsync(scene,camera);
+  loadProgress(95,'Finishing the first view…');
+  draw(current,1/60);
+  await new Promise(resolve=>requestAnimationFrame(resolve));
+  scenePrepared=true;
+  container.dataset.sceneState='ready';
+  loadProgress(100,'Ready to explore');
+  container.dispatchEvent(new CustomEvent('journey:ready',{bubbles:true}));
+  schedule();
 }

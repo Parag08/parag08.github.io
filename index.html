@@ -11,14 +11,25 @@
   <link rel="preload" href="assets/fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=16">
   <link rel="preload" as="image" href="mountain-demo/assets/summit-sunrise.jpg">
+  <link rel="preload" as="fetch" href="mountain-demo/models/climber.glb" crossorigin>
   <link rel="stylesheet" href="mountain-demo/descent.css?v=6">
-  <link rel="stylesheet" href="about-journey.css?v=4">
+  <link rel="stylesheet" href="about-journey.css?v=6">
   <script type="importmap">{"imports":{"three":"./mountain-demo/vendor/three.module.js"}}</script>
-  <script src="script.js?v=5" defer></script>
-  <script type="module" src="mountain-demo/descent.js?v=6"></script>
+  <script src="journey-loader.js?v=2" defer></script>
+  <script src="script.js?v=6" defer></script>
+  <script type="module" data-journey-module src="mountain-demo/descent.js?v=7"></script>
 </head>
 <body class="about-journey">
   <a class="skip-link" href="#main">Skip to content</a>
+  <div class="loader loader--journey" data-journey-loader aria-label="Loading the mountain journey">
+    <div class="loader-copy">
+      <span data-loader-greeting lang="en" aria-hidden="true">Hello</span>
+      <strong class="loader-pct" aria-hidden="true">0%</strong>
+      <p class="loader-status" data-loader-status role="status" aria-live="polite">Preparing the mountain…</p>
+      <button class="loader-continue" data-loader-continue type="button" hidden>Continue to site →</button>
+    </div>
+  </div>
+  <noscript><style>.loader--journey { display: none; }</style></noscript>
   <header class="site-nav">
     <nav class="nav-pill" aria-label="Primary">
       <a class="is-active" aria-current="page" href="index.html">Home</a>
@@ -39,7 +50,7 @@
     </nav>
   </div>
 
-  <main id="main">
+  <main id="main" tabindex="-1">
   <aside class="descent" data-scene-paper="#f5f5f7" aria-label="A hiker watches the sunrise, then follows a long trail from snowy summit to green foothills as you scroll">
     <div class="descent__stage" aria-hidden="true"></div>
     <div class="descent__controls">
@@ -81,17 +92,17 @@
           <li><strong>20,000 km and AED 12,200 saved every month.</strong> Specified and prototyped an AI-assisted route-optimisation app after frontline research. It reached 100% adoption by the operations team in one week.</li>
           <li><strong>Two fleet-cost strategies approved.</strong> Won CEO and operations-leadership approval after diagnosing an 18% rise in fleet operating costs while revenue stayed flat.</li>
         </ul>
-        <a class="chapter-next" href="#everhaus">Earlier: EverHaus Group <span aria-hidden="true">↓</span></a>
+        <a class="chapter-next" href="#everhaus">Earlier: Strymin <span aria-hidden="true">↓</span></a>
       </div>
       <span class="chapter-number">02 / 10</span>
     </section>
     <section class="chapter chapter--experience" id="everhaus" data-chapter="experience" aria-labelledby="everhaus-title">
       <div class="chapter__copy">
         <p class="eyebrow">EXPERIENCE / 02 OF 07</p>
-        <h2 class="experience-title" id="everhaus-title">EverHaus <em>Group</em></h2>
+        <h2 class="experience-title" id="everhaus-title"><em>Strymin</em></h2>
         <h3 class="experience-role">Product Strategy Manager · Part-time</h3>
         <p class="experience-meta"><span>February – June 2026</span><span>Singapore</span></p>
-        <p class="company-description">A proptech startup building a property investment platform.</p>
+        <p class="company-description"><a href="https://strymin.com/" target="_blank" rel="noopener">Formerly EverHaus Group. A proptech startup building a property investment platform. <span aria-hidden="true">↗</span></a></p>
         <p class="experience-summary">Built the product roadmap from a blank page, turned regulatory research into product requirements, and set up an AI-first operating model for the founders.</p>
         <ul class="experience-outcomes">
           <li><strong>20+ core features defined; 15 built and validated.</strong> Used AI-assisted market and user research, with validation through founder review.</li>
@@ -106,7 +117,7 @@
       <div class="chapter__copy">
         <p class="eyebrow">EXPERIENCE / 03 OF 07</p>
         <h2 class="experience-title" id="nutanix-lead-title"><em>Nutanix</em></h2>
-        <p class="company-description"><a href="https://www.nutanix.com" target="_blank" rel="noopener">Enterprise cloud software for running and managing applications across private and public clouds. <span aria-hidden="true">↗</span></a></p>
+        <p class="company-description"><a href="https://www.nutanix.com/products/move" target="_blank" rel="noopener">Enterprise cloud software for running and managing applications across private and public clouds. <span aria-hidden="true">↗</span></a></p>
         <article class="experience-position" aria-labelledby="nutanix-lead-role">
           <h3 class="experience-role" id="nutanix-lead-role">Development Team Lead / Engineering Manager</h3>
           <p class="experience-meta"><span>July 2024 – January 2026</span><span>Bengaluru, India</span></p>
@@ -154,7 +165,7 @@
         <h2 class="experience-title" id="eleven01-title"><em>Eleven01</em></h2>
         <h3 class="experience-role">Founding Member &amp; Blockchain Developer</h3>
         <p class="experience-meta"><span>September 2018 – February 2020</span><span>Hyderabad, India</span></p>
-        <p class="company-description">A Hyderabad startup building a blockchain protocol for emerging markets, positioned as India’s first native blockchain protocol.</p>
+        <p class="company-description"><a href="https://www.eleven01.io/" target="_blank" rel="noopener">A Hyderabad startup building a blockchain protocol for emerging markets, positioned as India’s first native blockchain protocol. <span aria-hidden="true">↗</span></a></p>
         <p class="experience-summary">Joined as a founding member, helped build the blockchain platform from scratch, led the development team and represented the company publicly.</p>
         <ul class="experience-outcomes">
           <li><strong>Zero to MVP and Initial Coin Offering in one year.</strong> Led a team of 10+ developers to build and launch the blockchain platform.</li>

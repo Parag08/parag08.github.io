@@ -90,3 +90,11 @@ body.about-journey {
 @media (prefers-reduced-motion: reduce) {
   .about-journey .scroll-cue__arrow { animation: none; transform: none; }
 }
+
+/* The existing Hello screen stays up until the first complete scene is drawn. */
+.loader--journey { touch-action: none; }
+.loader--journey [data-loader-greeting] { min-height: 1.5em; line-height: 1.5; }
+.loader--journey .loader-status { margin-top: 4px; color: var(--muted); font-size: 12px; letter-spacing: 0; }
+.loader--journey .loader-continue { justify-self: center; margin-top: 12px; padding: 9px 14px; border: 1px solid var(--line-strong); border-radius: 24px; background: #fff; color: var(--blue); font-size: 12px; }
+.loader--journey .loader-continue[hidden] { display: none; }
+.loader--journey .loader-continue:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }

@@ -5,7 +5,7 @@
 ## Pages
 
 - [Home](https://parag08.github.io/): Scroll-driven mountain journey through career history, experience and education.
-- [Case studies](https://parag08.github.io/work.html): Enterprise migration at Nutanix, route optimisation at Valeo Health, AI-enabled investment platform at EverHaus.
+- [Case studies](https://parag08.github.io/work.html): Enterprise migration at Nutanix, route optimisation at Valeo Health, AI-enabled investment platform at Strymin (formerly EverHaus Group).
 - [Projects](https://parag08.github.io/projects.html): Case studies, working demos and project summaries for platforms and tools built, scaled or turned around.
 - [Old Site](https://parag08.github.io/old-site.html): Previous homepage with a 3D workspace, selected impact metrics, skills and project links.
 - [Contact](https://parag08.github.io/contact.html): Email, LinkedIn and résumé.
