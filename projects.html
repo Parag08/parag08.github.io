@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=16">
-  <link rel="stylesheet" href="projects-japan.css?v=1">
+  <link rel="stylesheet" href="projects-japan.css?v=2">
   <script src="script.js?v=5" defer></script>
 </head>
 <body>
@@ -50,6 +50,24 @@
       <h2 class="help-title" id="kobo-title">Recent builds <span class="kobo-ja" lang="ja">新作</span></h2>
 
       <div class="kobo-grid">
+        <article class="kobo-card" id="logistics-valeo">
+          <span class="hanko" lang="ja" aria-hidden="true">路</span>
+          <p class="kobo-meta">Operations tool · Rebuild</p>
+          <h3>Logistics Valeo, rebuilt</h3>
+          <div class="kobo-media">
+            <video src="assets/projects/valeo-routing.webm" poster="assets/projects/valeo-routing-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Logistics Valeo: one synthetic day under the Excel era, Logistics Valeo v1 and v2, with orders captured rising from 65% to 77% to 86%; then the hub siting map, pairs needed at each service level, and recorded against predicted km with bad days excluded"></video>
+          </div>
+          <p class="kobo-caption">One synthetic day under the Excel era, v1 and v2, then hub siting, capacity and metrics. Synthetic data.</p>
+          <p>A rebuild of the dispatch tool I shipped at Valeo Health, on a seeded synthetic month. An acceptance engine claims the orders the fleet can serve, a planner sequences each nurse–driver pair's day, and idle pairs wait at hubs sited by K-median. Capacity comes from simulation and predicted km are checked against a tracker. An independent validator checks every plan.</p>
+          <p class="kobo-caption">At Valeo (real, measured): orders captured went from 60–70% to 80–90%, and km per order fell about 25% after launch.</p>
+          <ul class="kobo-facts">
+            <li><strong>7</strong>tabs, as ops used them</li>
+            <li><strong>167</strong>tests</li>
+            <li><strong>0</strong>validator violations</li>
+          </ul>
+          <div class="tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">React</span><span class="tag">Operations research</span></div>
+        </article>
+
         <article class="kobo-card" id="jobsearch">
           <span class="hanko" lang="ja" aria-hidden="true">道</span>
           <p class="kobo-meta">Personal product</p>
