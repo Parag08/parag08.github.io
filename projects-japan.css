@@ -269,9 +269,22 @@
 .kobo-links {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 10px;
   margin-top: auto;
   padding-top: 6px;
+}
+
+/* Stands in for a button when there is nothing public to open, so every card ends the same way. */
+.kobo-note {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius);
+  padding: 0 18px;
+  color: var(--muted);
+  font-weight: 600;
 }
 
 .kobo-note {
