@@ -63,8 +63,9 @@
     }
     finish();
   }
-  // Slow connections may keep loading; visitors can still choose to read ahead.
-  const slowTimer=window.setTimeout(()=> { if(!finished&&skip) skip.hidden=false; },8000);
+  // Never hold the page back for the 3D scene: the copy shows after a short greeting
+  // and the mountain keeps loading behind it.
+  const slowTimer=window.setTimeout(finish,1500);
   skip?.addEventListener('click',finish,{once:true});
   loader.addEventListener('wheel',preventScroll,{passive:false});
   loader.addEventListener('touchmove',preventScroll,{passive:false});

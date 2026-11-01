@@ -55,25 +55,38 @@ function setup({reduced=false,state='loading',seen=true,journey=true}={}) {
   return {root,document,loader,scene,main,nav,menu,footer,module,percent,label,skip,status,advance,context};
 }
 
-test('the loader outlasts the old time limits and repeat-visit shortcut until the scene is ready',()=> {
+test('the loader releases the page after a short greeting even while the scene loads',()=> {
   for(const reduced of [false,true]) {
     const page=setup({reduced,seen:true});
-    // Run the real shared preloader too: its 350ms/2s safeguards must not release this loader.
+    // Run the real shared preloader too: its 350ms/2s safeguards must not change this timing.
     const preloader=shared.slice(0,shared.indexOf('  const menu ='))+'\n})();';
     vm.runInContext(preloader,page.context);
-    page.advance(2500);
-    assert.equal(page.loader.isConnected,true);
+    page.advance(1499);
     assert.equal(page.root.classes.has('is-ready'),false);
     assert.equal(page.main.inert,true);
     assert.equal(page.main.attrs['aria-busy'],'true');
-    page.scene.dataset.sceneState='ready'; page.document.emit('journey:ready');
+    page.advance(1);
     assert.equal(page.root.classes.has('is-ready'),true);
-    assert.equal(page.percent.textContent,'100%');
+    assert.equal(page.percent.textContent,'—');
+    assert.equal(page.label.textContent,'The journey is ready to read');
     assert.equal(page.main.inert,false);
     assert.equal(page.main.attrs['aria-busy'],'false');
     assert.equal(page.menu.inert,true,'the mobile menu retains its original inert state');
     page.advance(400); assert.equal(page.loader.isConnected,false);
+    // The mountain finishing later is harmless.
+    page.scene.dataset.sceneState='ready'; page.document.emit('journey:ready');
+    assert.equal(page.main.inert,false);
   }
+});
+
+test('a scene that is ready before the time limit releases the loader at once',()=> {
+  const page=setup();
+  page.advance(600);
+  page.scene.dataset.sceneState='ready'; page.document.emit('journey:ready');
+  assert.equal(page.root.classes.has('is-ready'),true);
+  assert.equal(page.percent.textContent,'100%');
+  assert.equal(page.main.inert,false);
+  page.advance(5000); assert.equal(page.loader.isConnected,false);
 });
 
 test('model progress is monotonic and cannot claim completion before the first frame',()=> {
@@ -110,20 +123,6 @@ test('a failed scene import also releases the page and reports an unavailable mo
   assert.equal(page.main.inert,false);
   page.advance(400); assert.equal(page.loader.isConnected,false);
 });
-
-test('a slow connection keeps loading until the visitor explicitly continues',()=> {
-  const page=setup();
-  page.advance(7999); assert.equal(page.skip.hidden,true);
-  page.advance(1); assert.equal(page.skip.hidden,false);
-  page.advance(60000); assert.equal(page.root.classes.has('is-ready'),false);
-  page.document.activeElement=page.skip; page.skip.emit('click');
-  assert.equal(page.root.classes.has('is-ready'),true);
-  assert.equal(page.document.activeElement,page.main);
-  page.advance(400); assert.equal(page.loader.isConnected,false);
-  // Late loading events are harmless after the visitor has continued.
-  page.document.emit('journey:ready'); assert.equal(page.main.inert,false);
-});
-
 
 test('the previous homepage retains its quick repeat-visit and reduced-motion loader behavior',()=> {
   for(const reduced of [false,true]) {
