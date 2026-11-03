@@ -10,10 +10,10 @@
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
   <link rel="preload" href="../../assets/fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="../../style.css?v=16">
-  <link rel="stylesheet" href="../../arcade.css?v=4">
+  <link rel="stylesheet" href="../../arcade.css?v=8">
   <script type="importmap">{"imports":{"three":"../../mountain-demo/vendor/three.module.js"}}</script>
   <script src="../../script.js?v=5" defer></script>
-  <script type="module" src="../../arcade-scenes.js?v=7"></script>
+  <script type="module" src="../../arcade-scenes.js?v=10"></script>
   <link rel="canonical" href="https://parag08.github.io/work/nutanix-esxi-to-ahv/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Parag Rahangdale">
@@ -59,20 +59,27 @@
       <p class="stage-clear" aria-label="Stage clear: shipped on time">Stage<b>Clear</b>On time</p>
     </header>
 
-    <figure class="arcade-stage run-stage" data-arcade-scene="flow" data-fallback="VMware ESXi → Nutanix AHV: seed, delta sync, cutover.">
-      <figcaption class="sr-only">Animation: virtual machines move from VMware ESXi onto Nutanix AHV in three phases, an initial seed, incremental delta syncs, then cutover. Move orchestrates from above through the AHV APIs.</figcaption>
-      <span class="flow-label" data-anchor="source" aria-hidden="true"><span class="hud hud-muted">From</span>VMware ESXi</span>
-      <span class="flow-label" data-anchor="move" aria-hidden="true"><span class="hud">Move · my team</span>Orchestration</span>
-      <span class="flow-label" data-anchor="target" aria-hidden="true"><span class="hud">To</span>Nutanix AHV</span>
+    <figure class="arcade-stage run-stage" data-arcade-scene="rolling" data-fallback="Each node in turn: move its VMs off, reimage it with AHV, convert the VMs onto it.">
+      <figcaption class="sr-only">Animation of an in-place conversion on a three-node cluster. One node at a time, its virtual machines move to the other nodes, the node is brought down and reimaged with AHV, and the virtual machines are converted onto AHV as they move back. The workloads stay the same throughout; only the hypervisor under them changes from VMware ESXi to Nutanix AHV.</figcaption>
+      <span class="vm-label" data-vm-label aria-hidden="true">VM 1</span>
+      <span class="vm-label" data-vm-label aria-hidden="true">VM 2</span>
+      <span class="vm-label" data-vm-label aria-hidden="true">VM 3</span>
+      <span class="vm-label" data-vm-label aria-hidden="true">VM 4</span>
+      <span class="vm-label" data-vm-label aria-hidden="true">VM 5</span>
+      <span class="vm-label" data-vm-label aria-hidden="true">VM 6</span>
+      <span class="flow-label node-label" data-node-label aria-hidden="true">Node 1 · <b>ESXi</b></span>
+      <span class="flow-label node-label" data-node-label aria-hidden="true">Node 2 · <b>ESXi</b></span>
+      <span class="flow-label node-label" data-node-label aria-hidden="true">Node 3 · <b>ESXi</b></span>
       <div class="flow-hud" aria-hidden="true">
         <ol class="flow-steps">
-          <li data-step="copy" class="is-on">1 · Seed</li>
-          <li data-step="delta">2 · Delta sync</li>
-          <li data-step="cutover">3 · Cutover</li>
+          <li data-step="evacuate">1 · Evacuate</li>
+          <li data-step="reimage">2 · Reimage</li>
+          <li data-step="convert">3 · Convert</li>
         </ol>
-        <span class="flow-total">Same hardware, new hypervisor</span>
+        <span class="flow-caption" data-caption>A 3-node cluster running on VMware ESXi</span>
       </div>
     </figure>
+    <p class="stage-legend"><span class="legend-item"><span class="legend-vm" aria-hidden="true"></span>Coloured cubes are the customer’s workloads: they never change.</span><span class="legend-item"><span class="legend-hv legend-esxi" aria-hidden="true"></span>Grey is ESXi</span><span class="legend-item"><span class="legend-hv legend-ahv" aria-hidden="true"></span>indigo is AHV</span></p>
 
     <section class="reveal" aria-labelledby="score-title">
       <h2 id="score-title" class="sr-only">Results</h2>

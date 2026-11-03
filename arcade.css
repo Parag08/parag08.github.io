@@ -1412,3 +1412,105 @@ kbd {
     grid-template-columns: 1fr;
   }
 }
+
+/* ------------------------------------------------ rolling conversion scene */
+.node-label {
+  display: inline-flex;
+  gap: 4px;
+  transform: translate(-50%, 6px);
+  font-size: 0.78rem;
+}
+
+.node-label b {
+  color: var(--faint);
+  transition: color var(--dur-2) var(--ease-soft);
+}
+
+.node-label.is-ahv b {
+  color: var(--arc);
+}
+
+.node-label.is-down b {
+  color: var(--hp);
+}
+
+.vm-label {
+  position: absolute;
+  z-index: 2;
+  border-radius: 6px;
+  padding: 2px 6px;
+  background: rgba(29, 29, 31, 0.78);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  transform: translate(-50%, -100%);
+  pointer-events: none;
+}
+
+/* Unlike the data-flow total, the caption explains each step, so it stays
+   visible on phones and wraps under the step pills. */
+.flow-caption {
+  border-radius: 12px;
+  padding: 6px 12px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.stage-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 10px;
+}
+
+.legend-vm,
+.legend-hv {
+  flex: 0 0 auto;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+}
+
+.legend-vm {
+  background: linear-gradient(135deg, #ff9f0a 0 33%, #30b0c7 33% 66%, #ff375f 66%);
+}
+
+.legend-hv {
+  height: 6px;
+  border-radius: 3px;
+}
+
+.legend-esxi { background: #8e8e93; }
+.legend-ahv { background: var(--arc); }
+
+@media (max-width: 640px) {
+  .flow-caption {
+    width: 100%;
+    font-size: 0.74rem;
+  }
+
+  .node-label {
+    font-size: 0.66rem;
+  }
+
+  .vm-label {
+    padding: 1px 4px;
+    font-size: 0.54rem;
+  }
+}
