@@ -691,6 +691,209 @@ function createRolling(stage) {
   }, () => { resize(); layout(); });
 }
 
+/* ------------------------------------------------------------- city routing
+   A day of home visits on a small city grid, run two ways. Excel era: every
+   pair drives back to the office between visits and some orders are missed.
+   Logistics Valeo: visits are chained and idle pairs wait at the nearest hub,
+   so every order is served with far less driving. Routes follow the streets. */
+const ROUTE_ORDERS = [[-3, -3], [-3, 3], [0, -3], [1.5, 1.5], [3, -1.5], [4.5, 3], [6, -3], [6, 1.5]];
+const ROUTE_HUBS = [[-1.5, 0], [3, 0], [6, 0]];
+const ROUTE_OFFICE = [-6, 0];
+const ROUTE_CARS = ['#0f766e', '#ff9f0a', '#5e5ce6', '#ff375f'];
+const ROUTE_MODES = [
+  {
+    key: 'excel', caption: 'Excel era: pairs drive back to the office between visits', km: '60',
+    missed: [5, 7],
+    plans: [['office', 0, 'office', 1, 'office'], ['office', 2, 'office', 3, 'office'], ['office', 4, 'office'], ['office', 6, 'office']]
+  },
+  {
+    key: 'valeo', caption: 'Logistics Valeo: visits chained, pairs wait at the nearest hub', km: '45',
+    missed: [],
+    plans: [['h0', 1, 0, 'h0'], ['h0', 2, 3, 'h1'], ['h1', 4, 6, 'h2'], ['h2', 7, 5, 'h2']]
+  }
+];
+
+function createRoutes(stage) {
+  const { renderer, scene, camera, resize } = createStage(stage, { fov: 30 });
+  const steps = [...stage.querySelectorAll('[data-step]')];
+  const caption = stage.querySelector('[data-caption]');
+  const kmOut = stage.querySelector('[data-km]');
+  const labels = [...stage.querySelectorAll('[data-anchor]')];
+
+  // City blocks between the streets, which run every 1.5 units.
+  const blockGeo = new RoundedBoxGeometry(1, 1, 1, 2, 0.06);
+  const blockMat = material('#e5e5ea');
+  const cells = [];
+  for (let x = -6.75; x <= 6.75; x += 1.5) {
+    for (let z = -3.75; z <= 3.75; z += 1.5) cells.push([x, z]);
+  }
+  const blocks = new THREE.InstancedMesh(blockGeo, blockMat, cells.length);
+  const dummy = new THREE.Object3D();
+  cells.forEach(([x, z], i) => {
+    const h = 0.08 + ((Math.sin(x * 12.9 + z * 78.2) * 43758.5) % 1 + 1) % 1 * 0.22;
+    dummy.position.set(x, h / 2, z);
+    dummy.scale.set(0.95, h, 0.95);
+    dummy.updateMatrix();
+    blocks.setMatrixAt(i, dummy.matrix);
+  });
+  blocks.castShadow = true;
+  blocks.receiveShadow = true;
+  scene.add(blocks);
+
+  const office = new THREE.Mesh(new RoundedBoxGeometry(0.9, 1.6, 0.9, 3, 0.08), material('#1d1d1f'));
+  office.position.set(ROUTE_OFFICE[0], 0.8, ROUTE_OFFICE[1]);
+  office.castShadow = true;
+  scene.add(office);
+
+  const hubMat = material('#0f766e', { emissive: '#0f766e', emissiveIntensity: 0.2 });
+  const hubs = ROUTE_HUBS.map(([x, z]) => {
+    const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.42, 0.12, 32), hubMat);
+    hub.position.set(x, 0.06, z);
+    scene.add(hub);
+    return hub;
+  });
+
+  const pinGeo = new THREE.SphereGeometry(0.2, 20, 16);
+  const pins = ROUTE_ORDERS.map(([x, z]) => {
+    const mat = new THREE.MeshStandardMaterial({ color: '#34c759', emissive: '#34c759', emissiveIntensity: 0.3 });
+    const pin = new THREE.Mesh(pinGeo, mat);
+    pin.position.set(x, 0.45, z);
+    pin.castShadow = true;
+    scene.add(pin);
+    return { pin, mat };
+  });
+
+  const point = (stop) => {
+    if (stop === 'office') return ROUTE_OFFICE;
+    if (typeof stop === 'string') return ROUTE_HUBS[Number(stop.slice(1))];
+    return ROUTE_ORDERS[stop];
+  };
+  // Street routing: along x first, then along z.
+  const pathFor = (plan) => {
+    const pts = [];
+    plan.forEach((stop, i) => {
+      const [x, z] = point(stop);
+      if (i > 0) {
+        const [px] = point(plan[i - 1]);
+        pts.push(new THREE.Vector3(x, 0.12, pts[pts.length - 1].z));
+        if (px === x) pts.pop();
+      }
+      pts.push(new THREE.Vector3(x, 0.12, z));
+    });
+    const lengths = [0];
+    for (let i = 1; i < pts.length; i += 1) lengths.push(lengths[i - 1] + pts[i].distanceTo(pts[i - 1]));
+    return { pts, lengths, total: lengths[lengths.length - 1] };
+  };
+  const along = (path, t, out) => {
+    const d = t * path.total;
+    let i = 1;
+    while (i < path.lengths.length - 1 && path.lengths[i] < d) i += 1;
+    const span = path.lengths[i] - path.lengths[i - 1] || 1;
+    return out.lerpVectors(path.pts[i - 1], path.pts[i], (d - path.lengths[i - 1]) / span);
+  };
+
+  const carGeo = new RoundedBoxGeometry(0.5, 0.28, 0.34, 2, 0.07);
+  const cars = ROUTE_CARS.map((color) => {
+    const car = new THREE.Mesh(carGeo, material(color));
+    car.castShadow = true;
+    scene.add(car);
+    return car;
+  });
+
+  let trails = [];
+  let paths = [];
+  let mode = -1;
+  const setMode = (index) => {
+    mode = index;
+    const m = ROUTE_MODES[index];
+    trails.forEach((line) => scene.remove(line));
+    paths = m.plans.map(pathFor);
+    // Routes as flat tubes along the streets, wide enough to read at a glance.
+    trails = paths.map((path, i) => {
+      const curve = new THREE.CurvePath();
+      for (let k = 1; k < path.pts.length; k += 1) {
+        const a = path.pts[k - 1].clone().setY(0.05);
+        const b = path.pts[k].clone().setY(0.05);
+        if (a.distanceTo(b) > 1e-3) curve.add(new THREE.LineCurve3(a, b));
+      }
+      const tube = new THREE.Mesh(
+        new THREE.TubeGeometry(curve, Math.max(8, curve.curves.length * 8), 0.06, 6, false),
+        new THREE.MeshBasicMaterial({ color: m.key === 'excel' ? '#aeaeb2' : ROUTE_CARS[i], transparent: true, opacity: 0.85 })
+      );
+      scene.add(tube);
+      return tube;
+    });
+    pins.forEach(({ mat }, i) => {
+      const missed = m.missed.includes(i);
+      mat.color.set(missed ? '#ff3b30' : '#34c759');
+      mat.emissive.set(missed ? '#ff3b30' : '#34c759');
+    });
+    hubMat.opacity = 1;
+    hubs.forEach((hub) => { hub.visible = m.key === 'valeo'; });
+    steps.forEach((step) => step.classList.toggle('is-on', step.dataset.step === m.key));
+    if (caption) caption.textContent = m.caption;
+    if (kmOut) kmOut.textContent = m.km;
+    labels.forEach((label) => {
+      if (label.dataset.anchor.startsWith('hub')) label.hidden = m.key !== 'valeo';
+    });
+  };
+
+  const layout = () => {
+    const span = 15;
+    const halfTan = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+    const distance = Math.max(12, span / 2 / (halfTan * camera.aspect));
+    camera.position.set(0, distance * 0.78, distance * 0.62);
+    camera.lookAt(0, 0, 0.3);
+  };
+  layout();
+
+  const anchors = {
+    office: new THREE.Vector3(ROUTE_OFFICE[0], 1.75, ROUTE_OFFICE[1]),
+    hub0: new THREE.Vector3(ROUTE_HUBS[0][0], 0.3, ROUTE_HUBS[0][1]),
+    hub1: new THREE.Vector3(ROUTE_HUBS[1][0], 0.3, ROUTE_HUBS[1][1]),
+    hub2: new THREE.Vector3(ROUTE_HUBS[2][0], 0.3, ROUTE_HUBS[2][1])
+  };
+  const projected = new THREE.Vector3();
+  const placeLabels = () => {
+    const { clientWidth: w, clientHeight: h } = stage;
+    labels.forEach((label) => {
+      const at = anchors[label.dataset.anchor];
+      if (!at) return;
+      projected.copy(at).project(camera);
+      label.style.left = `${((projected.x + 1) / 2) * w}px`;
+      label.style.top = `${((1 - projected.y) / 2) * h}px`;
+    });
+  };
+
+  // Each mode runs one full lap of every route, then the other mode takes over.
+  const LAP = 7.5;
+  let clock = 0;
+  setMode(reduced ? 1 : 0);
+  if (reduced) clock = LAP * 0.4;
+
+  runLoop(stage, (dt, t) => {
+    clock += dt;
+    if (!reduced && clock > LAP) {
+      clock = 0;
+      setMode((mode + 1) % ROUTE_MODES.length);
+    }
+    const lap = Math.min(1, clock / LAP);
+    cars.forEach((car, i) => {
+      const path = paths[i];
+      along(path, lap, car.position);
+      car.position.y = 0.24;
+      const ahead = along(path, Math.min(1, lap + 0.01), projected);
+      const dx = ahead.x - car.position.x;
+      const dz = ahead.z - car.position.z;
+      if (Math.abs(dx) + Math.abs(dz) > 1e-4) car.rotation.y = Math.atan2(-dz, dx);
+    });
+    pins.forEach(({ pin }, i) => { pin.position.y = 0.45 + Math.sin(t * 2.4 + i) * 0.05; });
+    hubMat.emissiveIntensity = 0.2 + Math.sin(t * 2) * 0.12;
+    renderer.render(scene, camera);
+    placeLabels();
+  }, () => { resize(); layout(); });
+}
+
 /* ---------------------------------------------------------------- bootstrap
    Last, so every const above is initialised before a scene reads it. */
 document.querySelectorAll('[data-arcade-scene]').forEach((stage) => {
@@ -698,6 +901,7 @@ document.querySelectorAll('[data-arcade-scene]').forEach((stage) => {
     if (stage.dataset.arcadeScene === 'slots') createSlots(stage);
     else if (stage.dataset.arcadeScene === 'flow') createFlow(stage);
     else if (stage.dataset.arcadeScene === 'rolling') createRolling(stage);
+    else if (stage.dataset.arcadeScene === 'routes') createRoutes(stage);
   } catch (error) {
     console.warn('Arcade scene unavailable:', error);
     const fallback = document.createElement('p');

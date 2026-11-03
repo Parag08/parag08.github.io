@@ -4,18 +4,21 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Valeo Health — Routing product | Parag Rahangdale</title>
-  <meta name="description" content="How Parag Rahangdale built Logistics Valeo, a dispatch tool that lifted orders captured from 60â70% to 80â90% and cut km per order by about 25%.">
+  <meta name="description" content="How Parag Rahangdale traced an 18% rise in fleet cost, won three CEO-approved strategies and built Logistics Valeo: orders captured up to 80–90%, km per order down ~25%.">
   <meta name="theme-color" content="#f5f5f7">
   <link rel="icon" href="../../favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
   <link rel="preload" href="../../assets/fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="../../style.css?v=16">
+  <link rel="stylesheet" href="../../arcade.css?v=10">
+  <script type="importmap">{"imports":{"three":"../../mountain-demo/vendor/three.module.js"}}</script>
   <script src="../../script.js?v=5" defer></script>
+  <script type="module" src="../../arcade-scenes.js?v=12"></script>
   <link rel="canonical" href="https://parag08.github.io/work/valeo-health/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Parag Rahangdale">
   <meta property="og:title" content="Valeo Health — Routing product | Parag Rahangdale">
-  <meta property="og:description" content="How Parag Rahangdale built Logistics Valeo, a dispatch tool that lifted orders captured from 60â70% to 80â90% and cut km per order by about 25%.">
+  <meta property="og:description" content="How Parag Rahangdale traced an 18% rise in fleet cost, won three CEO-approved strategies and built Logistics Valeo: orders captured up to 80–90%, km per order down ~25%.">
   <meta property="og:url" content="https://parag08.github.io/work/valeo-health/">
   <meta property="og:image" content="https://parag08.github.io/assets/og-image.jpg">
   <meta property="og:image:width" content="1200">
@@ -25,6 +28,7 @@
   <script src="/analytics.js"></script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-nav">
     <nav class="nav-pill" aria-label="Primary">
       <a href="../../index.html">Home</a>
@@ -42,39 +46,208 @@
       <a href="../../contact.html">Contact Me</a>
     </nav>
   </div>
-  <main class="wrap study">
-    <p class="study-kicker">Valeo Health · UAE · 2026 · Product management &amp; operations</p>
-    <h1>From rising fleet costs to an adopted routing product</h1>
-    <p class="lede">Turning an invisible fleet-cost problem into a dispatch tool the operations team moved onto within a week.</p>
-    <div class="study-grid">
+
+  <main id="main" class="wrap run">
+    <a class="run-back" href="../../work.html">← All save files</a>
+
+    <header class="run-head">
       <div>
-        <p class="study-kicker">Context</p>
-        <p>Valeo Health sends nurse–driver pairs to patients' homes for short visits: sample collection, IV therapy and injections. Orders arrive on a partner booking platform and go to whichever provider claims them first. Ops claimed them by hand in Excel, and idle pairs waited at the office between visits, so the fleet absorbed distance, fuel and time nobody could see clearly.</p>
-
-        <p class="study-kicker">My scope</p>
-        <p>I led the financial diagnosis, worked with the operations team on the decisions that mattered, built Logistics Valeo, and built the Valeo Smart Tracker prototype.</p>
-
-        <p class="study-kicker">Approach</p>
-        <p>The cost baseline came first, so the problem had a number rather than only a narrative. The tool was then designed around the people running the routes: an acceptance engine that claims the orders the fleet can serve, a live day view, roster auto-allocation, standby hubs for idle pairs, capacity planning and metrics.</p>
-        <p>It went live on 1 August 2026. The first days had many issues; daily catch-ups with ops for 14 days fixed them, and ops moved fully onto the tool within a week. When ops pushed back, the auto-accept lead time moved from 3 h to 24 h and night hours stopped counting.</p>
-        <p>Measured from 16 August to 16 September over 29 clean days, km per order fell from 60 to 45.3 (−24.6%). Daily order volume rose over the same period, and denser days cost less per order, so the claim is that km per order fell about 25% after launch, not that hubs alone cut it. The saving is valued at the marginal cost per km, since salaries and rental don't fall when cars drive less.</p>
-        <p>Separately, I specified and built Valeo Smart Tracker — a working prototype for medication and health-habit adherence, with a daily care plan, refill alerts, and streaks that motivate without punishing a missed day.</p>
-
-        <p class="study-kicker">What this demonstrates</p>
-        <div class="tags"><span class="tag">Product management</span><span class="tag">Operations partnership</span><span class="tag">Rapid prototyping</span><span class="tag">Adoption-led design</span></div>
+        <p class="hud">Slot 03 · Valeo Health · Dubai, UAE · Jul – Aug 2026 · Management intern, product and operations</p>
+        <h1>From fleet costs to an adopted routing product</h1>
+        <p class="lede">Fleet cost had risen 18% with no more orders served. I traced it from the receipts, won CEO approval for three strategies, then built Logistics Valeo myself and worked alongside operations until it stuck. Orders captured rose to 80–90%, and km per order fell about 25%.</p>
       </div>
-      <div class="outcome-list">
-        <div><strong>60–70% → 80–90%</strong><p>orders captured from the platform</p></div>
-        <div><strong>−25%</strong><p>km per order after launch</p></div>
-        <div><strong>~23,000 km</strong><p>saved a month</p></div>
-        <div><strong>~AED 12,400</strong><p>saved a month, at marginal cost per km</p></div>
-        <a class="btn" href="../../valeohealth.html" target="_blank" rel="noopener">Open the tracker prototype ↗</a>
-        <a class="btn" href="../../projects.html#logistics-valeo">See the rebuild →</a>
+      <p class="stage-clear" aria-label="Stage clear: adopted by operations">Stage<b>Clear</b>Adopted</p>
+    </header>
+
+    <figure class="arcade-stage run-stage" data-arcade-scene="routes" data-fallback="Excel era: back to the office between visits. Logistics Valeo: chained visits, idle pairs at hubs.">
+      <figcaption class="sr-only">Animation of a day of home visits on a city grid, shown two ways. In the Excel era, each nurse–driver pair drives back to the office between visits and two orders are missed. With Logistics Valeo, visits are chained, idle pairs wait at the nearest of three hubs, and every order is served with less driving.</figcaption>
+      <span class="flow-label" data-anchor="office" aria-hidden="true"><span class="hud hud-muted">Base</span>Office</span>
+      <span class="flow-label" data-anchor="hub0" aria-hidden="true"><span class="hud">Hub</span>1</span>
+      <span class="flow-label" data-anchor="hub1" aria-hidden="true"><span class="hud">Hub</span>2</span>
+      <span class="flow-label" data-anchor="hub2" aria-hidden="true"><span class="hud">Hub</span>3</span>
+      <div class="flow-hud" aria-hidden="true">
+        <ol class="flow-steps">
+          <li data-step="excel" class="is-on">1 · Excel era</li>
+          <li data-step="valeo">2 · Logistics Valeo</li>
+        </ol>
+        <span class="flow-caption"><span data-caption>Excel era: pairs drive back to the office between visits</span> · <b data-km>60</b> km per order</span>
       </div>
-    </div>
-    <div class="contact-actions" style="margin-top:36px">
-      <a class="btn" href="../../work.html">← All case studies</a>
-    </div>
+    </figure>
+    <p class="stage-legend"><span class="legend-item"><span class="legend-dot legend-served" aria-hidden="true"></span>Order served</span><span class="legend-item"><span class="legend-dot legend-missed" aria-hidden="true"></span>Order missed</span><span class="legend-item"><span class="legend-dot legend-hub" aria-hidden="true"></span>Standby hub</span><span class="legend-item">Illustrative layout; the km figures are measured.</span></p>
+
+    <section class="reveal" aria-labelledby="score-title">
+      <h2 id="score-title" class="sr-only">Results</h2>
+      <div class="scoreboard">
+        <div class="score"><span class="hud">Orders captured</span><strong>80–90%</strong><p>up from 60–70% of platform orders</p></div>
+        <div class="score"><span class="hud">Driving</span><strong data-count="25" data-prefix="−" data-suffix="%">−25%</strong><p>km per order, 60 → 45.3</p></div>
+        <div class="score"><span class="hud">Saved a month</span><strong>~23,000 km</strong><p>and ~AED 12,400 at marginal cost</p></div>
+        <div class="score"><span class="hud">Adoption</span><strong>1 week</strong><p>for operations to move fully onto it</p></div>
+        <div class="score"><span class="hud">CEO approved</span><strong data-count="3">3</strong><p>strategies from the cost diagnosis</p></div>
+      </div>
+    </section>
+
+    <section class="run-section reveal" aria-labelledby="mission-title">
+      <div>
+        <p class="hud">Mission</p>
+        <h2 id="mission-title">The problem</h2>
+      </div>
+      <div class="run-copy">
+        <p>Valeo Health sends 10–12 nurse–driver pairs to patients’ homes for short visits: sample collection, IV therapy and injections, 50–70 orders a day. Orders arrive on a partner booking platform and go to whichever provider claims them first.</p>
+        <p>Dispatch claimed orders by hand in Excel and coordinated the ground team at the same time, so many orders were missed. Between visits, idle pairs waited at the office, so the fleet drove long, empty kilometres that nobody could see clearly.</p>
+      </div>
+    </section>
+
+    <section class="run-section reveal" aria-labelledby="diag-title">
+      <div>
+        <p class="hud">Loot check</p>
+        <h2 id="diag-title">Finding the cost nobody could see</h2>
+      </div>
+      <div>
+        <ol class="ledger">
+          <li class="ledger-step"><span class="hud">Step 1</span><strong>Rebuilt cost from receipts</strong><span>With the accounts team, from every fleet receipt</span></li>
+          <li class="ledger-step"><span class="hud">Step 2</span><strong>Allocated it by business line</strong><span>Managerial accounting from my MBA, applied to a real P&amp;L</span></li>
+          <li class="ledger-step ledger-result"><span class="hud">Found</span><strong>Fleet cost up 18%</strong><span>With no rise in orders served</span></li>
+        </ol>
+        <div class="ledger-bars" aria-label="Fleet cost rose 18% while orders served stayed flat">
+          <div class="ledger-bar"><span>Fleet cost</span><span class="bar"><span class="bar-fill bar-cost" style="--w: 100%"></span></span><b>+18%</b></div>
+          <div class="ledger-bar"><span>Orders served</span><span class="bar"><span class="bar-fill bar-flat" style="--w: 0%"></span></span><b>flat</b></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="run-section reveal" aria-labelledby="strategy-title">
+      <div>
+        <p class="hud">Strategies unlocked</p>
+        <h2 id="strategy-title">Three plans the CEO approved</h2>
+      </div>
+      <ul class="upgrades">
+        <li class="upgrade" data-tier="decision"><span class="hud">Built and live</span><strong>Three hubs, aligned incentives and a digital app</strong><p>A 3-hub standby model. The operations team earns AED 50 a day when the team’s km per order is 35–45, and AED 100 below 35. Logistics Valeo runs all sample-collection and IV orders.</p></li>
+        <li class="upgrade" data-tier="process"><span class="hud">Approved plan</span><strong>Combine babysitting and home nursing</strong><p>Share one fleet and one set of operations managers across both businesses.</p></li>
+        <li class="upgrade" data-tier="delivery"><span class="hud">Approved plan</span><strong>A digital app for both businesses</strong><p>Extend the same digital operating model to babysitting and home nursing.</p></li>
+      </ul>
+    </section>
+
+    <section class="run-section reveal" aria-labelledby="party-map-title">
+      <div>
+        <p class="hud">Party</p>
+        <h2 id="party-map-title">Built with the business, not for it</h2>
+      </div>
+      <div>
+        <ol class="alliance">
+          <li class="alliance-row alliance-sponsor"><span class="hud">Final approval</span><strong>CEO</strong><span>Approved the three strategies and the launch</span></li>
+          <li class="alliance-row alliance-lead"><span class="hud">Builder</span><strong>Me, end to end</strong><span>Diagnosis, product, code, rollout</span></li>
+          <li class="alliance-teams">
+            <span class="alliance-team"><strong>CTO</strong><span>Found the booking-platform and internal APIs with me</span></span>
+            <span class="alliance-team"><strong>COO</strong><span>Set the business use cases the tool had to cover</span></span>
+            <span class="alliance-team"><strong>Ops manager</strong><span>Refined it with me every day after launch</span></span>
+          </li>
+          <li class="alliance-row alliance-customer"><span class="hud">Users</span><strong>Dispatch and 10–12 nurse–driver pairs</strong><span>50–70 home visits a day</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="run-section reveal" aria-labelledby="patch-title">
+      <div>
+        <p class="hud">Patch notes</p>
+        <h2 id="patch-title">Every objection got an answer</h2>
+        <p class="section-note">Operations pushed back on every change. Each objection was answered with data or with a shipped change, usually within days.</p>
+      </div>
+      <ol class="patches">
+        <li class="patch">
+          <p class="patch-quote">“Why use a tool when the current setup works?”</p>
+          <p class="patch-fix"><span class="patch-tag tag-proof">Proof</span>It didn’t work: orders were being missed, and dispatch barely had time to claim orders and coordinate the ground team. I showed them the missed orders.</p>
+        </li>
+        <li class="patch">
+          <p class="patch-quote">“The third hub is barely used; my orders are around hub 2.”</p>
+          <p class="patch-fix"><span class="patch-tag tag-proof">Proof</span>True on some days, but the 3-hub model saves money overall. It was fitted on 9 months of historical orders, and I walked them through the data.</p>
+        </li>
+        <li class="patch">
+          <p class="patch-quote">“I get all the morning orders while other nurses sit idle.”</p>
+          <p class="patch-fix"><span class="patch-tag tag-patch">Patch</span>Fair. I changed the roster algorithm to spread morning shifts evenly.</p>
+        </li>
+        <li class="patch">
+          <p class="patch-quote">“We have too many split shifts.”</p>
+          <p class="patch-fix"><span class="patch-tag tag-patch">Patch</span>The roster now allows at most two split shifts.</p>
+        </li>
+        <li class="patch">
+          <p class="patch-quote">Pushback on the auto-accept lead time</p>
+          <p class="patch-fix"><span class="patch-tag tag-patch">Patch</span>Lead time moved from 3 to 24 hours, and night hours stopped counting.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="run-section reveal" aria-labelledby="map-title">
+      <div>
+        <p class="hud">Run map</p>
+        <h2 id="map-title">How it ran</h2>
+      </div>
+      <div>
+        <ol class="run-map">
+          <li class="room room-blocked"><span class="hud">Before</span>Excel dispatch, pairs waiting at the office</li>
+          <li class="room"><span class="hud">Room 1</span>Cost rebuilt from receipts</li>
+          <li class="room"><span class="hud">Room 2</span>+18% fleet cost found</li>
+          <li class="room"><span class="hud">Room 3</span>CEO approves 3 strategies</li>
+          <li class="room"><span class="hud">Room 4</span>Built with CTO and COO</li>
+          <li class="room"><span class="hud">Room 5</span>Live 1 Aug, daily fixes for 14 days</li>
+          <li class="room room-qa"><span class="hud">Room 6 · Boss</span>Operations pushback, answered</li>
+          <li class="room room-goal"><span class="hud">Adopted</span>In 1 week</li>
+        </ol>
+        <p class="run-map-dates"><span>Jul 2026 · diagnosis</span><span>Still in use after the internship</span></p>
+      </div>
+    </section>
+
+    <section class="run-section reveal" aria-labelledby="party-title">
+      <div>
+        <p class="hud">Loadout</p>
+        <h2 id="party-title">What the tool does</h2>
+      </div>
+      <div class="party-loadout">
+        <div>
+          <ul class="inventory" aria-label="Tool loadout">
+            <li class="item"><b>Auto</b><span>Accepts the orders the fleet can serve</span></li>
+            <li class="item"><b>Day</b><span>Live view of every pair’s visits</span></li>
+            <li class="item"><b>Roster</b><span>Builds pairs and shifts to cover demand</span></li>
+            <li class="item"><b>Hubs</b><span>3 standby hubs, from 9 months of orders</span></li>
+            <li class="item"><b>Plan</b><span>Capacity for each day’s demand</span></li>
+            <li class="item"><b>KPI</b><span>Km per order, for the incentive</span></li>
+          </ul>
+          <p class="loadout-note">Built in Python and React on the booking platform’s APIs.</p>
+        </div>
+        <div class="replay">
+          <video src="../../assets/projects/valeo-routing.webm" poster="../../assets/projects/valeo-routing-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Public rebuild of Logistics Valeo on synthetic data: the same day under the Excel era and Logistics Valeo, then hub siting and capacity"></video>
+          <p class="loadout-note">The public rebuild on synthetic data, so the logic can be shown. <a href="https://github.com/Parag08/valeo-routing" target="_blank" rel="noopener">See the code ↗</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="run-section reveal" aria-labelledby="ach-title">
+      <div>
+        <p class="hud">Achievements unlocked</p>
+        <h2 id="ach-title">Highlights</h2>
+      </div>
+      <ul class="achievements">
+        <li class="achievement" style="--i: 0"><span class="trophy" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></span><span><strong>Adopted in a week</strong><span>Operations moved fully onto the tool</span></span></li>
+        <li class="achievement" style="--i: 1"><span class="trophy" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></span><span><strong>Incentive unlocked</strong><span>The team hit the km target on many days</span></span></li>
+        <li class="achievement" style="--i: 2"><span class="trophy" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></span><span><strong>Still running after I left</strong><span>Fully used a month later; they asked me to stay on</span></span></li>
+      </ul>
+    </section>
+
+    <section class="reveal">
+      <div class="next-run">
+        <div>
+          <p class="hud">Next save file</p>
+          <h2>Slot 04 · Designing an AI-enabled investment platform</h2>
+        </div>
+        <div class="contact-actions">
+          <a class="btn" href="../everhaus/">Load slot 04 →</a>
+          <a class="btn btn-dark" href="../../contact.html">Contact me</a>
+        </div>
+      </div>
+    </section>
   </main>
+  <footer class="site-footer">
+    <div class="giant-name">parag</div>
+    <div class="footer-base"><span>Singapore 🇸🇬 · <span data-clock>--:--</span> SGT</span><a href="../../contact.html">Let’s talk</a></div>
+  </footer>
 </body>
 </html>

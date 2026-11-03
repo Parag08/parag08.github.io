@@ -468,6 +468,10 @@ kbd {
   backdrop-filter: blur(6px);
 }
 
+.flow-label[hidden] {
+  display: none;
+}
+
 .flow-label .hud {
   font-size: 0.62rem;
 }
@@ -1512,5 +1516,217 @@ kbd {
   .vm-label {
     padding: 1px 4px;
     font-size: 0.54rem;
+  }
+}
+
+/* ------------------------------------------------- valeo: ledger and patches */
+.section-note {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.ledger {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: none;
+}
+
+.ledger-step {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px 16px;
+  background: #fff;
+}
+
+.ledger-step:not(:last-child)::after {
+  position: absolute;
+  top: 50%;
+  right: -14px;
+  z-index: 1;
+  color: var(--arc);
+  font-weight: 700;
+  transform: translateY(-50%);
+  content: "→";
+}
+
+.ledger-step strong {
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.ledger-step > span:last-child {
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.4;
+}
+
+.ledger-result {
+  border: 2px solid var(--hp);
+}
+
+.ledger-result .hud {
+  color: var(--hp);
+}
+
+.ledger-bars {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px;
+  background: #fff;
+}
+
+.ledger-bar {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr) 56px;
+  gap: 12px;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.ledger-bar b {
+  font-family: var(--mono);
+  text-align: right;
+}
+
+.bar {
+  position: relative;
+  height: 12px;
+  border-radius: 6px;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.bar::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: calc(100% / 1.18);
+  border-right: 2px dashed rgba(29, 29, 31, 0.35);
+  content: "";
+}
+
+.bar-fill {
+  display: block;
+  width: var(--w);
+  height: 100%;
+  border-radius: 6px;
+  transition: width 1.4s cubic-bezier(0.45, 0, 0.2, 1) 0.3s;
+}
+
+.bar-cost { background: linear-gradient(90deg, #ff9f0a, var(--hp)); }
+.bar-flat { width: calc(100% / 1.18); background: #aeaeb2; }
+
+.ts-reveal .reveal:not(.is-visible) .bar-cost {
+  width: calc(100% / 1.18);
+}
+
+.patches {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.patch {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 16px;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px 16px;
+  background: #fff;
+}
+
+.patch-quote {
+  color: var(--ink);
+  font-size: 0.98rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+}
+
+.patch-fix {
+  color: #48484c;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.patch-tag {
+  display: inline-block;
+  margin-right: 8px;
+  border-radius: 6px;
+  padding: 2px 7px;
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  vertical-align: 2px;
+}
+
+.tag-proof { background: var(--arc-wash); color: var(--arc); }
+.tag-patch { background: rgba(36, 138, 61, 0.12); color: #248a3d; }
+
+.legend-dot {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.legend-served { background: #34c759; }
+.legend-missed { background: #ff3b30; }
+.legend-hub { background: var(--teal); }
+
+.replay video {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #1d1d1f;
+}
+
+.flow-caption b {
+  font-family: var(--mono);
+}
+
+@media (max-width: 640px) {
+  .ledger {
+    grid-template-columns: 1fr;
+  }
+
+  .ledger-step:not(:last-child)::after {
+    top: auto;
+    right: 50%;
+    bottom: -14px;
+    transform: translateX(50%) rotate(90deg);
+  }
+
+  .ledger-bar {
+    grid-template-columns: 90px minmax(0, 1fr) 44px;
+    gap: 8px;
+    font-size: 0.82rem;
+  }
+
+  .patch {
+    grid-template-columns: 1fr;
+    gap: 8px;
   }
 }
