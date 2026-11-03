@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nutanix — Converting ESXi to AHV in place | Parag Rahangdale</title>
+  <meta name="description" content="How Parag Rahangdale led Nutanix Move's in-place ESXi-to-AHV conversion across three teams after VMware's licensing change, keeping about half of affected customers.">
+  <meta name="theme-color" content="#f5f5f7">
+  <link rel="icon" href="../../favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+  <link rel="preload" href="../../assets/fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../style.css?v=16">
+  <link rel="stylesheet" href="../../arcade.css?v=4">
+  <script type="importmap">{"imports":{"three":"../../mountain-demo/vendor/three.module.js"}}</script>
+  <script src="../../script.js?v=5" defer></script>
+  <script type="module" src="../../arcade-scenes.js?v=7"></script>
+  <link rel="canonical" href="https://parag08.github.io/work/nutanix-esxi-to-ahv/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Parag Rahangdale">
+  <meta property="og:title" content="Nutanix — Converting ESXi to AHV in place | Parag Rahangdale">
+  <meta property="og:description" content="How Parag Rahangdale led Nutanix Move's in-place ESXi-to-AHV conversion across three teams after VMware's licensing change, keeping about half of affected customers.">
+  <meta property="og:url" content="https://parag08.github.io/work/nutanix-esxi-to-ahv/">
+  <meta property="og:image" content="https://parag08.github.io/assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Parag Rahangdale, Product Manager in Singapore">
+  <meta name="twitter:card" content="summary_large_image">
+  <script src="/analytics.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-nav">
+    <nav class="nav-pill" aria-label="Primary">
+      <a href="../../index.html">Home</a>
+      <a class="is-active" href="../../work.html">Case Studies</a>
+      <a href="../../projects.html">My Projects</a>
+    </nav>
+    <a class="nav-cta" href="../../contact.html">Contact Me</a>
+    <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false">Menu</button>
+  </header>
+  <div class="mobile-menu" inert>
+    <nav>
+      <a href="../../index.html">Home</a>
+      <a href="../../work.html">Case Studies</a>
+      <a href="../../projects.html">My Projects</a>
+      <a href="../../contact.html">Contact Me</a>
+    </nav>
+  </div>
+
+  <main id="main" class="wrap run">
+    <a class="run-back" href="../../work.html">← All save files</a>
+
+    <header class="run-head">
+      <div>
+        <p class="hud">Slot 02 · Nutanix · Dec 2024 – Oct 2025 · Technical lead</p>
+        <h1>Keeping customers through VMware’s licensing shake-up</h1>
+        <p class="lede">VMware’s new licensing forced about 2,000 enterprise customers running Nutanix on VMware to pick one full stack. I led Nutanix Move’s in-place ESXi-to-AHV conversion across three teams, built for zero downtime and shipped on time. About half of those customers stayed with Nutanix.</p>
+      </div>
+      <p class="stage-clear" aria-label="Stage clear: shipped on time">Stage<b>Clear</b>On time</p>
+    </header>
+
+    <figure class="arcade-stage run-stage" data-arcade-scene="flow" data-fallback="VMware ESXi → Nutanix AHV: seed, delta sync, cutover.">
+      <figcaption class="sr-only">Animation: virtual machines move from VMware ESXi onto Nutanix AHV in three phases, an initial seed, incremental delta syncs, then cutover. Move orchestrates from above through the AHV APIs.</figcaption>
+      <span class="flow-label" data-anchor="source" aria-hidden="true"><span class="hud hud-muted">From</span>VMware ESXi</span>
+      <span class="flow-label" data-anchor="move" aria-hidden="true"><span class="hud">Move · my team</span>Orchestration</span>
+      <span class="flow-label" data-anchor="target" aria-hidden="true"><span class="hud">To</span>Nutanix AHV</span>
+      <div class="flow-hud" aria-hidden="true">
+        <ol class="flow-steps">
+          <li data-step="copy" class="is-on">1 · Seed</li>
+          <li data-step="delta">2 · Delta sync</li>
+          <li data-step="cutover">3 · Cutover</li>
+        </ol>
+        <span class="flow-total">Same hardware, new hypervisor</span>
+      </div>
+    </figure>
+
+    <section class="reveal" aria-labelledby="score-title">
+      <h2 id="score-title" class="sr-only">Results</h2>
+      <div class="scoreboard">
+        <div class="score"><span class="hud">Retention</span><strong data-count="50" data-prefix="~" data-suffix="%">~50%</strong><p>of affected customers stayed with Nutanix</p></div>
+        <div class="score"><span class="hud">At stake</span><strong>2,000</strong><p>enterprise customers on Nutanix + VMware</p></div>
+        <div class="score"><span class="hud">Revenue at risk</span><strong>$10–20M</strong><p>if the release slipped</p></div>
+        <div class="score"><span class="hud">Delivery</span><strong>On time</strong><p>shipped Sep–Oct 2025</p></div>
+        <div class="score"><span class="hud">Cycle time</span><strong data-count="20" data-prefix="~" data-suffix="%">~20%</strong><p>shorter after fixing the QA bottleneck</p></div>
+      </div>
+    </section>
+
+    <section class="run-section reveal" aria-labelledby="mission-title">
+      <div>
+        <p class="hud">Mission</p>
+        <h2 id="mission-title">The problem</h2>
+      </div>
+      <div class="run-copy">
+        <p>Many Nutanix customers ran a mixed stack: Nutanix software on top of VMware’s ESXi hypervisor. After Broadcom acquired VMware, it changed the licensing so customers had to buy the complete package. Partial subscriptions were gone.</p>
+        <p>That left about 2,000 enterprise customers with a choice: go all-in on VMware, or move fully to Nutanix. With the new pricing, many wanted to stay with Nutanix. The blocker was the move itself: switching every workload from ESXi to Nutanix’s own hypervisor, AHV, without downtime.</p>
+        <p>Nutanix needed a product that made that switch seamless, and needed it before customers made their decision.</p>
+      </div>
+    </section>
+
+    <section class="run-section reveal" aria-labelledby="boss-title">
+      <div>
+        <p class="hud">Boss fights</p>
+        <h2 id="boss-title">The hardest parts</h2>
+      </div>
+      <div class="boss-grid">
+        <article class="boss">
+          <div class="boss-name"><strong>Three teams, three roadmaps</strong><span class="hud">Boss 1</span></div>
+          <p>The conversion depended on AHV, Networking and Uhura, each with its own priorities. The customer timeline was fixed, and $10–20M was at risk if it slipped.</p>
+          <span class="hp" style="--hp-end: 0%" aria-hidden="true"><span class="hp-fill"></span></span>
+          <span class="hp-read"><span>Defeated by <b>a shared mandate</b></span><span>Dec 2024</span></span>
+        </article>
+        <article class="boss">
+          <div class="boss-name"><strong>The QA bottleneck</strong><span class="hud">Boss 2</span></div>
+          <p>Every release queued behind QA. With bugs landing on both our side and the AHV team’s, the date was at risk.</p>
+          <span class="hp" style="--hp-end: 0%" aria-hidden="true"><span class="hp-fill"></span></span>
+          <span class="hp-read"><span><b>+15%</b> QA capacity</span><span>Cycles ~20% shorter</span></span>
+        </article>
+      </div>
+    </section>
+
+    <section class="run-section reveal" aria-labelledby="party-map-title">
+      <div>
+        <p class="hud">Party</p>
+        <h2 id="party-map-title">Getting three teams behind one plan</h2>
+      </div>
+      <div>
+        <ol class="alliance">
+          <li class="alliance-row alliance-sponsor"><span class="hud">Sponsors</span><strong>Directors and VPs</strong><span>Backed the project: 2,000 enterprise customers to retain</span></li>
+          <li class="alliance-row alliance-lead"><span class="hud">Lead</span><strong>Me, with the Move team</strong><span>One plan, one timeline, one voice to customers</span></li>
+          <li class="alliance-teams">
+            <span class="alliance-team"><strong>AHV</strong><span>The core hypervisor and the data path workloads land on</span></span>
+            <span class="alliance-team"><strong>Networking</strong><span>Brings networks up and down once systems are converted</span></span>
+            <span class="alliance-team"><strong>Uhura</strong><span>Nutanix running on VMware: where every customer started</span></span>
+          </li>
+          <li class="alliance-row alliance-customer"><span class="hud">For</span><strong>~2,000 enterprise customers</strong><span>Running Nutanix on VMware ESXi</span></li>
+        </ol>
+        <p class="boundary-note">Same split as the files migration: Move orchestrates the conversion and gives the user control; the AHV team owns the data path. That meant both teams fixing their own bugs, in parallel, against one date.</p>
+      </div>
+    </section>
+
+    <section class="run-section reveal" aria-labelledby="strategy-title">
+      <div>
+        <p class="hud">Upgrades picked</p>
+        <h2 id="strategy-title">What I did</h2>
+      </div>
+      <ul class="upgrades">
+        <li class="upgrade" data-tier="decision"><span class="hud">Decision</span><strong>Got leadership buy-in first</strong><p>Directors and VPs endorsed the project on one number: 2,000 enterprise customers we wanted to keep.</p></li>
+        <li class="upgrade" data-tier="decision"><span class="hud">Decision</span><strong>Let customers set the requirements</strong><p>Heard their migration worries, then pinned down exactly what they needed and which trade-offs they would accept.</p></li>
+        <li class="upgrade" data-tier="process"><span class="hud">Process</span><strong>Briefed all three teams up front</strong><p>Explained the impact on retention, shared the leadership mandate, and asked for every objection early.</p></li>
+        <li class="upgrade" data-tier="process"><span class="hud">Process</span><strong>Built a common base, then split the work</strong><p>Agreed one foundation across teams, then divided execution into parts each team could own.</p></li>
+        <li class="upgrade" data-tier="delivery"><span class="hud">Delivery</span><strong>Beta in 2–3 months</strong><p>From the customer’s ask to a working beta, refined from their feedback before release.</p></li>
+        <li class="upgrade" data-tier="delivery"><span class="hud">Delivery</span><strong>Widened the bottleneck</strong><p>Added two contractors and two test clusters, about 15% more QA capacity. Delivery cycles got about 20% shorter.</p></li>
+      </ul>
+    </section>
+
+    <section class="run-section reveal" aria-labelledby="map-title">
+      <div>
+        <p class="hud">Run map</p>
+        <h2 id="map-title">How the release ran</h2>
+      </div>
+      <div>
+        <ol class="run-map">
+          <li class="room room-blocked"><span class="hud">Trigger</span>VMware licensing change: full stack or leave</li>
+          <li class="room"><span class="hud">Room 1</span>Director and VP buy-in</li>
+          <li class="room"><span class="hud">Room 2</span>Customer requirements</li>
+          <li class="room"><span class="hud">Room 3</span>Brief AHV, Networking and Uhura</li>
+          <li class="room"><span class="hud">Room 4</span>Common base, work split</li>
+          <li class="room"><span class="hud">Room 5</span>Beta and customer feedback</li>
+          <li class="room room-qa"><span class="hud">Room 6 · Boss</span>QA and joint bug fixing</li>
+          <li class="room room-goal"><span class="hud">Shipped</span>On time</li>
+        </ol>
+        <p class="run-map-dates"><span>Dec 2024 · kickoff</span><span>Sep–Oct 2025 · released</span></p>
+      </div>
+    </section>
+
+    <section class="run-section reveal" aria-labelledby="party-title">
+      <div>
+        <p class="hud">Team and loadout</p>
+        <h2 id="party-title">Team and tech</h2>
+      </div>
+      <div class="party-loadout">
+        <div>
+          <ul class="party">
+            <li class="member is-me"><span class="member-icon" aria-hidden="true">PR</span><span><strong>Me · technical lead</strong><span>Alignment, planning, customer requirements, delivery</span></span></li>
+            <li class="member"><span class="member-icon" aria-hidden="true">MV</span><span><strong>Move team</strong><span>2 backend, 1 UI, 1 UX, 1 product manager, 2 QA</span></span></li>
+            <li class="member"><span class="member-icon" aria-hidden="true">+2</span><span><strong>QA contractors</strong><span>Added with two test clusters to clear the bottleneck</span></span></li>
+            <li class="member"><span class="member-icon" aria-hidden="true">3T</span><span><strong>AHV, Networking, Uhura</strong><span>Partner teams across Nutanix</span></span></li>
+          </ul>
+        </div>
+        <div>
+          <ul class="inventory" aria-label="Tech loadout">
+            <li class="item"><b>ESXi</b><span>VMware hypervisor, the start</span></li>
+            <li class="item"><b>AHV</b><span>Nutanix hypervisor, the goal</span></li>
+            <li class="item"><b>In-place</b><span>Same hardware, no new cluster</span></li>
+            <li class="item"><b>Seed</b><span>Initial copy of each VM</span></li>
+            <li class="item"><b>Δ</b><span>Incremental delta syncs</span></li>
+            <li class="item"><b>API</b><span>AHV data-path APIs</span></li>
+          </ul>
+          <p class="loadout-note">Move orchestrates; AHV moves the data. Workloads keep running until cutover, so the switch is built for zero downtime.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="run-section reveal" aria-labelledby="replay-title">
+      <div>
+        <p class="hud">Replay</p>
+        <h2 id="replay-title">See the feature</h2>
+      </div>
+      <div class="replay">
+        <button class="replay-button" type="button" data-video="jmD0-TC3y1c" data-title="Nutanix Move 6.1: Convert ESXi to AHV In-Place">
+          <img src="https://i.ytimg.com/vi/jmD0-TC3y1c/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+          <span class="replay-play"><span aria-hidden="true">▶</span> Play video</span>
+        </button>
+        <p class="loadout-note">Nutanix University’s walkthrough of the feature in Move 6.1. Nothing loads from YouTube until you press play.</p>
+      </div>
+    </section>
+
+    <section class="run-section reveal" aria-labelledby="ach-title">
+      <div>
+        <p class="hud">Achievements unlocked</p>
+        <h2 id="ach-title">Highlights</h2>
+      </div>
+      <ul class="achievements">
+        <li class="achievement" style="--i: 0"><span class="trophy" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></span><span><strong>Half the base kept</strong><span>~50% of affected customers stayed with Nutanix</span></span></li>
+        <li class="achievement" style="--i: 1"><span class="trophy" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></span><span><strong>Three teams, one release</strong><span>AHV, Networking and Uhura on one date</span></span></li>
+        <li class="achievement" style="--i: 2"><span class="trophy" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></span><span><strong>Bottleneck found: QA</strong><span>15% more capacity, ~20% shorter cycles</span></span></li>
+      </ul>
+    </section>
+
+    <section class="reveal">
+      <div class="next-run">
+        <div>
+          <p class="hud">Next save file</p>
+          <h2>Slot 03 · From fleet costs to an adopted routing product</h2>
+        </div>
+        <div class="contact-actions">
+          <a class="btn" href="../valeo-health/">Load slot 03 →</a>
+          <a class="btn btn-dark" href="../../contact.html">Contact me</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="giant-name">parag</div>
+    <div class="footer-base"><span>Singapore 🇸🇬 · <span data-clock>--:--</span> SGT</span><a href="../../contact.html">Let’s talk</a></div>
+  </footer>
+</body>
+</html>

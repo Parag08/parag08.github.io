@@ -17,6 +17,7 @@ loaded through an import map in `index.html`, so nothing is fetched from a CDN.
 | `about.html` | Background and profile |
 | `work.html` | Case-study index, styled as game save slots (gaming theme, Three.js cartridges) |
 | `work/nutanix-files-migration/index.html` | Files migration at Nutanix — first case study in the gaming "results screen" layout |
+| `work/nutanix-esxi-to-ahv/index.html` | In-place ESXi-to-AHV conversion at Nutanix (slot 02) |
 | `work/nutanix/index.html` | Earlier Nutanix page, unlinked from the index until its stories are rewritten |
 | `work/valeo-health/index.html` | Route optimisation at Valeo Health |
 | `work/everhaus/index.html` | AI-enabled investment platform (Strymin, formerly EverHaus Group) |
