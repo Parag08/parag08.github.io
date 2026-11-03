@@ -14,9 +14,26 @@ body.about-journey {
 .about-journey main > .chapter { scroll-margin-top: 0; }
 .about-journey .about-greeting { margin: 0 0 19px; color: var(--ink); font-size: clamp(14px, 1.25vw, 18px); font-weight: 500; line-height: 1.6; letter-spacing: -.025em; }
 .about-journey .about-hero-title { font-size: clamp(56px, 6.2vw, 96px); margin-bottom: 25px; }
-/* The hero title uses the site's Inter headline style, not the journey's serif. */
-.about-journey .about-hero-title { font-family: "Inter", "Inter Fallback", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif; font-weight: 700; letter-spacing: -.05em; line-height: 1.02; }
-.about-journey .about-hero-title em { font-style: normal; font-weight: 700; }
+/* Every heading and note uses the site's Inter type, not the journey demo's
+   Georgia serif. The coloured accent word stays, set upright. */
+.about-journey h1,
+.about-journey h2,
+.about-journey .education-item h3,
+.about-journey .header-note,
+.about-journey .small-note,
+.about-journey .company-description { font-family: "Inter", "Inter Fallback", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif; font-style: normal; }
+.about-journey h1,
+.about-journey h2 { font-weight: 700; letter-spacing: -.05em; line-height: 1.02; }
+.about-journey h1 em,
+.about-journey h2 em { font-style: normal; font-weight: 700; }
+.about-journey .education-item h3 { font-weight: 650; letter-spacing: -.035em; }
+
+/* Links from a role to its case study and project pages. */
+.about-journey .role-links { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 22px; }
+.about-journey .role-link { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; border: 1px solid var(--line-strong); border-radius: 999px; padding: 6px 14px; background: #fff; color: var(--ink); font-size: 12px; font-weight: 600; letter-spacing: -.01em; transition: border-color var(--dur-2) var(--ease-soft), color var(--dur-2) var(--ease-soft), translate var(--dur-2) var(--ease-soft); }
+.about-journey .role-link small { color: var(--role-accent, var(--blue)); font: 600 9px/1 ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace; letter-spacing: .12em; text-transform: uppercase; }
+.about-journey .role-link:hover,
+.about-journey .role-link:focus-visible { border-color: var(--role-accent, var(--blue)); color: var(--role-accent, var(--blue)); translate: 0 -1px; }
 .about-journey .about-summary { max-width: 36rem; line-height: 1.85; }
 /* Recruiter essentials: role, location, availability and next steps above the fold. */
 .about-journey .hero-status { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 18px; padding: 8px 14px; border: 1px solid #b9d3c3; border-radius: 24px; background: #eef7f1; color: #1f5a3a; font-size: 13px; font-weight: 600; line-height: 1.4; }
