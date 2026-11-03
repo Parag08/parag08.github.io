@@ -145,3 +145,65 @@ body.about-journey {
 .loader--journey .loader-continue { justify-self: center; margin-top: 12px; padding: 9px 14px; border: 1px solid var(--line-strong); border-radius: 24px; background: #fff; color: var(--blue); font-size: 12px; }
 .loader--journey .loader-continue[hidden] { display: none; }
 .loader--journey .loader-continue:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
+
+/* Readable type scale. The journey demo set body copy at 9-13px, well below
+   the 16-17px used on the other pages; these sizes bring it in line. Kept
+   last so it wins over the demo's sizes and the phone block above. */
+.about-journey .about-summary { font-size: 17px; line-height: 1.7; }
+.about-journey .hero-status { font-size: 14px; }
+.about-journey .hero-facts li { font-size: 13px; }
+.about-journey .hero-note { font-size: 13px; }
+.about-journey .scroll-cue { font-size: 13px; }
+.about-journey .eyebrow { font-size: 12px; letter-spacing: .14em; font-weight: 650; }
+.about-journey .experience-role { font-size: clamp(18px, 1.6vw, 22px); }
+.about-journey .experience-meta { font-size: 13px; letter-spacing: 0; }
+.about-journey .company-description { font-size: 15px; line-height: 1.6; }
+.about-journey .company-description span { font-size: 12px; }
+.about-journey .experience-summary { font-size: 16px; line-height: 1.65; color: #48484c; }
+.about-journey .experience-outcomes { gap: 14px; }
+.about-journey .experience-outcomes li { padding-left: 16px; font-size: 15px; line-height: 1.6; color: #48484c; }
+.about-journey .experience-outcomes li::before { top: .7em; width: 5px; height: 5px; }
+.about-journey .role-link { min-height: 40px; font-size: 14px; }
+.about-journey .role-link small { font-size: 10px; }
+.about-journey .chapter-next { font-size: 13px; }
+.about-journey .chapter-number { font-size: 12px; }
+.about-journey .education-item h3 span { font-size: 13px; }
+.about-journey .education-item p:not(.experience-meta) { font-size: 15px; line-height: 1.65; }
+.about-journey .career-intro { font-size: 17px; line-height: 1.7; }
+.about-journey .career-languages { font-size: 14px; }
+.about-journey .contact-links { font-size: 14px; }
+.about-journey .restart { font-size: 14px; }
+.about-journey .descent__view,
+.about-journey .descent__readout { font-size: 11px; }
+
+@media (max-width: 760px) {
+  .about-journey .about-summary,
+  .about-journey .chapter--hero .about-summary { font-size: 15px; line-height: 1.65; }
+  .about-journey .hero-status { font-size: 13px; }
+  .about-journey .hero-facts li { font-size: 12px; }
+  .about-journey .eyebrow { font-size: 11px; letter-spacing: .1em; }
+  .about-journey .experience-role { font-size: 17px; }
+  .about-journey .experience-meta { font-size: 12px; }
+  .about-journey .company-description { font-size: 14px; }
+  .about-journey .experience-summary { font-size: 15px; }
+  .about-journey .experience-outcomes li { font-size: 14px; line-height: 1.6; }
+  .about-journey .role-link { font-size: 13px; }
+  .about-journey .education-item p:not(.experience-meta) { font-size: 14px; }
+  .about-journey .career-intro { font-size: 15px; }
+  /* Readable text needs the full width: every chapter's copy sits on the same
+     frosted card the hero uses, above the climber, instead of a half column. */
+  .about-journey .chapter { padding-right: 16px; padding-left: 16px; }
+  .about-journey .chapter__copy { position: relative; z-index: 6; padding: 22px 18px; border: 1px solid var(--line-strong); border-radius: 20px; background: #ffffffe6; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+  .about-journey .chapter--hero .chapter__copy { background: #f5f5f7e6; }
+}
+
+/* Less chrome around the content: the "Experience / 01 of 07" eyebrow is the
+   one chapter counter, and the scene's progress readout and "Closer look"
+   toggle stay in the DOM for the scripts but are not shown. */
+.about-journey .chapter-number,
+.about-journey .descent__readout,
+.about-journey .descent__view { display: none; }
+
+/* Case studies sit next to the résumé as the hero's second call to action. */
+.about-journey .hero-actions .hero-cases { border-color: var(--blue); color: var(--blue); }
+.about-journey .hero-actions .hero-cases:hover { background: var(--blue); color: #fff; }
