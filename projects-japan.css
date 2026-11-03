@@ -295,3 +295,9 @@
   .kobo-card { transition: none; }
   .kobo-petals { display: none; }
 }
+
+/* Problem / decision / result labels in each card. */
+.kobo-card > p strong {
+  color: var(--ink);
+  font-weight: 600;
+}

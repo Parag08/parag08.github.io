@@ -4,19 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Projects — Parag Rahangdale</title>
-  <meta name="description" content="Case studies, working demos and project summaries covering the platforms and tools Parag Rahangdale has built, scaled or turned around.">
+  <meta name="description" content="Products Parag Rahangdale has taken from a user problem to a working demo: the problem, the product decisions and the results.">
   <meta name="theme-color" content="#f5f5f7">
   <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=16">
-  <link rel="stylesheet" href="projects-japan.css?v=3">
+  <link rel="stylesheet" href="projects-japan.css?v=4">
   <script src="script.js?v=5" defer></script>
   <link rel="canonical" href="https://parag08.github.io/projects.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Parag Rahangdale">
   <meta property="og:title" content="Projects — Parag Rahangdale">
-  <meta property="og:description" content="Case studies, working demos and project summaries covering the platforms and tools Parag Rahangdale has built, scaled or turned around.">
+  <meta property="og:description" content="Products Parag Rahangdale has taken from a user problem to a working demo: the problem, the product decisions and the results.">
   <meta property="og:url" content="https://parag08.github.io/projects.html">
   <meta property="og:image" content="https://parag08.github.io/assets/og-image.jpg">
   <meta property="og:image:width" content="1200">
@@ -50,32 +50,33 @@
       <div class="kobo-petals" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
       <div class="kobo-hero-text">
         <p class="kicker">My Projects</p>
-        <h1>Platforms and tools I’ve built, scaled, or turned around.</h1>
-        <p class="lede">Recent things I’ve built end to end, with the code, a working demo or a clip of each.</p>
+        <h1>Products I’ve taken from a problem to something you can try.</h1>
+        <p class="lede">Each one starts with a user problem. I scoped it, made the product trade-offs and built it, so every card shows the problem, the key decision and the result, with a demo or the code.</p>
       </div>
       <img class="kobo-mascot" src="assets/projects/anime-dev.svg" width="240" height="240" alt="">
     </section>
 
     <section class="kobo reveal" aria-labelledby="kobo-title">
-      <h2 class="help-title" id="kobo-title">Recent builds <span class="kobo-ja" lang="ja">新作</span></h2>
+      <h2 class="help-title" id="kobo-title">Selected products <span class="kobo-ja" lang="ja">新作</span></h2>
 
       <div class="kobo-grid">
         <article class="kobo-card" id="logistics-valeo">
           <span class="hanko" lang="ja" aria-hidden="true">路</span>
-          <p class="kobo-meta">Operations tool · Rebuild</p>
-          <h3>Logistics Valeo, rebuilt</h3>
+          <p class="kobo-meta">Operations product · Valeo Health</p>
+          <h3>Logistics Valeo</h3>
           <div class="kobo-media">
             <video src="assets/projects/valeo-routing.webm" poster="assets/projects/valeo-routing-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Logistics Valeo: one synthetic day under the Excel era, Logistics Valeo v1 and v2, with orders captured rising from 65% to 77% to 86%; then the hub siting map, pairs needed at each service level, and recorded against predicted km with bad days excluded"></video>
           </div>
-          <p class="kobo-caption">One synthetic day under the Excel era, v1 and v2, then hub siting, capacity and metrics. Synthetic data.</p>
-          <p>A rebuild of the dispatch tool I shipped at Valeo Health, on a seeded synthetic month. An acceptance engine claims the orders the fleet can serve, a planner sequences each nurse–driver pair's day, and idle pairs wait at hubs sited by K-median. Capacity comes from simulation and predicted km are checked against a tracker. An independent validator checks every plan.</p>
-          <p class="kobo-caption">At Valeo (real, measured): orders captured went from 60–70% to 80–90%, and km per order fell about 25% after launch.</p>
+          <p class="kobo-caption">The same day under Excel, v1 and v2, then hub siting and capacity. Rebuilt on synthetic data.</p>
+          <p><strong>Problem.</strong> Home-visit dispatch ran on Excel. Operations captured only 60–70% of booked orders, and nurse–driver pairs drove long, empty routes.</p>
+          <p><strong>What I did.</strong> Sat with the dispatchers, then shipped a tool built around their day: which orders the fleet can take, the order of each pair’s visits, and where idle pairs should wait. Operations moved onto it fully within a week.</p>
+          <p><strong>Result.</strong> Measured at Valeo: ~23,000 km and ~AED 12,400 saved a month. The demo is a rebuild on synthetic data, so the logic can be shown publicly.</p>
           <ul class="kobo-facts">
-            <li><strong>7</strong>tabs, as ops used them</li>
-            <li><strong>167</strong>tests</li>
-            <li><strong>0</strong>validator violations</li>
+            <li><strong>80–90%</strong>orders captured, up from 60–70%</li>
+            <li><strong>~25%</strong>fewer km per order</li>
+            <li><strong>1 week</strong>to full adoption by ops</li>
           </ul>
-          <div class="tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">React</span><span class="tag">Operations research</span></div>
+          <div class="tags"><span class="tag">User research</span><span class="tag">Operations</span><span class="tag">Adoption</span><span class="tag">Python · React</span></div>
           <div class="kobo-links">
             <a class="btn btn-dark" href="work/valeo-health/">Read the case study →</a>
             <a class="btn" href="https://github.com/Parag08/valeo-routing" target="_blank" rel="noopener">Code →</a>
@@ -84,49 +85,31 @@
 
         <article class="kobo-card" id="jobsearch">
           <span class="hanko" lang="ja" aria-hidden="true">道</span>
-          <p class="kobo-meta">Personal product</p>
+          <p class="kobo-meta">Personal product · Live</p>
           <h3>JobSearch</h3>
           <div class="kobo-media">
             <video src="assets/projects/jobsearch.webm" poster="assets/projects/jobsearch-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="JobSearch: the landing card plays the whole job-search loop, the process map opens two stages, then an application page shows its interview prep panel"></video>
           </div>
-          <p class="kobo-caption">The whole loop on one card, then the interview prep panel on an application. Demo workspace.</p>
-          <p>A job-search operating system built around one loop: source roles from company boards, tailor the CV as a reviewed diff from a master, practise interviews with AI scoring, and run live case interviews.</p>
+          <p class="kobo-caption">The whole loop on one card, then interview prep on an application. Demo workspace.</p>
+          <p><strong>Problem.</strong> A job search is one loop: find roles, tailor the CV, prepare, interview. But each step lives in a different tool, so the real work happens in spreadsheets and copy-paste.</p>
+          <p><strong>Key decision.</strong> Build around the loop, not the steps. AI suggests CV changes as a diff against a master CV that the user reviews, so they stay in control of every line. Interview practice is scored, and case interviews run live.</p>
+          <p><strong>Constraint.</strong> It runs entirely on free tiers, so it costs nothing to operate.</p>
           <ul class="kobo-facts">
-            <li><strong>6</strong>loop stages</li>
-            <li><strong>581</strong>tests</li>
-            <li><strong>₹0</strong>free-tier stack</li>
+            <li><strong>6</strong>stages in one loop</li>
+            <li><strong>₹0</strong>monthly running cost</li>
+            <li><strong>581</strong>automated tests</li>
           </ul>
-          <div class="tags"><span class="tag">Next.js 15</span><span class="tag">Supabase</span><span class="tag">LLM routing</span><span class="tag">TDD</span></div>
+          <div class="tags"><span class="tag">0 → 1</span><span class="tag">AI product</span><span class="tag">Human in the loop</span><span class="tag">Next.js · Supabase</span></div>
           <div class="kobo-links">
             <a class="btn btn-dark" href="https://jobsearch-roan.vercel.app" target="_blank" rel="noopener">Open the app →</a>
             <a class="btn" href="https://github.com/Parag08/jobsearch" target="_blank" rel="noopener">Code →</a>
           </div>
         </article>
 
-        <article class="kobo-card" id="microduck">
-          <span class="hanko" lang="ja" aria-hidden="true">歩</span>
-          <p class="kobo-meta">Robot learning</p>
-          <h3>MicroDuck learns to walk</h3>
-          <div class="kobo-media">
-            <video src="assets/projects/microduck-trained.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Simulated MicroDuck biped walking steadily forward after training"></video>
-          </div>
-          <p class="kobo-caption">Trained policy in simulation, commanded at 0.3 m/s.</p>
-          <p>Trained a walking policy for Pollen Robotics' 14-servo MicroDuck biped in NVIDIA Isaac Lab 3.0, with reinforcement learning on a laptop GPU. It walks steadily; tracking the commanded speed and standing still are the next steps.</p>
-          <ul class="kobo-facts">
-            <li><strong>14</strong>servos</li>
-            <li><strong>7,638</strong>PPO iterations</li>
-            <li><strong>1,024</strong>parallel sims</li>
-          </ul>
-          <div class="tags"><span class="tag">Isaac Lab</span><span class="tag">PPO</span><span class="tag">Sim-to-real</span></div>
-          <div class="kobo-links">
-            <a class="btn" href="https://github.com/Parag08/microduck-velocity" target="_blank" rel="noopener">Code →</a>
-          </div>
-        </article>
-
         <article class="kobo-card" id="support-agent">
           <span class="hanko" lang="ja" aria-hidden="true">助</span>
-          <p class="kobo-meta">AI agent</p>
-          <h3>Pluggable support agent</h3>
+          <p class="kobo-meta">AI product · Customer support</p>
+          <h3>Support agent stores can trust</h3>
           <div class="kobo-media">
             <video src="assets/projects/support-agent.webm" poster="assets/projects/support-agent-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Demo store chat: the agent answers a sizing question, asks the customer to sign in before showing an order, then turns down a return outside the 30-day window"></video>
           </div>
@@ -136,20 +119,43 @@
             <p class="kobo-msg kobo-msg-bot">Order SS90002 was delivered on September 14, 2026, which is outside our 30-day return window, so I can't start a return or exchange for it.</p>
             <p class="kobo-trace"><span>return_request 0.95</span><span>policy: deny</span><span>RETURN_WINDOW_EXPIRED</span></p>
           </div>
-          <p>A drop-in AI support agent for online stores: sizing advice, order tracking, returns, exchanges and cancellations. The model classifies and phrases; deterministic rules make every decision, and every message is screened for prompt injection first.</p>
+          <p><strong>Problem.</strong> Online stores want AI support for sizing, order tracking, returns and cancellations. But they can’t risk a chatbot that invents a refund policy or can be talked into one.</p>
+          <p><strong>Key decision.</strong> The model only understands the request and writes the reply. Written store rules make every decision, and every message is checked for prompt injection first. Stores connect their own order system through standard plug-in points.</p>
           <ul class="kobo-facts">
-            <li><strong>5</strong>pluggable ports</li>
-            <li><strong>181</strong>tests</li>
-            <li><strong>0</strong>actions decided by the LLM</li>
+            <li><strong>0</strong>refunds or returns decided by the AI</li>
+            <li><strong>5</strong>plug-in points for a store’s systems</li>
+            <li><strong>181</strong>automated tests</li>
           </ul>
-          <div class="tags"><span class="tag">Python</span><span class="tag">Ports &amp; adapters</span><span class="tag">Evals</span><span class="tag">Guardrails</span></div>
+          <div class="tags"><span class="tag">AI risk &amp; trust</span><span class="tag">Guardrails</span><span class="tag">Evals</span><span class="tag">Python</span></div>
           <div class="kobo-links">
             <a class="btn" href="https://github.com/Parag08/pluggable-support-agent" target="_blank" rel="noopener">Code →</a>
           </div>
         </article>
+        <article class="kobo-card" id="microduck">
+          <span class="hanko" lang="ja" aria-hidden="true">歩</span>
+          <p class="kobo-meta">Learning project · Robotics</p>
+          <h3>MicroDuck learns to walk</h3>
+          <div class="kobo-media">
+            <video src="assets/projects/microduck-trained.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Simulated MicroDuck biped walking steadily forward after training"></video>
+          </div>
+          <p class="kobo-caption">Trained policy in simulation, commanded at 0.3 m/s.</p>
+          <p>A hands-on project in reinforcement learning. I trained Pollen Robotics’ 14-servo MicroDuck biped to walk in NVIDIA Isaac Lab, on a laptop GPU.</p>
+          <p><strong>Where it stands.</strong> It walks steadily. Next: matching the commanded speed and standing still.</p>
+          <ul class="kobo-facts">
+            <li><strong>14</strong>motors controlled</li>
+            <li><strong>1,024</strong>robots simulated in parallel</li>
+            <li><strong>1</strong>laptop GPU</li>
+          </ul>
+          <div class="tags"><span class="tag">Isaac Lab</span><span class="tag">PPO</span><span class="tag">Sim-to-real</span></div>
+          <div class="kobo-links">
+            <a class="btn" href="https://github.com/Parag08/microduck-velocity" target="_blank" rel="noopener">Code →</a>
+          </div>
+        </article>
+
       </div>
       <div class="contact-actions">
         <a class="btn btn-dark" href="contact.html">Contact Me →</a>
+        <a class="btn" href="Parag%20Rahangdale%202026.pdf" target="_blank" rel="noopener">Download résumé ↗</a>
       </div>
     </section>
 
