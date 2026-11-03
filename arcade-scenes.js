@@ -239,9 +239,13 @@ function createSlots(stage) {
     const found = raycaster.intersectObjects(carts, true)[0];
     return found?.object.userData.cart;
   };
-  stage.addEventListener('pointermove', (event) => {
+  const aim = (event) => {
     const rect = stage.getBoundingClientRect();
     pointer.set(((event.clientX - rect.left) / rect.width) * 2 - 1, -((event.clientY - rect.top) / rect.height) * 2 + 1);
+  };
+  stage.addEventListener('pointermove', (event) => {
+    if (event.pointerType !== 'mouse') return;
+    aim(event);
     tiltX = pointer.x;
     tiltY = pointer.y;
     const cart = hit();
@@ -253,9 +257,19 @@ function createSlots(stage) {
     tiltX = 0;
     tiltY = 0;
   });
-  stage.addEventListener('click', () => {
+  // A tap sends no pointermove first, so aim from the click itself. On touch
+  // the first tap picks a cartridge and a second tap on it loads it, the way
+  // hover then click works with a mouse.
+  stage.addEventListener('click', (event) => {
+    aim(event);
     const cart = hit();
-    if (cart?.userData.href) window.location.href = cart.userData.href;
+    if (!cart) return;
+    const touch = !window.matchMedia('(hover: hover)').matches;
+    if (touch && cart.userData.index !== selected) {
+      select(cart.userData.index);
+      return;
+    }
+    if (cart.userData.href) window.location.href = cart.userData.href;
   });
 
   let rotX = 0;

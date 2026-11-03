@@ -104,6 +104,13 @@ kbd {
   pointer-events: none;
 }
 
+.on-touch { display: none; }
+
+@media (hover: none) {
+  .on-mouse { display: none; }
+  .on-touch { display: inline; }
+}
+
 .stage-fallback {
   position: absolute;
   inset: 0;

@@ -82,6 +82,7 @@ body.about-journey {
 .about-journey #valeo { --chapter-paper: #ffffff; --role-accent: var(--teal); }
 .about-journey #everhaus { --chapter-paper: #f5f5f7; --role-accent: var(--gold); }
 .about-journey #nutanix-lead { --chapter-paper: #ffffff; --role-accent: var(--blue); }
+.about-journey #nutanix-engineer { --chapter-paper: #f5f5f7; --role-accent: var(--blue); }
 .about-journey #touchnote { --chapter-paper: #ffffff; --role-accent: var(--peach); }
 .about-journey #eleven01 { --chapter-paper: #f5f5f7; --role-accent: var(--gold); }
 .about-journey #amantya { --chapter-paper: #ffffff; --role-accent: var(--teal); }
@@ -204,6 +205,41 @@ body.about-journey {
 .about-journey .descent__readout,
 .about-journey .descent__view { display: none; }
 
-/* Case studies sit next to the résumé as the hero's second call to action. */
-.about-journey .hero-actions .hero-cases { border-color: var(--blue); color: var(--blue); }
-.about-journey .hero-actions .hero-cases:hover { background: var(--blue); color: #fff; }
+/* The hero must fit one screen. Fact chips stay on one row, the summary runs
+   wider so it takes three lines, and spacing tightens on shorter laptops. */
+.about-journey .chapter--hero .chapter__copy { max-width: 660px; }
+.about-journey .hero-facts { gap: 6px; margin-bottom: 16px; }
+.about-journey .hero-facts li { padding: 4px 10px; font-size: 12.5px; }
+.about-journey .chapter--hero .about-summary { max-width: 40rem; margin-bottom: 20px; font-size: 16px; line-height: 1.6; }
+.about-journey .hero-status { margin-bottom: 14px; }
+
+@media (min-width: 761px) and (max-height: 820px) {
+  .about-journey .chapter--hero { padding-top: 76px; padding-bottom: 28px; }
+  .about-journey .chapter--hero .about-hero-title { font-size: clamp(48px, 9vh, 76px); margin-bottom: 14px; }
+  .about-journey .about-greeting { margin-bottom: 10px; }
+  .about-journey .chapter--hero .scroll-cue { margin-top: 14px; }
+  .about-journey .hero-note { margin-top: 10px; }
+}
+
+/* Each chapter fills one screen, as the journey was designed: body copy a
+   step smaller than the first pass and tighter vertical rhythm, with less
+   chapter padding on shorter laptop screens. */
+@media (min-width: 761px) {
+  .about-journey .chapter--experience .eyebrow { margin-bottom: 12px; }
+  .about-journey .experience-title { margin-bottom: 6px; }
+  .about-journey .experience-role { font-size: clamp(17px, 1.4vw, 20px); margin-bottom: 6px; }
+  .about-journey .experience-meta { font-size: 12.5px; }
+  .about-journey .company-description { margin: 10px 0 8px; font-size: 14px; line-height: 1.5; }
+  .about-journey .experience-summary { margin: 0; font-size: 15px; line-height: 1.55; }
+  .about-journey .experience-outcomes { gap: 9px; margin: 14px 0 16px; }
+  .about-journey .experience-outcomes li { font-size: 14px; line-height: 1.5; }
+  .about-journey .role-links { margin: 0 0 12px; }
+  .about-journey .role-link { min-height: 34px; padding: 5px 13px; font-size: 13px; }
+  .about-journey .chapter-next { padding: 6px 0; font-size: 12.5px; }
+  .about-journey .education-item p:not(.experience-meta) { font-size: 14px; line-height: 1.55; }
+}
+
+@media (min-width: 761px) and (max-height: 820px) {
+  .about-journey .chapter:not(.chapter--hero) { padding-top: 64px; padding-bottom: 32px; }
+  .about-journey .experience-title { font-size: clamp(34px, 6.4vh, 56px); }
+}
