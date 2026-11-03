@@ -15,8 +15,9 @@ loaded through an import map in `index.html`, so nothing is fetched from a CDN.
 |---|---|
 | `index.html` | Home — scroll-driven mountain journey through career history, experience and education, with a 3D workspace hero |
 | `about.html` | Background and profile |
-| `work.html` | Case-study index |
-| `work/nutanix/index.html` | Enterprise migration at Nutanix |
+| `work.html` | Case-study index, styled as game save slots (gaming theme, Three.js cartridges) |
+| `work/nutanix-files-migration/index.html` | Files migration at Nutanix — first case study in the gaming "results screen" layout |
+| `work/nutanix/index.html` | Earlier Nutanix page, unlinked from the index until its stories are rewritten |
 | `work/valeo-health/index.html` | Route optimisation at Valeo Health |
 | `work/everhaus/index.html` | AI-enabled investment platform (Strymin, formerly EverHaus Group) |
 | `projects.html` | Projects: case studies, working demos and project summaries |
@@ -41,6 +42,8 @@ Two self-contained sub-apps:
 | `about-journey.css` | Scroll-driven career journey on `about.html` |
 | `home-hero.css` | Landing hero and HUD-style motion layer |
 | `projects-japan.css` | Recent-builds section with Japanese accents |
+| `arcade.css` | Gaming accents for the case-study pages: save slots, boss bars, inventory, scoreboard |
+| `arcade-scenes.js` | THREE.js scenes for the case-study pages (save-slot cartridges, data-flow) |
 | `script.js` | Shared page behaviour (nav, reveals, motion) |
 | `home-workspace.js` | THREE.js 3D workspace scene on the home hero |
 | `journey-loader.js` | Journey loading state / readiness handshake |

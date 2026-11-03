@@ -4,18 +4,21 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Case Studies — Parag Rahangdale</title>
-  <meta name="description" content="Selected case studies across enterprise migration, operations products, and AI-enabled platforms, covering program management and product management.">
+  <meta name="description" content="Case studies from Parag Rahangdale: unblocking a stalled files migration at Nutanix, an adopted routing product at Valeo Health, and an AI investment platform.">
   <meta name="theme-color" content="#f5f5f7">
   <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=16">
+  <link rel="stylesheet" href="arcade.css?v=2">
+  <script type="importmap">{"imports":{"three":"./mountain-demo/vendor/three.module.js"}}</script>
   <script src="script.js?v=5" defer></script>
+  <script type="module" src="arcade-scenes.js?v=6"></script>
   <link rel="canonical" href="https://parag08.github.io/work.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Parag Rahangdale">
   <meta property="og:title" content="Case Studies — Parag Rahangdale">
-  <meta property="og:description" content="Selected case studies across enterprise migration, operations products, and AI-enabled platforms, covering program management and product management.">
+  <meta property="og:description" content="Case studies from Parag Rahangdale: unblocking a stalled files migration at Nutanix, an adopted routing product at Valeo Health, and an AI investment platform.">
   <meta property="og:url" content="https://parag08.github.io/work.html">
   <meta property="og:image" content="https://parag08.github.io/assets/og-image.jpg">
   <meta property="og:image:width" content="1200">
@@ -45,33 +48,86 @@
   </div>
 
   <main id="main" class="wrap">
-    <section class="page-hero reveal">
-      <p class="kicker gold">Case Studies</p>
-      <h1>Three programs where product decisions, cross-functional teams, and commercial outcomes had to move together.</h1>
-      <p class="lede">Each case covers the context, my scope, how I approached the work, and the outcome.</p>
+    <section class="arcade-hero reveal">
+      <div>
+        <p class="hud">Case studies · Select a save file</p>
+        <h1>Real problems I owned, <em>start to finish.</em></h1>
+        <p class="lede">Each case study covers the problem, the hardest part, what I decided and what changed because of it.</p>
+
+        <div class="player-card" aria-label="Player profile">
+          <div class="player-portrait" aria-hidden="true">PR</div>
+          <div>
+            <div class="player-name"><strong>Parag Rahangdale</strong><span class="hud">Lv 10 · Singapore</span></div>
+            <p class="player-class">Class path: Engineer → <b>Engineering Manager</b> → <b>Product Manager</b> · INSEAD MBA ’26</p>
+            <ul class="player-stats">
+              <li><strong>10 yrs</strong><span>experience</span></li>
+              <li><strong>$40–50M</strong><span>contract value enabled</span></li>
+              <li><strong>10+ PB</strong><span>customer data migrated</span></li>
+              <li><strong>~30%</strong><span>lower ops costs at Valeo</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="arcade-stage" data-arcade-scene="slots" data-fallback="Pick a save file below.">
+        <p class="stage-caption hud hud-muted" aria-hidden="true">Hover a cartridge · click to load</p>
+      </div>
     </section>
-    <section class="section reveal">
-      <a class="case-item" href="work/nutanix/">
-        <div>
-          <h3>Scaling enterprise migration at Nutanix</h3>
-          <p>Enterprise migration, customer onboarding, technical due diligence, and cross-functional alignment.</p>
-        </div>
-        <div class="case-stat"><strong>$1M+</strong><span>Recurring revenue</span></div>
-      </a>
-      <a class="case-item" href="work/valeo-health/">
-        <div>
-          <h3>From fleet costs to an adopted routing product</h3>
-          <p>Financial diagnosis, frontline discovery, rapid prototyping, and adoption-led design.</p>
-        </div>
-        <div class="case-stat"><strong>~23,000 km</strong><span>Saved / month</span></div>
-      </a>
-      <a class="case-item" href="work/everhaus/">
-        <div>
-          <h3>Designing an AI-enabled investment platform</h3>
-          <p>Product management, market research, compliance translation, and lean operating design.</p>
-        </div>
-        <div class="case-stat"><strong>6 → 2 mo</strong><span>Time to working platform</span></div>
-      </a>
+
+    <section class="section reveal" aria-labelledby="slots-title">
+      <div class="slots-head">
+        <h2 id="slots-title" class="hud">Save files</h2>
+        <p class="slots-hint" aria-hidden="true"><kbd>↑</kbd><kbd>↓</kbd> choose · <kbd>Enter</kbd> load</p>
+      </div>
+      <ol class="slot-list">
+        <li>
+          <a class="slot" href="work/nutanix-files-migration/" data-slot data-num="01" data-color="#5e5ce6" data-cart="Files&#10;migration" data-sub="NUTANIX · 10+ PB">
+            <span class="slot-num" aria-hidden="true">Slot<b>01</b></span>
+            <div class="slot-body">
+              <span class="hud">Nutanix · Dec 2022 – Sep 2023</span>
+              <h3>Unblocking a files migration stalled for two years</h3>
+              <p>Took ownership, drew the line between two teams, cleared ~300 QA bugs in six weeks and shipped on time.</p>
+              <span class="slot-meta hud hud-muted"><span>Party 5</span><span>6 rooms</span><span class="clear">✓ Stage clear</span></span>
+            </div>
+            <span class="slot-stat"><strong>$1M+</strong><span>recurring revenue</span></span>
+          </a>
+        </li>
+        <li>
+          <a class="slot" href="work/valeo-health/" data-slot data-num="02" data-color="#0f766e" data-cart="Fleet&#10;routing" data-sub="VALEO HEALTH · UAE">
+            <span class="slot-num" aria-hidden="true">Slot<b>02</b></span>
+            <div class="slot-body">
+              <span class="hud">Valeo Health · UAE · 2026</span>
+              <h3>From fleet costs to an adopted routing product</h3>
+              <p>Financial diagnosis, frontline discovery, rapid prototyping and adoption-led design.</p>
+              <span class="slot-meta hud hud-muted"><span>Ops adopted in 1 week</span><span class="clear">✓ Stage clear</span></span>
+            </div>
+            <span class="slot-stat"><strong>~23,000 km</strong><span>saved a month</span></span>
+          </a>
+        </li>
+        <li>
+          <a class="slot" href="work/everhaus/" data-slot data-num="03" data-color="#b54400" data-cart="AI invest&#10;platform" data-sub="STRYMIN · SINGAPORE">
+            <span class="slot-num" aria-hidden="true">Slot<b>03</b></span>
+            <div class="slot-body">
+              <span class="hud">Strymin · Singapore · 2026</span>
+              <h3>Designing an AI-enabled investment platform</h3>
+              <p>Product management, market research, compliance translation and lean operating design.</p>
+              <span class="slot-meta hud hud-muted"><span>15 features built</span><span class="clear">✓ Stage clear</span></span>
+            </div>
+            <span class="slot-stat"><strong>6 → 2 mo</strong><span>time to working platform</span></span>
+          </a>
+        </li>
+        <li>
+          <a class="slot is-locked" href="contact.html" data-slot data-num="04" data-cart="Next role" data-sub="EMPTY SLOT">
+            <span class="slot-num" aria-hidden="true">Slot<b>04</b></span>
+            <div class="slot-body">
+              <span class="hud hud-muted">Empty slot · Singapore</span>
+              <h3>Your team’s next product problem</h3>
+              <p>This slot is free. I’m looking for a Product Manager role in Singapore and can start now.</p>
+            </div>
+            <span class="slot-stat"><span class="press-start">Press start <span class="blink" aria-hidden="true">▶</span></span></span>
+          </a>
+        </li>
+      </ol>
     </section>
   </main>
   <footer class="site-footer">

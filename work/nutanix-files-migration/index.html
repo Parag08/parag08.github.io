@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nutanix — Unblocking a stalled files migration | Parag Rahangdale</title>
+  <meta name="description" content="How Parag Rahangdale took over a files migration stalled for two years at Nutanix and shipped it on time: 10+ PB migrated and $1M+ recurring revenue.">
+  <meta name="theme-color" content="#f5f5f7">
+  <link rel="icon" href="../../favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+  <link rel="preload" href="../../assets/fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../style.css?v=16">
+  <link rel="stylesheet" href="../../arcade.css?v=2">
+  <script type="importmap">{"imports":{"three":"../../mountain-demo/vendor/three.module.js"}}</script>
+  <script src="../../script.js?v=5" defer></script>
+  <script type="module" src="../../arcade-scenes.js?v=6"></script>
+  <link rel="canonical" href="https://parag08.github.io/work/nutanix-files-migration/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Parag Rahangdale">
+  <meta property="og:title" content="Nutanix — Unblocking a stalled files migration | Parag Rahangdale">
+  <meta property="og:description" content="How Parag Rahangdale took over a files migration stalled for two years at Nutanix and shipped it on time: 10+ PB migrated and $1M+ recurring revenue.">
+  <meta property="og:url" content="https://parag08.github.io/work/nutanix-files-migration/">
+  <meta property="og:image" content="https://parag08.github.io/assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Parag Rahangdale, Product Manager in Singapore">
+  <meta name="twitter:card" content="summary_large_image">
+  <script src="/analytics.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-nav">
+    <nav class="nav-pill" aria-label="Primary">
+      <a href="../../index.html">Home</a>
+      <a class="is-active" href="../../work.html">Case Studies</a>
+      <a href="../../projects.html">My Projects</a>
+    </nav>
+    <a class="nav-cta" href="../../contact.html">Contact Me</a>
+    <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false">Menu</button>
+  </header>
+  <div class="mobile-menu" inert>
+    <nav>
+      <a href="../../index.html">Home</a>
+      <a href="../../work.html">Case Studies</a>
+      <a href="../../projects.html">My Projects</a>
+      <a href="../../contact.html">Contact Me</a>
+    </nav>
+  </div>
+
+  <main id="main" class="wrap run">
+    <a class="run-back" href="../../work.html">← All save files</a>
+
+    <header class="run-head">
+      <div>
+        <p class="hud">Slot 01 · Nutanix · Dec 2022 – Sep 2023 · Project lead (individual contributor)</p>
+        <h1>Unblocking a files migration stalled for two years</h1>
+        <p class="lede">The feature had been blocked for two years with no owner and no architecture. I took ownership, drew the line between two teams and shipped it on time with full QA sign-off. In its first year, customers migrated 10+ PB with it, adding $1M+ in recurring revenue.</p>
+      </div>
+      <p class="stage-clear" aria-label="Stage clear: shipped on time">Stage<b>Clear</b>On time</p>
+    </header>
+
+    <figure class="arcade-stage run-stage" data-arcade-scene="flow" data-fallback="SMB/NFS shares → Nutanix Files: full copy, delta syncs, cutover.">
+      <figcaption class="sr-only">Animation: files stream from SMB and NFS shares into Nutanix Files in three phases, a full initial copy, incremental delta syncs, then cutover. Move orchestrates from above through the Files APIs.</figcaption>
+      <span class="flow-label" data-anchor="source" aria-hidden="true"><span class="hud hud-muted">Source</span>SMB / NFS shares</span>
+      <span class="flow-label" data-anchor="move" aria-hidden="true"><span class="hud">Move · my team</span>Orchestration</span>
+      <span class="flow-label" data-anchor="target" aria-hidden="true"><span class="hud">Destination</span>Nutanix Files</span>
+      <div class="flow-hud" aria-hidden="true">
+        <ol class="flow-steps">
+          <li data-step="copy" class="is-on">1 · Full copy</li>
+          <li data-step="delta">2 · Delta sync</li>
+          <li data-step="cutover">3 · Cutover</li>
+        </ol>
+        <span class="flow-total">10+ PB in year one</span>
+      </div>
+    </figure>
+
+    <section class="reveal" aria-labelledby="score-title">
+      <h2 id="score-title" class="sr-only">Results</h2>
+      <div class="scoreboard">
+        <div class="score"><span class="hud">Revenue</span><strong>$1M+</strong><p>recurring revenue in the first year</p></div>
+        <div class="score"><span class="hud">Data moved</span><strong data-count="10" data-suffix="+ PB">10+ PB</strong><p>migrated by customers in year one</p></div>
+        <div class="score"><span class="hud">Stall broken</span><strong>2 yrs → 10 mo</strong><p>blocked, then shipped on schedule</p></div>
+        <div class="score"><span class="hud">Bugs cleared</span><strong>~300 → 0</strong><p>QA stability bugs, in six weeks</p></div>
+        <div class="score"><span class="hud">Quality</span><strong data-count="100" data-suffix="%">100%</strong><p>QA sign-off at release</p></div>
+      </div>
+    </section>
+
+    <section class="run-section reveal" aria-labelledby="mission-title">
+      <div>
+        <p class="hud">Mission</p>
+        <h2 id="mission-title">The problem</h2>
+      </div>
+      <div class="run-copy">
+        <p>Customers wanted to move their file shares, over SMB and NFS, onto Nutanix Files using Nutanix Move. They needed one place to plan, watch and control a file migration.</p>
+        <p>The feature had been blocked for two years. It sat between two teams, Move and Files, and nobody clearly owned it. There was no architecture, and the decisions that would let either team start had never been made.</p>
+      </div>
+    </section>
+
+    <section class="run-section reveal" aria-labelledby="boss-title">
+      <div>
+        <p class="hud">Boss fights</p>
+        <h2 id="boss-title">The hardest parts</h2>
+      </div>
+      <div class="boss-grid">
+        <article class="boss">
+          <div class="boss-name"><strong>No owner</strong><span class="hud">Boss 1</span></div>
+          <p>Two teams each had a stake, but neither owned the outcome. Nothing could move until someone made the calls.</p>
+          <span class="hp" style="--hp-end: 0%" aria-hidden="true"><span class="hp-fill"></span></span>
+          <span class="hp-read"><span>Blocked <b>2 years</b></span><span>Defeated: Dec 2022</span></span>
+        </article>
+        <article class="boss">
+          <div class="boss-name"><strong>~300 stability bugs</strong><span class="hud">Boss 2</span></div>
+          <p>Once the feature reached QA, testers raised close to 300 stability bugs, with the delivery date still fixed.</p>
+          <span class="hp" style="--hp-end: 0%" aria-hidden="true"><span class="hp-fill"></span></span>
+          <span class="hp-read"><span><b data-from="300" data-count="0">0</b> bugs left</span><span>Cleared in 6 weeks</span></span>
+        </article>
+      </div>
+    </section>
+
+    <section class="run-section reveal" aria-labelledby="line-title">
+      <div>
+        <p class="hud">Key decision</p>
+        <h2 id="line-title">Drawing the line between teams</h2>
+      </div>
+      <div>
+        <div class="boundary">
+          <div class="lane lane-move">
+            <span class="hud">Control plane</span>
+            <h3>Move (my team)</h3>
+            <ul>
+              <li>Takes the user’s inputs</li>
+              <li>Discovers shares and builds the migration plan</li>
+              <li>Shows the whole migration in the UI</li>
+              <li>Gives the user control: start, pause, cut over</li>
+            </ul>
+          </div>
+          <div class="api-line"><span>Files<br>APIs</span></div>
+          <div class="lane">
+            <span class="hud hud-muted">Data plane</span>
+            <h3>Nutanix Files</h3>
+            <ul>
+              <li>Owns the data path</li>
+              <li>Decides how the copy happens</li>
+              <li>Runs the full copy, then delta syncs</li>
+              <li>Exposes the APIs Move calls</li>
+            </ul>
+          </div>
+        </div>
+        <p class="boundary-note">Move decides <em>what</em> happens and shows it to the user. Files decides <em>how</em> the data moves. They meet at one interface. That single decision ended two years of ambiguity.</p>
+      </div>
+    </section>
+
+    <section class="run-section reveal" aria-labelledby="strategy-title">
+      <div>
+        <p class="hud">Upgrades picked</p>
+        <h2 id="strategy-title">What I did</h2>
+      </div>
+      <ul class="upgrades">
+        <li class="upgrade" data-tier="decision"><span class="hud">Decision</span><strong>Took ownership and made the calls</strong><p>Set the architecture and the framework for how the project would run.</p></li>
+        <li class="upgrade" data-tier="decision"><span class="hud">Decision</span><strong>Drew the line between teams</strong><p>Move owns orchestration and the user experience; Files owns the data path.</p></li>
+        <li class="upgrade" data-tier="process"><span class="hud">Process</span><strong>Locked the design early</strong><p>Finalised the experience with the UX/UI team before the build scaled up.</p></li>
+        <li class="upgrade" data-tier="process"><span class="hud">Process</span><strong>Split the release into six phases</strong><p>Each with a predictable timeline. Not usual for the team, but a project this size needed it.</p></li>
+        <li class="upgrade" data-tier="delivery"><span class="hud">Delivery</span><strong>Tracked three teams on one plan</strong><p>Every phase had a clear owner and date for Move, Files and UX/UI work running in parallel.</p></li>
+        <li class="upgrade" data-tier="delivery"><span class="hud">Delivery</span><strong>Cleared the bug wall</strong><p>Debugged ~300 bugs, routed each to its owner, and resolved them by fixing the design or setting a clear product boundary.</p></li>
+      </ul>
+    </section>
+
+    <section class="run-section reveal" aria-labelledby="map-title">
+      <div>
+        <p class="hud">Run map</p>
+        <h2 id="map-title">How the release ran</h2>
+      </div>
+      <div>
+        <ol class="run-map">
+          <li class="room room-blocked"><span class="hud">Before</span>Blocked for 2 years: no owner, no architecture</li>
+          <li class="room"><span class="hud">Room 1</span>Planning: architecture and UX design</li>
+          <li class="room"><span class="hud">Room 2</span>Share discovery and plan creation</li>
+          <li class="room"><span class="hud">Room 3</span>Plan start: orchestration on Files</li>
+          <li class="room"><span class="hud">Room 4</span>Plan listing and controls</li>
+          <li class="room"><span class="hud">Room 5</span>Deletion and the rest</li>
+          <li class="room room-qa"><span class="hud">Room 6 · Boss</span>QA: ~300 bugs cleared in 6 weeks</li>
+          <li class="room room-goal"><span class="hud">Shipped</span>On time</li>
+        </ol>
+        <p class="run-map-dates"><span>Dec 2022 · took ownership</span><span>Sep 2023 · released, 100% QA sign-off</span></p>
+      </div>
+    </section>
+
+    <section class="run-section reveal" aria-labelledby="party-title">
+      <div>
+        <p class="hud">Party and loadout</p>
+        <h2 id="party-title">Team and tech</h2>
+      </div>
+      <div class="party-loadout">
+        <div>
+          <ul class="party">
+            <li class="member is-me"><span class="member-icon" aria-hidden="true">PR</span><span><strong>Me · project lead</strong><span>Architecture, team boundaries, planning, bug triage</span></span></li>
+            <li class="member"><span class="member-icon" aria-hidden="true">MV</span><span><strong>Move team</strong><span>2 backend, 1 UI, 1 UX, 1 QA</span></span></li>
+            <li class="member"><span class="member-icon" aria-hidden="true">NF</span><span><strong>Nutanix Files team</strong><span>The file system and data path</span></span></li>
+            <li class="member"><span class="member-icon" aria-hidden="true">UX</span><span><strong>UX/UI design</strong><span>The migration experience, phase by phase</span></span></li>
+          </ul>
+        </div>
+        <div>
+          <ul class="inventory" aria-label="Tech loadout">
+            <li class="item"><b>Go</b><span>Orchestration service</span></li>
+            <li class="item"><b>SMB</b><span>Windows file shares</span></li>
+            <li class="item"><b>NFS</b><span>Unix/Linux file shares</span></li>
+            <li class="item"><b>Full</b><span>Initial full copy</span></li>
+            <li class="item"><b>Δ</b><span>Incremental delta syncs</span></li>
+            <li class="item"><b>API</b><span>Nutanix Files APIs</span></li>
+          </ul>
+          <p class="loadout-note">A full initial copy, then incremental delta syncs until cutover, so users switch over with minimal downtime.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="run-section reveal" aria-labelledby="replay-title">
+      <div>
+        <p class="hud">Replay</p>
+        <h2 id="replay-title">See the feature</h2>
+      </div>
+      <div class="replay">
+        <button class="replay-button" type="button" data-video="EszET7Tthvw" data-title="Easy File Share Migration to Nutanix Files with Nutanix Move">
+          <img src="https://i.ytimg.com/vi/EszET7Tthvw/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+          <span class="replay-play"><span aria-hidden="true">▶</span> Play video</span>
+        </button>
+        <p class="loadout-note">Nutanix University’s walkthrough of the feature. Nothing loads from YouTube until you press play.</p>
+      </div>
+    </section>
+
+    <section class="run-section reveal" aria-labelledby="ach-title">
+      <div>
+        <p class="hud">Achievements unlocked</p>
+        <h2 id="ach-title">Highlights</h2>
+      </div>
+      <ul class="achievements">
+        <li class="achievement" style="--i: 0"><span class="trophy" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></span><span><strong>Ended a 2-year stall</strong><span>From no owner to shipped in 10 months</span></span></li>
+        <li class="achievement" style="--i: 1"><span class="trophy" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></span><span><strong>300 bugs, 6 weeks</strong><span>Every stability bug resolved before release</span></span></li>
+        <li class="achievement" style="--i: 2"><span class="trophy" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></span><span><strong>10+ PB moved</strong><span>In the first year after launch</span></span></li>
+      </ul>
+    </section>
+
+    <section class="reveal">
+      <div class="next-run">
+        <div>
+          <p class="hud">Next save file</p>
+          <h2>Slot 02 · From fleet costs to an adopted routing product</h2>
+        </div>
+        <div class="contact-actions">
+          <a class="btn" href="../valeo-health/">Load slot 02 →</a>
+          <a class="btn btn-dark" href="../../contact.html">Contact me</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="giant-name">parag</div>
+    <div class="footer-base"><span>Singapore 🇸🇬 · <span data-clock>--:--</span> SGT</span><a href="../../contact.html">Let’s talk</a><a href="../../old-site.html">Previous version of this site</a></div>
+  </footer>
+</body>
+</html>
