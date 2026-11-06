@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A rehearsal market — Parag Rahangdale</title>
+  <meta name="description" content="A product idea: market research on a simulated population of AI agents, configured from a company and its market, with income modelled as a real budget and every result checked against human data.">
+  <meta name="theme-color" content="#f5f5f7">
+  <link rel="icon" href="../../favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+  <link rel="preload" href="../../assets/fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../style.css?v=16">
+  <link rel="stylesheet" href="../../ideas.css?v=1">
+  <script src="../../script.js?v=5" defer></script>
+  <script src="../../ideas-toy.js?v=1" defer></script>
+  <link rel="canonical" href="https://parag08.github.io/ideas/rehearsal-market/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Parag Rahangdale">
+  <meta property="og:title" content="A rehearsal market — Parag Rahangdale">
+  <meta property="og:description" content="A product idea: market research on a simulated population of AI agents, configured from a company and its market, with income modelled as a real budget and every result checked against human data.">
+  <meta property="og:url" content="https://parag08.github.io/ideas/rehearsal-market/">
+  <meta property="og:image" content="https://parag08.github.io/assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Parag Rahangdale, Product Manager in Singapore">
+  <meta name="twitter:card" content="summary_large_image">
+  <script src="/analytics.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-nav">
+    <nav class="nav-pill" aria-label="Primary">
+      <a href="../../index.html">Home</a>
+      <a href="../../work.html">Case Studies</a>
+      <a href="../../projects.html">My Projects</a>
+      <a class="is-active" href="../../ideas.html">Ideas</a>
+    </nav>
+    <a class="nav-cta" href="../../contact.html">Contact Me</a>
+    <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false">Menu</button>
+  </header>
+  <div class="mobile-menu" inert>
+    <nav>
+      <a href="../../index.html">Home</a>
+      <a href="../../work.html">Case Studies</a>
+      <a href="../../projects.html">My Projects</a>
+      <a href="../../ideas.html">Ideas</a>
+      <a href="../../contact.html">Contact Me</a>
+    </nav>
+  </div>
+
+  <main id="main" class="wrap">
+    <section class="page-hero notebook-hero reveal">
+      <a class="idea-back" href="../../ideas.html">← All ideas</a>
+      <p class="kicker teal">Idea 01 · Not built</p>
+      <h1>Rehearse a market decision before paying to ask real people.</h1>
+      <p class="lede">Describe a company and its market. A population of AI agents, each with its own income, habits and constraints, reacts to your options. You find out which ones deserve a real study, who each one works for, and why everyone else said no.</p>
+    </section>
+
+    <div class="idea-body">
+      <section class="idea-section reveal">
+        <h2>The problem</h2>
+        <p>Real research is slow and costly, so teams can only afford to test a few options, late. The twelve pricing and packaging ideas on the whiteboard become three in a meeting, and that cut is usually made on opinion. It is often the most consequential decision in the process, and it has the least evidence behind it.</p>
+        <p>Headline numbers don’t help much either. “40% would buy” doesn’t say who those people are, or whether everyone else couldn’t afford it, didn’t want it or had never heard of you. Those three problems need completely different fixes.</p>
+      </section>
+
+      <section class="idea-section reveal">
+        <h2>The bet</h2>
+        <p class="idea-bet">Don’t replace the survey. Replace the meeting where a team guesses which options deserve one.</p>
+        <p style="margin-top:18px">This is a narrower claim than “synthetic customers replace market research”, and the research below only supports the narrower one. A tool that helps kill bad options early can be useful without predicting exact numbers. It only has to rank options better than a meeting does, and say clearly when it can’t.</p>
+      </section>
+
+      <section class="idea-section reveal">
+        <h2>How it works</h2>
+        <ol class="idea-grid">
+          <li><span class="step-no">01</span><h3>Set up the company</h3>What it sells, at what price, against which rivals, through which channels, and how well known it is. “Do nothing” always counts as a rival.</li>
+          <li><span class="step-no">02</span><h3>Generate the population</h3>Start from census-style data for that market, keep the people who could realistically come across this company, and write each one up as a file.</li>
+          <li><span class="step-no">03</span><h3>Run the options</h3>An LLM reads each person’s file and decides on each price, package or message, in random order, many times over.</li>
+          <li><span class="step-no">04</span><h3>Check against reality</h3>Compare with past launches and a small human sample, correct what can be corrected, and grade trust by segment.</li>
+          <li><span class="step-no">05</span><h3>Write the decision</h3>Which options to drop, which to test on real people, and which results not to rely on.</li>
+        </ol>
+      </section>
+
+      <section class="idea-section reveal">
+        <h2>The company shapes the population</h2>
+        <p>The population shouldn’t be a free-standing panel. A premium skincare brand in Singapore and a discount grocer in Jakarta sell to different people, in different currencies, with different rivals in mind. So the company setup comes first and decides who is in the room.</p>
+        <p>Traits also can’t be independent sliders, because in real life they move together. Income is tied to age, location, household and job, and sampling them separately produces people who don’t exist, like a 19-year-old homeowner with three children. Sampling from real population data keeps those links, and you can still skew the mix on purpose to ask “what if our customers skew younger?”</p>
+        <div class="idea-table-wrap">
+          <table class="idea-table">
+            <thead><tr><th scope="col">Layer</th><th scope="col">What you can configure</th><th scope="col">What it changes</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Money</th><td>Income, debt, fixed bills, how regular the pay is</td><td>What they can actually afford, and when</td></tr>
+              <tr><th scope="row">Life</th><td>Age, household, location, job</td><td>What they need, and whether they can get it</td></tr>
+              <tr><th scope="row">Habit</th><td>Current brand, category spend, switching costs</td><td>What you have to beat, which is usually a habit</td></tr>
+              <tr><th scope="row">Attitude</th><td>Risk appetite, trust in new brands, status, values</td><td>Who tries first, and what convinces them</td></tr>
+              <tr><th scope="row">Moment</th><td>Awareness, what triggers a purchase, time pressure</td><td>Whether the decision ever comes up at all</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="idea-section reveal">
+        <h2>Each person is one readable file</h2>
+        <p>Every simulated person is a single Markdown file: income, family, product history and anything else that could affect a purchase. To get a decision, an LLM reads that file and the option on offer, then answers as that person: buy or not, and why.</p>
+        <figure class="idea-file">
+          <figcaption>person-0412.md · invented example</figcaption>
+<pre><code>---
+id: person-0412
+spare_per_month_sgd: 180
+---
+# Person 0412
+
+## Money
+Household income S$6,800 a month, paid monthly.
+Mortgage, childcare and bills take most of it.
+
+## Family
+Married, two children aged 4 and 7.
+Partner works shifts, so weeknight dinners are this person's job.
+
+## Product history
+- Tried a meal kit two years ago, cancelled after six weeks:
+  too much packaging, too little food.
+- Same online grocery store every week for three years.
+- Switched mobile plan last year to save S$10 a month.
+
+## Habits and attitudes
+Cooks four nights a week, orders delivery twice.
+Reads reviews and waits for a friend to try things first.</code></pre>
+        </figure>
+        <figure class="idea-file">
+          <figcaption>The decision it returns · invented example</figcaption>
+<pre><code>option:     Family plan, S$49 a month
+decision:   no
+reason:     Already cancelled a meal kit over packaging, and this
+            would take over a quarter of the money left each month.
+relied on:  Product history, Money
+would buy if: a friend recommends it and packaging is reduced</code></pre>
+        </figure>
+        <ul class="idea-grid">
+          <li><h3>Why a file works</h3>Anyone can read it, edit it and see what changed between runs. When a result looks odd, you can open the people behind it instead of trusting a black box.</li>
+          <li><h3>Where details must come from</h3>If the same LLM invents a person and then plays them, it is just agreeing with its own stereotypes. Details should come from population and purchase data, with anything assumed marked as assumed.</li>
+          <li><h3>How to test a file</h3>Remove one detail and run it again. Deleting the failed meal kit should change a meal-kit decision, and deleting a pet shouldn’t. If irrelevant details swing results, the run can’t be trusted.</li>
+          <li><h3>What it costs</h3>Every decision is a model call. 500 people × 4 options × 5 repeat runs is 10,000 calls, so the size of the population is a real budget choice.</li>
+        </ul>
+        <p style="margin-top:18px">A detailed file doesn’t make one person’s answer reliable: the evidence below says individual prediction stays weak. The files are how you build a population, and results are only read across the group.</p>
+      </section>
+
+      <section class="idea-section reveal">
+        <h2>The key design decision: income is a wallet, not an adjective</h2>
+        <p>The obvious build tells the model “you are a low-income person” and asks what it thinks. That is the weakest way to do it. The model answers with its idea of a low-income person, and differences between groups are exactly where these models go wrong: in one study, the averages looked right while <strong>48% of the group-level effects came out significantly different</strong> from real respondents.</p>
+        <p>So each person’s file carries an actual monthly budget, in the block at the top: income, minus rent, debt and bills, leaving a specific amount spare. Two people on the same salary can end up with very different wallets, say a single renter and a parent paying off a loan. Code reads that number before the LLM sees the offer. If the price is more than the spare money, the person can’t buy, however appealing the pitch.</p>
+        <p><strong>The rule: code holds the facts, the model supplies the reasons.</strong> Budget, awareness and access are enforced in code. The model handles what code can’t: what this person weighs up, what they’d give up and what would put them off. That also makes every result traceable to why someone said no.</p>
+
+        <div class="toy" data-toy>
+          <div class="toy-controls">
+            <label><span>Price per month <output data-out="price"></output></span><input type="range" data-in="price" min="10" max="100" step="1" value="49"></label>
+            <label><span>Low-income share <output data-out="low"></output></span><input type="range" data-in="low" min="10" max="80" step="1" value="40"></label>
+            <label><span>Have heard of you <output data-out="aware"></output></span><input type="range" data-in="aware" min="10" max="100" step="1" value="40"></label>
+            <p class="toy-bands" data-bands aria-live="polite"></p>
+            <p class="toy-note">A toy to show the idea, with made-up numbers and simple rules. No AI runs here, and it predicts nothing.</p>
+          </div>
+          <div>
+            <svg class="toy-dots" data-dots viewBox="0 0 400 400" role="img" aria-label="400 simulated people, each marked by whether they would buy, and if not, why not"></svg>
+            <ul class="toy-legend">
+              <li><svg width="12" height="12" aria-hidden="true"><circle class="is-buyer" cx="6" cy="6" r="5"/></svg><span>Would buy: <strong data-count="buyer"></strong></span></li>
+              <li><svg width="12" height="12" aria-hidden="true"><circle class="is-uninterested" cx="6" cy="6" r="5"/></svg><span>Not worth it: <strong data-count="uninterested"></strong></span></li>
+              <li><svg width="12" height="12" aria-hidden="true"><circle class="is-broke" cx="6" cy="6" r="4.5"/></svg><span>Can’t afford it: <strong data-count="broke"></strong></span></li>
+              <li><svg width="12" height="12" aria-hidden="true"><circle class="is-unaware" cx="6" cy="6" r="5"/></svg><span>Never heard of you: <strong data-count="unaware"></strong></span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="idea-section reveal">
+        <h2>Three ways to run it, built in this order</h2>
+        <ul class="idea-grid">
+          <li><span class="step-no">Build first</span><h3>Choose</h3>Agents pick between your options, rivals and doing nothing, under their real budget. It outputs a ranking by segment, which is the core of the product and the easiest part to check against real results.</li>
+          <li><span class="step-no">Build second</span><h3>Ask</h3>Open interviews with agents, for objections and language. Every quote is labelled as a hypothesis to test, not as something a customer said.</li>
+          <li><span class="step-no">Build last</span><h3>Live</h3>The population runs for simulated weeks: awareness spreads, friends talk, people cancel. It’s the most impressive to demo and the hardest to validate, so it waits.</li>
+        </ul>
+      </section>
+
+      <section class="idea-section reveal">
+        <h2>What the evidence says</h2>
+        <p>The research is mixed, and that determines what this product is allowed to claim.</p>
+        <div class="idea-table-wrap">
+          <table class="idea-table">
+            <thead><tr><th scope="col">Study</th><th scope="col">Finding</th><th scope="col">What it means here</th></tr></thead>
+            <tbody>
+              <tr><th scope="row"><a href="https://arxiv.org/abs/2411.10109" target="_blank" rel="noopener">Park et al., 1,052 people</a></th><td>Agents built on two-hour interviews matched survey answers 85% as well as people match their own answers two weeks later.</td><td>Rich data about real people helps a lot. Most companies won’t have it.</td></tr>
+              <tr><th scope="row"><a href="https://www.cambridge.org/core/product/B92267DC26195C7F36E63EA04A47D2FE" target="_blank" rel="noopener">Bisbee et al., Political Analysis</a></th><td>Persona responses looked right on average, but 48% of estimated effects differed significantly from human data.</td><td>Segment results from plain personas can’t be trusted. Hence the wallet.</td></tr>
+              <tr><th scope="row"><a href="https://papers.ssrn.com/abstract=4395751" target="_blank" rel="noopener">Brand, Israeli &amp; Ngwe</a></th><td>Willingness-to-pay estimates were sometimes comparable, often inaccurate and occasionally the wrong sign. Prior survey data helped most.</td><td>Report rankings, not prices. Calibration has to be built in.</td></tr>
+              <tr><th scope="row"><a href="https://arxiv.org/html/2509.19088v4" target="_blank" rel="noopener">“Digital Twins as Funhouse Mirrors”</a></th><td>Twins of real people correlated only weakly with their answers, averaging r = 0.20 across 164 outcomes.</td><td>Never promise individual prediction. Work at population level.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:18px"><strong>Fair use:</strong> early ranking of options, finding objections, and spotting obvious losers. <strong>Not fair use:</strong> exact demand forecasts, small segments, brand-new categories, or the final call on anything expensive.</p>
+      </section>
+
+      <section class="idea-section reveal">
+        <h2>Earning trust: every run has to pass checks</h2>
+        <ul class="idea-grid">
+          <li><h3>Backtest</h3>Re-run a past decision with a known result, showing agents only what was known at the time. Did it pick the option that won?</li>
+          <li><h3>Stability</h3>Reword the question and shuffle the order. If the winner flips, report it as noise.</li>
+          <li><h3>Sanity tests</h3>Plant options that must lose, like the same product at twice the price. If they do well, the run is void.</li>
+          <li><h3>Human anchor</h3>Run a small real sample alongside it and use statistical correction, such as prediction-powered inference, to adjust results and widen the error bars honestly.</li>
+          <li><h3>Segment grades</h3>Trust is graded by segment. “We can’t tell for this group” is a valid output, and an important one.</li>
+        </ul>
+      </section>
+
+      <section class="idea-section reveal">
+        <h2>The output is a decision memo, not a dashboard</h2>
+        <p>The buyer needs to know what to do on Monday. A shape for that, for an imaginary meal-kit startup:</p>
+        <div class="idea-memo">
+          <p class="idea-status">Invented example</p>
+          <p><strong>Drop plan C.</strong> It loses to “do nothing” in every segment and in every re-run.</p>
+          <p><strong>Test plans A and B on real people.</strong> The ranking flips among young parents, so this run can’t separate them.</p>
+          <p><strong>Your bigger problem may be awareness.</strong> Most lost customers in this run never heard of you, so a price change won’t reach them.</p>
+          <p><strong>Don’t rely on the retiree results.</strong> Trust grade is low: the human anchor disagreed with the simulation.</p>
+        </div>
+      </section>
+
+      <section class="idea-section reveal">
+        <h2>Who it’s for first</h2>
+        <p><strong>First customer: consumer subscription companies deciding pricing and packaging.</strong> They face this decision repeatedly, they hold data to calibrate against, and they can run a real A/B test soon after, which tells us whether the simulation was right. That loop is the whole point.</p>
+        <p><strong>Not for now:</strong> elections, healthcare or financial product decisions, where a confident wrong answer does real harm, and new-to-the-world categories, where the model has nothing to draw on.</p>
+        <p><strong>Where the advantage could come from.</strong> The space is getting crowded: <a href="https://thealchemic.com/feeds/synthetic-respondent-platforms" target="_blank" rel="noopener">one public roundup</a> covers Aaru, Simile, Evidenza and Synthetic Users, and notes that Qualtrics now offers synthetic respondents too. I haven’t tested these hands-on. Spinning up agents will be a commodity. What’s harder to copy is a population calibrated on a company’s own outcomes, which gets more accurate with each decision that’s checked against reality.</p>
+      </section>
+
+      <section class="idea-section reveal">
+        <h2>How this could go wrong</h2>
+        <ul class="idea-grid">
+          <li><h3>Caricature</h3>Agents can reproduce stereotypes about low-income and minority groups. Hard budgets help but don’t fix this, so segment accuracy is measured and published per run.</li>
+          <li><h3>Persuasive and wrong</h3>Fluent quotes feel like evidence. Labelling them as hypotheses and leading with trust grades is a product requirement, not a disclaimer.</li>
+          <li><h3>Decision laundering</h3>Someone runs it until it agrees with the boss. All runs are logged, and rewording tests expose fragile results.</li>
+          <li><h3>Customer privacy</h3>Calibrating on customer data creates a privacy duty. Use aggregates, and never build a twin of a named person without consent.</li>
+          <li><h3>No better than a meeting</h3>The real risk. If rankings don’t beat a team’s own judgement in backtests, there’s no product. So test that first.</li>
+        </ul>
+      </section>
+
+      <section class="idea-section reveal">
+        <h2>The first test, before building anything</h2>
+        <p>The riskiest assumption is that person files with real budgets beat simple personas, and it can be tested cheaply on public data like <a href="https://arxiv.org/html/2505.17479v1" target="_blank" rel="noopener">Twin-2K-500</a>, which holds answers from about 2,000 people to more than 500 questions.</p>
+        <ol class="idea-grid">
+          <li><span class="step-no">01</span><h3>Write down the pass mark</h3>Before running anything, set how much better the wallet must be, and on which measures.</li>
+          <li><span class="step-no">02</span><h3>Run three versions</h3>A one-line persona label, a full person file, and a full file with its budget enforced, all on the same human-answered choice questions.</li>
+          <li><span class="step-no">03</span><h3>Compare by income group</h3>Which one gets the differences between groups right, and the ranking of options, not just the average?</li>
+        </ol>
+        <p style="margin-top:18px"><strong>If the files and the wallet don’t beat the label, the core design is wrong</strong>, and this idea needs a rethink before anyone builds it. The next test would be one blind backtest with a real company.</p>
+      </section>
+
+      <section class="idea-section reveal">
+        <h2>Open questions</h2>
+        <ul class="idea-sources">
+          <li>What’s the smallest human sample that makes correction worthwhile?</li>
+          <li>Does population data travel across markets? Census data varies widely, and Southeast Asia may need other sources.</li>
+          <li>How many people are enough, and how long should each file be? More detail costs more per decision and may only add noise, so both need measuring.</li>
+          <li>Where does product history come from without a company’s own data? Purchase panels could supply it, but coverage and licensing need checking.</li>
+          <li>Will a team pay for a tool whose honest answer is sometimes “we can’t tell”? I think that’s what makes it trustworthy, but it needs testing with buyers.</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="giant-name">parag</div>
+    <div class="footer-base"><span>Singapore 🇸🇬 · <span data-clock>--:--</span> SGT</span><a href="../../contact.html">Get in touch</a></div>
+  </footer>
+</body>
+</html>

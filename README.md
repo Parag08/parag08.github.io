@@ -22,6 +22,8 @@ loaded through an import map in `index.html`, so nothing is fetched from a CDN.
 | `work/valeo-health/index.html` | Route optimisation at Valeo Health |
 | `work/everhaus/index.html` | AI-enabled investment platform (Strymin, formerly EverHaus Group) |
 | `projects.html` | Projects: case studies, working demos and project summaries |
+| `ideas.html` | Ideas index: product ideas not yet built (field-notebook theme, `ideas.css`) |
+| `ideas/rehearsal-market/index.html` | Idea 01: market research on a simulated population, with a toy model (`ideas-toy.js`) |
 | `old-site.html` | Previous homepage — 3D workspace, impact metrics, skills, project links (kept for the archive; no longer linked from any page) |
 | `valeohealth.html` | Standalone Valeo Health case page |
 | `contact.html` | Email, LinkedIn, résumé |

@@ -10,6 +10,8 @@
 - [Nutanix ESXi to AHV](https://parag08.github.io/work/nutanix-esxi-to-ahv/): Led Nutanix Move's in-place ESXi-to-AHV conversion across the AHV, Networking and Uhura teams after VMware's licensing change; shipped on time and kept about half of ~2,000 affected enterprise customers.
 - [Valeo Health routing](https://parag08.github.io/work/valeo-health/): Traced an 18% fleet-cost rise from receipts, won CEO approval for three strategies, and built Logistics Valeo with operations: orders captured rose from 60–70% to 80–90%, km per order fell ~25%, adopted in a week.
 - [Projects](https://parag08.github.io/projects.html): Case studies, working demos and project summaries for platforms and tools built, scaled or turned around.
+- [Ideas](https://parag08.github.io/ideas.html): Product ideas not yet built: the bet, the design decisions and what would prove each one wrong.
+- [A rehearsal market](https://parag08.github.io/ideas/rehearsal-market/): Idea for ranking market decisions on a simulated population of AI agents, with income modelled as a real budget and results checked against human data.
 - [Old Site](https://parag08.github.io/old-site.html): Previous homepage with a 3D workspace, selected impact metrics, skills and project links.
 - [Contact](https://parag08.github.io/contact.html): Email, LinkedIn and résumé.
 
