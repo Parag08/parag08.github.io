@@ -48,13 +48,15 @@ Two self-contained sub-apps:
 | `script.js` | Shared page behaviour (nav, reveals, motion) |
 | `home-workspace.js` | THREE.js 3D workspace scene on the home hero |
 | `journey-loader.js` | Journey loading state / readiness handshake |
+| `analytics.js` | Page-view analytics, loaded on `index.html`, `contact.html` and `old-site.html` |
 
 ## Machine-readable bits
 
 - `llms.txt` — LLM-facing description of the site and its pages
 - `sitemap.xml` — canonical page list
 - `robots.txt`
-- `favicon-32.png`, `apple-touch-icon.png`
+- `favicon-32.png`, `apple-touch-icon.png`, `assets/og-image.jpg` (social preview)
+- `BingSiteAuth.xml`, `google3877fb22c60a10f1.html` — search-engine ownership verification files; do not rename or delete them
 
 ## Local preview
 
