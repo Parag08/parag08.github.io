@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+  <channel>
+    <title>Interview practice</title>
+    <link>https://parag08.github.io</link>
+    <description>Private interview practice. Question, a pause to answer out loud, then a model answer.</description>
+    <language>en</language>
+    <itunes:block>Yes</itunes:block>
+    <itunes:image href="https://parag08.github.io/apple-touch-icon.png"/>
+    <item>
+      <title>Cognition 00: All questions (quiz mode)</title>
+      <guid isPermaLink="false">cognition/00-cognition-all-questions.m4a#0b9154410d5c</guid>
+      <pubDate>Thu, 19 Nov 2026 04:20:25 GMT</pubDate>
+      <enclosure url="https://parag08.github.io/practice/bfa62e0d8087f743/cognition/00-cognition-all-questions.m4a" length="6284563" type="audio/mp4"/>
+      <itunes:duration>926</itunes:duration>
+    </item>
+    <item>
+      <title>Cognition 01: Walk me through your background</title>
+      <guid isPermaLink="false">cognition/01-background.m4a#b8b6918fba0f</guid>
+      <pubDate>Thu, 19 Nov 2026 04:19:25 GMT</pubDate>
+      <enclosure url="https://parag08.github.io/practice/bfa62e0d8087f743/cognition/01-background.m4a" length="700905" type="audio/mp4"/>
+      <itunes:duration>94</itunes:duration>
+    </item>
+    <item>
+      <title>Cognition 02: Something technically impressive you built</title>
+      <guid isPermaLink="false">cognition/02-technical-impact.m4a#8dce7686317b</guid>
+      <pubDate>Thu, 19 Nov 2026 04:18:25 GMT</pubDate>
+      <enclosure url="https://parag08.github.io/practice/bfa62e0d8087f743/cognition/02-technical-impact.m4a" length="793525" type="audio/mp4"/>
+      <itunes:duration>106</itunes:duration>
+    </item>
+    <item>
+      <title>Cognition 03: Explain it to a non-technical person</title>
+      <guid isPermaLink="false">cognition/03-explain-nontechnical.m4a#4971eb56a382</guid>
+      <pubDate>Thu, 19 Nov 2026 04:17:25 GMT</pubDate>
+      <enclosure url="https://parag08.github.io/practice/bfa62e0d8087f743/cognition/03-explain-nontechnical.m4a" length="372581" type="audio/mp4"/>
+      <itunes:duration>56</itunes:duration>
+    </item>
+    <item>
+      <title>Cognition 04: How it handled failure</title>
+      <guid isPermaLink="false">cognition/04-failure-recovery.m4a#34ea083e9f62</guid>
+      <pubDate>Thu, 19 Nov 2026 04:16:25 GMT</pubDate>
+      <enclosure url="https://parag08.github.io/practice/bfa62e0d8087f743/cognition/04-failure-recovery.m4a" length="718380" type="audio/mp4"/>
+      <itunes:duration>97</itunes:duration>
+    </item>
+    <item>
+      <title>Cognition 05: How much did you own on a deployment?</title>
+      <guid isPermaLink="false">cognition/05-owned-deployment.m4a#611752621b63</guid>
+      <pubDate>Thu, 19 Nov 2026 04:15:25 GMT</pubDate>
+      <enclosure url="https://parag08.github.io/practice/bfa62e0d8087f743/cognition/05-owned-deployment.m4a" length="573702" type="audio/mp4"/>
+      <itunes:duration>80</itunes:duration>
+    </item>
+    <item>
+      <title>Cognition 06: Your experience with agentic development</title>
+      <guid isPermaLink="false">cognition/06-agentic-development.m4a#d757c5d600db</guid>
+      <pubDate>Thu, 19 Nov 2026 04:14:25 GMT</pubDate>
+      <enclosure url="https://parag08.github.io/practice/bfa62e0d8087f743/cognition/06-agentic-development.m4a" length="680691" type="audio/mp4"/>
+      <itunes:duration>91</itunes:duration>
+    </item>
+    <item>
+      <title>Cognition 07: Where do agents fail for you?</title>
+      <guid isPermaLink="false">cognition/07-agents-fail.m4a#513df580c122</guid>
+      <pubDate>Thu, 19 Nov 2026 04:13:25 GMT</pubDate>
+      <enclosure url="https://parag08.github.io/practice/bfa62e0d8087f743/cognition/07-agents-fail.m4a" length="560260" type="audio/mp4"/>
+      <itunes:duration>78</itunes:duration>
+    </item>
+    <item>
+      <title>Cognition 08: Largest customer wants an off-roadmap feature</title>
+      <guid isPermaLink="false">cognition/08-feature-not-on-roadmap.m4a#9275d56ff749</guid>
+      <pubDate>Thu, 19 Nov 2026 04:12:25 GMT</pubDate>
+      <enclosure url="https://parag08.github.io/practice/bfa62e0d8087f743/cognition/08-feature-not-on-roadmap.m4a" length="515526" type="audio/mp4"/>
+      <itunes:duration>72</itunes:duration>
+    </item>
+    <item>
+      <title>Cognition 09: Security blocks network access and secrets</title>
+      <guid isPermaLink="false">cognition/09-locked-down-security.m4a#93de932eb7f3</guid>
+      <pubDate>Thu, 19 Nov 2026 04:11:25 GMT</pubDate>
+      <enclosure url="https://parag08.github.io/practice/bfa62e0d8087f743/cognition/09-locked-down-security.m4a" length="443018" type="audio/mp4"/>
+      <itunes:duration>65</itunes:duration>
+    </item>
+    <item>
+      <title>Cognition 10: Legacy system nobody understands</title>
+      <guid isPermaLink="false">cognition/10-legacy-system.m4a#a8cc839951a9</guid>
+      <pubDate>Thu, 19 Nov 2026 04:10:25 GMT</pubDate>
+      <enclosure url="https://parag08.github.io/practice/bfa62e0d8087f743/cognition/10-legacy-system.m4a" length="460376" type="audio/mp4"/>
+      <itunes:duration>67</itunes:duration>
+    </item>
+    <item>
+      <title>Cognition 11: Why Deployed Engineering, why Cognition?</title>
+      <guid isPermaLink="false">cognition/11-why-de.m4a#db2768af0585</guid>
+      <pubDate>Thu, 19 Nov 2026 04:09:25 GMT</pubDate>
+      <enclosure url="https://parag08.github.io/practice/bfa62e0d8087f743/cognition/11-why-de.m4a" length="435630" type="audio/mp4"/>
+      <itunes:duration>63</itunes:duration>
+    </item>
+    <item>
+      <title>Cognition 12: What questions do you have for me?</title>
+      <guid isPermaLink="false">cognition/12-questions-for-us.m4a#5f45b60c5282</guid>
+      <pubDate>Thu, 19 Nov 2026 04:08:25 GMT</pubDate>
+      <enclosure url="https://parag08.github.io/practice/bfa62e0d8087f743/cognition/12-questions-for-us.m4a" length="233637" type="audio/mp4"/>
+      <itunes:duration>40</itunes:duration>
+    </item>
+  </channel>
+</rss>
